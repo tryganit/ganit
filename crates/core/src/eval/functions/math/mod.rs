@@ -1,5 +1,7 @@
 use super::super::Registry;
 
-pub fn register_math(_registry: &mut Registry) {
-    // Math functions registered here as they are implemented (Task 8+)
+pub mod sum;
+
+pub fn register_math(registry: &mut Registry) {
+    registry.register_eager("SUM", sum::sum_fn);
 }

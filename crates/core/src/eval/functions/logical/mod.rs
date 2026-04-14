@@ -1,5 +1,7 @@
 use super::super::Registry;
 
-pub fn register_logical(_registry: &mut Registry) {
-    // Logical functions registered here as they are implemented (Task 8+)
+pub mod if_fn;
+
+pub fn register_logical(registry: &mut Registry) {
+    registry.register_lazy("IF", if_fn::if_fn);
 }
