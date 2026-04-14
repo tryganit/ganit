@@ -8,6 +8,7 @@ pub fn sum_fn(args: &[Value]) -> Value {
     }
     let mut sum = 0.0_f64;
     for arg in args {
+        // .clone() required because to_number takes ownership; coercion API is fixed.
         match to_number(arg.clone()) {
             Err(e) => return e,
             Ok(n) => sum += n,

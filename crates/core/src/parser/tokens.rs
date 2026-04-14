@@ -18,6 +18,8 @@ pub fn number_literal(i: &str) -> IResult<&str, f64> {
 }
 
 /// Parse a double-quoted string. Returns the inner content (no quotes).
+/// NOTE: Excel-style escaped quotes (`""`) are not yet supported.
+/// A string ends at the first unescaped `"`.
 pub fn string_literal(i: &str) -> IResult<&str, String> {
     let mut parser = map(
         delimited(char('"'), take_while(|c| c != '"'), char('"')),
@@ -72,6 +74,8 @@ mod tests {
     fn strings() {
         assert_eq!(string_literal("\"hello\""), Ok(("", "hello".to_string())));
         assert_eq!(string_literal("\"\""), Ok(("", "".to_string())));
+        // Unterminated string returns an error
+        assert!(string_literal("\"unterminated").is_err());
     }
 
     #[test]
@@ -95,5 +99,19 @@ mod tests {
         let full = "=SUM(1,2)";
         let sub = &full[5..]; // "1,2)"
         assert_eq!(offset(full, sub), 5);
+    }
+
+    #[test]
+    fn bool_boundary() {
+        // FALSE branch word-boundary rejection
+        assert!(bool_literal("falsetto").is_err());
+        // TRUE branch already tested in booleans test
+    }
+
+    #[test]
+    fn offset_boundaries() {
+        let full = "=SUM(1,2)";
+        assert_eq!(offset(full, full), 0);
+        assert_eq!(offset(full, &full[full.len()..]), full.len());
     }
 }

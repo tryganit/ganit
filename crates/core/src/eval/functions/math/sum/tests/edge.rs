@@ -29,3 +29,8 @@ fn mixed_bool_text_number() {
         Value::Number(6.0)
     );
 }
+
+#[test]
+fn empty_arg_treated_as_zero() {
+    assert_eq!(sum_fn(&[Value::Empty, Value::Number(5.0)]), Value::Number(5.0));
+}

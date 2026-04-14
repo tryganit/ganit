@@ -69,3 +69,14 @@ fn two_arg_form_condition_true() {
     ];
     assert_eq!(if_fn(&args, &mut ctx), Value::Number(1.0));
 }
+
+#[test]
+fn two_arg_form_condition_false_returns_bool_false() {
+    let reg = Registry::new();
+    let mut ctx = make_eval_ctx(&reg);
+    let args = vec![
+        Expr::Bool(false, dummy_span()),
+        Expr::Number(1.0, dummy_span()),
+    ];
+    assert_eq!(if_fn(&args, &mut ctx), Value::Bool(false));
+}

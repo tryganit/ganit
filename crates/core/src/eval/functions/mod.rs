@@ -71,3 +71,12 @@ pub fn check_arity(args: &[Value], min: usize, max: usize) -> Option<Value> {
         None
     }
 }
+
+/// Validate argument count by raw length. Use for lazy functions where args are `&[Expr]`.
+pub fn check_arity_len(count: usize, min: usize, max: usize) -> Option<Value> {
+    if count < min || count > max {
+        Some(Value::Error(ErrorKind::Value))
+    } else {
+        None
+    }
+}

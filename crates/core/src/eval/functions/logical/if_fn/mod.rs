@@ -1,12 +1,12 @@
 use crate::eval::coercion::to_bool;
-use crate::eval::functions::EvalCtx;
+use crate::eval::functions::{check_arity_len, EvalCtx};
 use crate::eval::evaluate_expr;
 use crate::parser::ast::Expr;
-use crate::types::{ErrorKind, Value};
+use crate::types::Value;
 
 pub fn if_fn(args: &[Expr], ctx: &mut EvalCtx<'_>) -> Value {
-    if args.len() < 2 || args.len() > 3 {
-        return Value::Error(ErrorKind::Value);
+    if let Some(err) = check_arity_len(args.len(), 2, 3) {
+        return err;
     }
     let condition = evaluate_expr(&args[0], ctx);
     let cond_bool = match to_bool(condition) {
