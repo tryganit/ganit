@@ -36,14 +36,17 @@ fn with_future_value() {
 
 #[test]
 fn beginning_of_period_type1() {
-    // type=1 adjusts payment to beginning of period
+    // type=1 (annuity-due): payment at beginning of period is smaller in abs value
+    // PMT(0.1, 5, 1000, 0, 0) ≈ -263.80, PMT(0.1, 5, 1000, 0, 1) ≈ -239.82
     let args_end   = [Value::Number(0.1), Value::Number(5.0), Value::Number(1000.0), Value::Number(0.0), Value::Number(0.0)];
     let args_begin = [Value::Number(0.1), Value::Number(5.0), Value::Number(1000.0), Value::Number(0.0), Value::Number(1.0)];
     let end   = pmt_fn(&args_end);
     let begin = pmt_fn(&args_begin);
-    // beginning-of-period payment has a larger absolute value (factor of 1+rate)
+    // beginning-of-period payment has a smaller absolute value (one fewer compounding period)
     if let (Value::Number(e), Value::Number(b)) = (end, begin) {
-        assert!(b.abs() > e.abs());
+        assert!(approx(Value::Number(e), -263.80, 0.01), "type0 expected ≈ -263.80, got {e}");
+        assert!(approx(Value::Number(b), -239.82, 0.01), "type1 expected ≈ -239.82, got {b}");
+        assert!(b.abs() < e.abs(), "type=1 abs value should be smaller than type=0");
     } else {
         panic!("expected numbers");
     }

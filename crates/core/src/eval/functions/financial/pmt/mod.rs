@@ -33,7 +33,7 @@ pub fn pmt_fn(args: &[Value]) -> Value {
         if denom == 0.0 {
             return Value::Error(ErrorKind::Num);
         }
-        (pv * rate * factor + fv * rate) / denom * -(1.0 + rate * typ)
+        -(pv * rate * factor + fv * rate) / denom / (1.0 + rate * typ)
     };
 
     if !result.is_finite() {

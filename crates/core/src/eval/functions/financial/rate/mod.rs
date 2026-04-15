@@ -46,7 +46,7 @@ fn rate_f_and_df(r: f64, nper: f64, pmt: f64, pv: f64, fv: f64, typ: f64) -> (f6
     if r == 0.0 {
         // Degenerate: use limit
         let f = pv + pmt * nper + fv;
-        let df = pmt * nper * (nper - 1.0) / 2.0;
+        let df = pv * nper + pmt * nper * (nper - 1.0) / 2.0;
         return (f, df);
     }
     let factor = (1.0 + r).powf(nper);

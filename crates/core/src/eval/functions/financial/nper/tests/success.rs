@@ -13,7 +13,7 @@ fn nper_for_loan() {
         Value::Number(-188.71),
         Value::Number(10000.0),
     ];
-    assert!(approx(nper_fn(&args), 60.0, 0.5));
+    assert!(approx(nper_fn(&args), 60.0, 0.01));
 }
 
 #[test]

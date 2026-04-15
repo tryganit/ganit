@@ -14,7 +14,7 @@ fn savings_plan() {
         Value::Number(60.0),
         Value::Number(-200.0),
     ];
-    assert!(approx(fv_fn(&args), 13601.22, 1.0));
+    assert!(approx(fv_fn(&args), 13601.22, 0.01));
 }
 
 #[test]
