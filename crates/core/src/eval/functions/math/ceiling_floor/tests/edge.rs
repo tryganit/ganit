@@ -1,5 +1,5 @@
 use super::super::*;
-use crate::types::Value;
+use crate::types::{ErrorKind, Value};
 
 #[test]
 fn ceiling_negative_both_negative_sig() {
@@ -20,17 +20,17 @@ fn floor_negative_both_negative_sig() {
 }
 
 #[test]
-fn ceiling_significance_zero_returns_zero() {
+fn ceiling_significance_zero_returns_div_by_zero() {
     assert_eq!(
         ceiling_fn(&[Value::Number(5.0), Value::Number(0.0)]),
-        Value::Number(0.0)
+        Value::Error(ErrorKind::DivByZero)
     );
 }
 
 #[test]
-fn floor_significance_zero_returns_zero() {
+fn floor_significance_zero_returns_div_by_zero() {
     assert_eq!(
         floor_fn(&[Value::Number(5.0), Value::Number(0.0)]),
-        Value::Number(0.0)
+        Value::Error(ErrorKind::DivByZero)
     );
 }

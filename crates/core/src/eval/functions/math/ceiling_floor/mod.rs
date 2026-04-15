@@ -16,7 +16,7 @@ pub fn ceiling_fn(args: &[Value]) -> Value {
         Ok(v) => v,
     };
     if sig == 0.0 {
-        return Value::Number(0.0);
+        return Value::Error(ErrorKind::DivByZero);
     }
     let result = (n / sig).ceil() * sig;
     if !result.is_finite() {
@@ -39,7 +39,7 @@ pub fn floor_fn(args: &[Value]) -> Value {
         Ok(v) => v,
     };
     if sig == 0.0 {
-        return Value::Number(0.0);
+        return Value::Error(ErrorKind::DivByZero);
     }
     let result = (n / sig).floor() * sig;
     if !result.is_finite() {
