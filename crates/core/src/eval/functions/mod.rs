@@ -1,6 +1,7 @@
 pub mod financial;
 pub mod logical;
 pub mod math;
+pub mod operator;
 pub mod statistical;
 pub mod text;
 
@@ -54,6 +55,7 @@ impl Registry {
         text::register_text(&mut r);
         financial::register_financial(&mut r);
         statistical::register_statistical(&mut r);
+        operator::register_operator(&mut r);
         r
     }
 
