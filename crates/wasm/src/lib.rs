@@ -3,7 +3,9 @@
 
 use std::collections::HashMap;
 
+use serde::Serialize;
 use serde_json::json;
+use tsify_next::Tsify;
 use wasm_bindgen::prelude::*;
 
 use ganit_core::Value;
@@ -22,25 +24,40 @@ fn json_to_value(v: &serde_json::Value) -> Value {
     }
 }
 
-/// Convert a ganit-core Value into a JS-friendly serde_json object.
-fn value_to_json(v: Value) -> serde_json::Value {
-    match v {
-        Value::Number(n) => json!({ "value": n, "type": "number" }),
-        Value::Text(s) => json!({ "value": s, "type": "text" }),
-        Value::Bool(b) => json!({ "value": b, "type": "bool" }),
-        Value::Error(e) => json!({ "value": null, "type": "error", "error": e.to_string() }),
-        Value::Empty => json!({ "value": null, "type": "empty" }),
-        Value::Array(_) => json!({ "value": null, "type": "array" }),
-    }
+#[derive(Tsify, Serialize)]
+#[tsify(into_wasm_abi)]
+#[serde(tag = "type", rename_all = "lowercase")]
+pub enum EvalResult {
+    Number { value: f64 },
+    Text { value: String },
+    Bool { value: bool },
+    Error { error: String },
+    Empty,
+}
+
+#[derive(Tsify, Serialize)]
+#[tsify(into_wasm_abi)]
+pub struct ValidateResult {
+    pub valid: bool,
+    #[tsify(optional)]
+    pub error: Option<String>,
+}
+
+#[derive(Tsify, Serialize, serde::Deserialize)]
+#[tsify(into_wasm_abi)]
+pub struct FunctionInfo {
+    pub name: String,
+    pub category: String,
+    pub syntax: String,
+    pub description: String,
 }
 
 /// Evaluate a formula with named variables supplied as a JS object.
 ///
 /// `variables` must be a plain JS object mapping string keys to number/string/bool/null.
 /// Passing `undefined` or `null` is safe and is treated as no variables.
-/// Returns `{ value, type }` or `{ value: null, type: "error", error: "..." }`.
 #[wasm_bindgen]
-pub fn evaluate(formula: &str, variables: JsValue) -> JsValue {
+pub fn evaluate(formula: &str, variables: JsValue) -> EvalResult {
     let vars_json: serde_json::Value = serde_wasm_bindgen::from_value(variables)
         .unwrap_or(serde_json::Value::Object(Default::default()));
 
@@ -52,28 +69,32 @@ pub fn evaluate(formula: &str, variables: JsValue) -> JsValue {
         None => HashMap::new(),
     };
 
-    let result = ganit_core::evaluate(formula, &vars);
-    let json_result = value_to_json(result);
-    serde_wasm_bindgen::to_value(&json_result).unwrap_or(JsValue::NULL)
+    match ganit_core::evaluate(formula, &vars) {
+        Value::Number(n) => EvalResult::Number { value: n },
+        Value::Text(s) => EvalResult::Text { value: s },
+        Value::Bool(b) => EvalResult::Bool { value: b },
+        Value::Error(e) => EvalResult::Error { error: e.to_string() },
+        Value::Empty => EvalResult::Empty,
+        Value::Array(_) => EvalResult::Error { error: "array not supported".to_string() },
+    }
 }
 
 /// Validate a formula string without evaluating it.
 ///
 /// Returns `{ valid: true }` on success or `{ valid: false, error: "..." }` on failure.
 #[wasm_bindgen]
-pub fn validate(formula: &str) -> JsValue {
-    let result = match ganit_core::validate(formula) {
-        Ok(_) => json!({ "valid": true }),
-        Err(e) => json!({ "valid": false, "error": e.to_string() }),
-    };
-    serde_wasm_bindgen::to_value(&result).unwrap_or(JsValue::NULL)
+pub fn validate(formula: &str) -> ValidateResult {
+    match ganit_core::validate(formula) {
+        Ok(_) => ValidateResult { valid: true, error: None },
+        Err(e) => ValidateResult { valid: false, error: Some(e.to_string()) },
+    }
 }
 
 /// Return metadata for all built-in functions as a JS array.
 ///
 /// Each entry: `{ name, category, syntax, description }`.
 #[wasm_bindgen]
-pub fn list_functions() -> JsValue {
+pub fn list_functions() -> Vec<FunctionInfo> {
     let functions = json!([
         // math
         { "name": "SUM", "category": "math", "syntax": "SUM(value1, ...)", "description": "Sum of all arguments" },
@@ -146,5 +167,6 @@ pub fn list_functions() -> JsValue {
         { "name": "MEDIAN", "category": "statistical", "syntax": "MEDIAN(value1, ...)", "description": "Median value" }
     ]);
 
-    serde_wasm_bindgen::to_value(&functions).unwrap_or(JsValue::NULL)
+    serde_json::from_value::<Vec<FunctionInfo>>(functions)
+        .unwrap_or_default()
 }
