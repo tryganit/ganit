@@ -2,18 +2,11 @@ use super::super::*;
 use crate::types::{ErrorKind, Value};
 
 #[test]
-fn max_error_propagates() {
+fn max_ignores_error_values() {
+    // The dispatcher strips errors before calling max_fn; errors are simply ignored
     assert_eq!(
-        max_fn(&[Value::Number(1.0), Value::Error(ErrorKind::Ref), Value::Number(5.0)]),
-        Value::Error(ErrorKind::Ref)
-    );
-}
-
-#[test]
-fn max_first_error_wins() {
-    assert_eq!(
-        max_fn(&[Value::Error(ErrorKind::Ref), Value::Error(ErrorKind::Name)]),
-        Value::Error(ErrorKind::Ref)
+        max_fn(&[Value::Number(3.0), Value::Error(ErrorKind::Value), Value::Number(5.0)]),
+        Value::Number(5.0)
     );
 }
 

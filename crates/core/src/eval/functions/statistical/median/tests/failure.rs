@@ -8,17 +8,10 @@ fn median_no_numeric_returns_num_error() {
 }
 
 #[test]
-fn median_error_propagates() {
+fn median_ignores_error_values() {
+    // The dispatcher strips errors before calling median_fn; errors are simply ignored
     assert_eq!(
-        median_fn(&[Value::Number(1.0), Value::Error(ErrorKind::Ref), Value::Number(3.0)]),
-        Value::Error(ErrorKind::Ref)
-    );
-}
-
-#[test]
-fn median_first_error_wins() {
-    assert_eq!(
-        median_fn(&[Value::Error(ErrorKind::Ref), Value::Error(ErrorKind::Name)]),
-        Value::Error(ErrorKind::Ref)
+        median_fn(&[Value::Number(1.0), Value::Error(ErrorKind::Value), Value::Number(3.0)]),
+        Value::Number(2.0)
     );
 }

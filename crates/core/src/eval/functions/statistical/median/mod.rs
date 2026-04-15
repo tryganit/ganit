@@ -1,16 +1,13 @@
 use crate::types::{ErrorKind, Value};
 
 /// `MEDIAN(value1, ...)` — middle value of numeric arguments.
-/// Ignores Text, Bool, Empty. Error values propagate (first error returned).
-/// Even count: average of two middle values. Odd count: middle value.
+/// Ignores Text, Bool, Empty, Error. Even count: average of two middle values. Odd count: middle value.
 /// Returns `Value::Error(ErrorKind::Num)` if no numeric values are present.
 pub fn median_fn(args: &[Value]) -> Value {
     let mut nums: Vec<f64> = Vec::new();
     for arg in args {
-        match arg {
-            Value::Error(_) => return arg.clone(),
-            Value::Number(n) => nums.push(*n),
-            _ => {}
+        if let Value::Number(n) = arg {
+            nums.push(*n);
         }
     }
     if nums.is_empty() {
