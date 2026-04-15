@@ -31,7 +31,7 @@ jobs:
         run: cargo audit
 
       - name: Install cargo-deny
-        run: cargo install cargo-deny --version 0.16.0 --locked
+        run: cargo install cargo-deny --locked
       - name: Deny check
         run: cargo deny check
 
