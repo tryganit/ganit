@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.8](https://github.com/tryganit/ganit-core/compare/ganit-core-v0.3.6...ganit-core-v0.3.8) - 2026-04-16
+
+### Added
+
+- implement COUNTBLANK, COUNTUNIQUE, COUNTIFS, SUMIFS
+- implement COMBIN, COMBINA, MULTINOMIAL, GCD, LCM
+- implement SQRTPI, SUMSQ, FACTDOUBLE, SERIESSUM
+- implement CEILING.MATH, CEILING.PRECISE, FLOOR.MATH, FLOOR.PRECISE, ISO.CEILING
+
+### Fixed
+
+- remove stray countifs/countunique/sumifs module stubs from mod.rs
+- remove spurious pub mod entries from math mod.rs
+
+### Other
+
+- release v0.3.7
+- Merge pull request #311 from tryganit/feat/105-math-base-conversion
+- Merge pull request #310 from tryganit/feat/105-math-simple
+- Merge pull request #309 from tryganit/feat/105-math-advanced-rounding
+
 ## [0.3.7](https://github.com/tryganit/ganit-core/compare/ganit-core-v0.3.6...ganit-core-v0.3.7) - 2026-04-16
 
 ### Added
