@@ -1,5 +1,6 @@
 pub mod date;
 pub mod engineering;
+pub mod filter;
 pub mod financial;
 pub mod logical;
 pub mod math;
@@ -74,6 +75,7 @@ impl Registry {
         date::register_date(&mut r);
         parser::register_parser(&mut r);
         engineering::register_engineering(&mut r);
+        filter::register_filter(&mut r);
         r
     }
 

@@ -120,25 +120,49 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_array_elements(&self, i: &'a str) -> IResult<&'a str, Vec<Expr>> {
-        let mut elems = Vec::new();
+        let mut rows: Vec<Vec<Expr>> = Vec::new();
+        let mut current_row: Vec<Expr> = Vec::new();
         let mut rest = multispace0(i)?.0;
         if rest.starts_with('}') {
-            return Ok((rest, elems)); // empty array {}
+            return Ok((rest, current_row)); // empty array {}
         }
         let (r, first) = self.parse_comparison(rest)?;
-        elems.push(first);
+        current_row.push(first);
         rest = r;
         loop {
             rest = multispace0(rest)?.0;
             if let Some(after_comma) = rest.strip_prefix(',') {
                 let (r, elem) = self.parse_comparison(after_comma)?;
-                elems.push(elem);
+                current_row.push(elem);
+                rest = r;
+            } else if let Some(after_semi) = rest.strip_prefix(';') {
+                // Row separator: finish the current row, start a new one
+                rows.push(current_row);
+                current_row = Vec::new();
+                rest = multispace0(after_semi)?.0;
+                let (r, elem) = self.parse_comparison(rest)?;
+                current_row.push(elem);
                 rest = r;
             } else {
                 break;
             }
         }
-        Ok((rest, elems))
+        if rows.is_empty() {
+            // 1-D array
+            Ok((rest, current_row))
+        } else {
+            // 2-D array: wrap each row in an Array expr, return Vec of row-Arrays
+            rows.push(current_row);
+            let span_start = i;
+            let row_exprs: Vec<Expr> = rows
+                .into_iter()
+                .map(|row| {
+                    let s = self.span(span_start, span_start); // placeholder span
+                    Expr::Array(row, s)
+                })
+                .collect();
+            Ok((rest, row_exprs))
+        }
     }
 
     // ── postfix % ─────────────────────────────────────────────────────────
