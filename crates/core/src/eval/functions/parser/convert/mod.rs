@@ -122,7 +122,7 @@ fn get_unit(name: &str) -> Option<(UnitCategory, f64)> {
         "ft3"            => Some((UnitCategory::Volume, 28.316846592)),
         "in3"            => Some((UnitCategory::Volume, 0.016387064)),
         "yd3"            => Some((UnitCategory::Volume, 764.554857984)),
-        "mi3"            => Some((UnitCategory::Volume, 4168181825.440579584)),
+        "mi3"            => Some((UnitCategory::Volume, 4_168_181_825.440_579_4)),
         "gal"            => Some((UnitCategory::Volume, 3.785411784)),
         "qt"             => Some((UnitCategory::Volume, 0.946352946)),
         "cup"            => Some((UnitCategory::Volume, 0.2365882365)),
