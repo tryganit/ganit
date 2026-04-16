@@ -5,8 +5,6 @@ pub mod average;
 pub mod averageif;
 pub mod ceiling_floor;
 pub mod countif;
-pub mod countifs;
-pub mod countunique;
 pub mod criterion;
 pub mod exp;
 pub mod fact;
@@ -25,7 +23,6 @@ pub mod sqrt;
 pub mod sqrtpi;
 pub mod sum;
 pub mod sumif;
-pub mod sumifs;
 pub mod sumsq;
 pub mod trig;
 
