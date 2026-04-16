@@ -223,7 +223,7 @@ conformance_test!(m2_date_conformance,        "m2", "Date.xlsx");
 conformance_test!(m2_engineering_conformance, "m2", "Engineering.xlsx");
 conformance_test!(m2_info_conformance,        "m2", "Info.xlsx");
 conformance_test!(m2_logical_conformance,     "m2", "Logical.xlsx");
-conformance_test!(pending, m2_lookup_conformance,      "m2", "Lookup.xlsx");
+conformance_test!(m2_lookup_conformance,               "m2", "Lookup.xlsx");
 conformance_test!(pending, m2_math_conformance,        "m2", "Math.xlsx");
 conformance_test!(m2_parser_conformance,               "m2", "Parser.xlsx");
 conformance_test!(m2_statistical_conformance,          "m2", "Statistical.xlsx");
@@ -233,7 +233,7 @@ conformance_test!(pending, m3_database_conformance,    "m3", "Database.xlsx");
 conformance_test!(pending, m3_engineering_conformance, "m3", "Engineering.xlsx");
 conformance_test!(pending, m3_financial_conformance,   "m3", "Financial.xlsx");
 conformance_test!(pending, m3_info_conformance,        "m3", "Info.xlsx");
-conformance_test!(pending, m3_lookup_conformance,      "m3", "Lookup.xlsx");
+conformance_test!(m3_lookup_conformance,               "m3", "Lookup.xlsx");
 conformance_test!(pending, m3_math_conformance,        "m3", "Math.xlsx");
 conformance_test!(pending, m3_statistical_conformance, "m3", "Statistical.xlsx");
 
