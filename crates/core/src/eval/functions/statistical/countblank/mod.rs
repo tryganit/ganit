@@ -1,5 +1,5 @@
 use crate::eval::functions::check_arity;
-use crate::types::{ErrorKind, Value};
+use crate::types::Value;
 
 fn count_blanks_in(values: &[Value]) -> usize {
     let mut count = 0;
