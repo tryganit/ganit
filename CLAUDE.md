@@ -83,6 +83,10 @@ After opening or pushing to a PR:
 **PR description must include:**
 - One `closes #<issue>` line per issue being resolved (not a comma list — one per line)
 
+**PR rules:**
+- Never enable auto-merge on a PR
+- Always assign the PR to `@hhimanshu` (the CODEOWNER): `gh pr edit <number> --add-assignee hhimanshu`
+
 Do not report a task complete until CI passes.
 
 ---
