@@ -183,4 +183,44 @@ pub fn register_engineering(registry: &mut Registry) {
     registry.register_eager("OCT2BIN", oct2bin::oct2bin_fn, FunctionMeta { category: "engineering", signature: "OCT2BIN(number, [places])", description: "Convert octal to binary" });
     registry.register_eager("OCT2DEC", oct2dec::oct2dec_fn, FunctionMeta { category: "engineering", signature: "OCT2DEC(number)",           description: "Convert octal to decimal" });
     registry.register_eager("OCT2HEX", oct2hex::oct2hex_fn, FunctionMeta { category: "engineering", signature: "OCT2HEX(number, [places])", description: "Convert octal to hexadecimal" });
+
+    // Complex number functions
+    registry.register_eager("COMPLEX",     complex::complex_fn,     FunctionMeta { category: "engineering", signature: "COMPLEX(real, imaginary, [suffix])", description: "Create a complex number" });
+    registry.register_eager("IMABS",       complex::imabs_fn,       FunctionMeta { category: "engineering", signature: "IMABS(inumber)",                     description: "Absolute value of a complex number" });
+    registry.register_eager("IMAGINARY",   complex::imaginary_fn,   FunctionMeta { category: "engineering", signature: "IMAGINARY(inumber)",                 description: "Imaginary coefficient of a complex number" });
+    registry.register_eager("IMREAL",      complex::imreal_fn,      FunctionMeta { category: "engineering", signature: "IMREAL(inumber)",                    description: "Real coefficient of a complex number" });
+    registry.register_eager("IMARGUMENT",  complex::imargument_fn,  FunctionMeta { category: "engineering", signature: "IMARGUMENT(inumber)",                description: "Argument (angle) of a complex number" });
+    registry.register_eager("IMCONJUGATE", complex::imconjugate_fn, FunctionMeta { category: "engineering", signature: "IMCONJUGATE(inumber)",               description: "Complex conjugate" });
+    registry.register_eager("IMDIV",       complex::imdiv_fn,       FunctionMeta { category: "engineering", signature: "IMDIV(inumber1, inumber2)",          description: "Divide two complex numbers" });
+    registry.register_eager("IMEXP",       complex::imexp_fn,       FunctionMeta { category: "engineering", signature: "IMEXP(inumber)",                     description: "Exponential of a complex number" });
+    registry.register_eager("IMLN",        complex::imln_fn,        FunctionMeta { category: "engineering", signature: "IMLN(inumber)",                      description: "Natural logarithm of a complex number" });
+    registry.register_eager("IMLOG10",     complex::imlog10_fn,     FunctionMeta { category: "engineering", signature: "IMLOG10(inumber)",                   description: "Base-10 logarithm of a complex number" });
+    registry.register_eager("IMLOG2",      complex::imlog2_fn,      FunctionMeta { category: "engineering", signature: "IMLOG2(inumber)",                    description: "Base-2 logarithm of a complex number" });
+    registry.register_eager("IMLOG",       complex::imlog_fn,       FunctionMeta { category: "engineering", signature: "IMLOG(inumber, base)",               description: "Logarithm of a complex number in a given base" });
+    registry.register_eager("IMPOWER",     complex::impower_fn,     FunctionMeta { category: "engineering", signature: "IMPOWER(inumber, number)",           description: "Complex number raised to a power" });
+    registry.register_eager("IMPRODUCT",   complex::improduct_fn,   FunctionMeta { category: "engineering", signature: "IMPRODUCT(inumber1, ...)",           description: "Product of complex numbers" });
+    registry.register_eager("IMSQRT",      complex::imsqrt_fn,      FunctionMeta { category: "engineering", signature: "IMSQRT(inumber)",                    description: "Square root of a complex number" });
+    registry.register_eager("IMSUB",       complex::imsub_fn,       FunctionMeta { category: "engineering", signature: "IMSUB(inumber1, inumber2)",          description: "Difference of two complex numbers" });
+    registry.register_eager("IMSUM",       complex::imsum_fn,       FunctionMeta { category: "engineering", signature: "IMSUM(inumber1, ...)",               description: "Sum of complex numbers" });
+    registry.register_eager("IMSIN",       complex::imsin_fn,       FunctionMeta { category: "engineering", signature: "IMSIN(inumber)",                     description: "Sine of a complex number" });
+    registry.register_eager("IMCOS",       complex::imcos_fn,       FunctionMeta { category: "engineering", signature: "IMCOS(inumber)",                     description: "Cosine of a complex number" });
+    registry.register_eager("IMTAN",       complex::imtan_fn,       FunctionMeta { category: "engineering", signature: "IMTAN(inumber)",                     description: "Tangent of a complex number" });
+    registry.register_eager("IMSEC",       complex::imsec_fn,       FunctionMeta { category: "engineering", signature: "IMSEC(inumber)",                     description: "Secant of a complex number" });
+    registry.register_eager("IMCSC",       complex::imcsc_fn,       FunctionMeta { category: "engineering", signature: "IMCSC(inumber)",                     description: "Cosecant of a complex number" });
+    registry.register_eager("IMCOT",       complex::imcot_fn,       FunctionMeta { category: "engineering", signature: "IMCOT(inumber)",                     description: "Cotangent of a complex number" });
+    registry.register_eager("IMSINH",      complex::imsinh_fn,      FunctionMeta { category: "engineering", signature: "IMSINH(inumber)",                    description: "Hyperbolic sine of a complex number" });
+    registry.register_eager("IMCOSH",      complex::imcosh_fn,      FunctionMeta { category: "engineering", signature: "IMCOSH(inumber)",                    description: "Hyperbolic cosine of a complex number" });
+    registry.register_eager("IMTANH",      complex::imtanh_fn,      FunctionMeta { category: "engineering", signature: "IMTANH(inumber)",                    description: "Hyperbolic tangent of a complex number" });
+    registry.register_eager("IMSECH",      complex::imsech_fn,      FunctionMeta { category: "engineering", signature: "IMSECH(inumber)",                    description: "Hyperbolic secant of a complex number" });
+    registry.register_eager("IMCSCH",      complex::imcsch_fn,      FunctionMeta { category: "engineering", signature: "IMCSCH(inumber)",                    description: "Hyperbolic cosecant of a complex number" });
+    registry.register_eager("IMCOTH",      complex::imcoth_fn,      FunctionMeta { category: "engineering", signature: "IMCOTH(inumber)",                    description: "Hyperbolic cotangent of a complex number" });
+
+    // Error functions
+    registry.register_eager("ERF",          erf::erf_fn,          FunctionMeta { category: "engineering", signature: "ERF(lower_limit, [upper_limit])", description: "Error function" });
+    registry.register_eager("ERF.PRECISE",  erf::erf_precise_fn,  FunctionMeta { category: "engineering", signature: "ERF.PRECISE(x)",                 description: "Error function (precise)" });
+    registry.register_eager("ERFC",         erf::erfc_fn,         FunctionMeta { category: "engineering", signature: "ERFC(x)",                        description: "Complementary error function" });
+    registry.register_eager("ERFC.PRECISE", erf::erfc_precise_fn, FunctionMeta { category: "engineering", signature: "ERFC.PRECISE(x)",               description: "Complementary error function (precise)" });
 }
+
+pub mod complex;
+pub mod erf;
