@@ -54,34 +54,4 @@ pub fn let_fn(args: &[Expr], ctx: &mut EvalCtx<'_>) -> Value {
 }
 
 #[cfg(test)]
-mod tests {
-    use std::collections::HashMap;
-    use crate::{evaluate, Value};
-    use crate::types::ErrorKind;
-
-    #[test]
-    fn let_single_binding() {
-        let vars = HashMap::new();
-        assert_eq!(evaluate("=LET(x, 5, x*2)", &vars), Value::Number(10.0));
-    }
-
-    #[test]
-    fn let_two_bindings() {
-        let vars = HashMap::new();
-        assert_eq!(evaluate("=LET(x, 3, y, 4, x+y)", &vars), Value::Number(7.0));
-    }
-
-    #[test]
-    fn let_later_binding_references_earlier() {
-        let vars = HashMap::new();
-        // y = x+1 = 3, x*y = 2*3 = 6
-        assert_eq!(evaluate("=LET(x, 2, y, x+1, x*y)", &vars), Value::Number(6.0));
-    }
-
-    #[test]
-    fn let_even_arg_count_returns_na() {
-        let vars = HashMap::new();
-        // Even number of args (2) — no body — should return #N/A
-        assert_eq!(evaluate("=LET(x, 5)", &vars), Value::Error(ErrorKind::NA));
-    }
-}
+mod tests;
