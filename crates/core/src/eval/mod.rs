@@ -159,6 +159,24 @@ fn type_rank(v: &Value) -> u8 {
 }
 
 fn eval_binary(op: &BinaryOp, lv: Value, rv: Value) -> Value {
+    // ── Array broadcasting ───────────────────────────────────────────────────
+    match (&lv, &rv) {
+        (Value::Array(elems), _) => {
+            let result: Vec<Value> = elems
+                .iter()
+                .map(|e| eval_binary(op, e.clone(), rv.clone()))
+                .collect();
+            return Value::Array(result);
+        }
+        (_, Value::Array(elems)) => {
+            let result: Vec<Value> = elems
+                .iter()
+                .map(|e| eval_binary(op, lv.clone(), e.clone()))
+                .collect();
+            return Value::Array(result);
+        }
+        _ => {}
+    }
     match op {
         // ── Arithmetic ──────────────────────────────────────────────────────
         BinaryOp::Add | BinaryOp::Sub | BinaryOp::Mul | BinaryOp::Div | BinaryOp::Pow => {

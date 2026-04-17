@@ -105,6 +105,17 @@ impl<'a> Parser<'a> {
                     nom::error::ErrorKind::Char,
                 )));
             }
+            // Range reference: A1:D4
+            if is_cell_ref(name) {
+                if let Some(after_colon) = rest_ws.strip_prefix(':') {
+                    if let Ok((rest2, name2)) = identifier(after_colon) {
+                        if is_cell_ref(name2) {
+                            let range_name = format!("{}:{}", name, name2);
+                            return Ok((rest2, Expr::Variable(range_name, self.span(i, rest2))));
+                        }
+                    }
+                }
+            }
             return Ok((rest, Expr::Variable(name.to_string(), self.span(i, rest))));
         }
 
@@ -347,6 +358,13 @@ impl<'a> Parser<'a> {
 
         Ok((rest, left))
     }
+}
+
+/// Returns true if `name` looks like a cell reference (e.g. "A1", "BC42").
+fn is_cell_ref(name: &str) -> bool {
+    let bytes = name.as_bytes();
+    let col_end = bytes.iter().take_while(|b| b.is_ascii_alphabetic()).count();
+    col_end > 0 && col_end < bytes.len() && bytes[col_end..].iter().all(|b| b.is_ascii_digit())
 }
 
 // ── public API ──────────────────────────────────────────────────────────────
