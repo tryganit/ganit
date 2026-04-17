@@ -356,3 +356,6 @@ pub fn register_database(registry: &mut Registry) {
     registry.register_eager("DVAR",     dvar_fn,     FunctionMeta { category: "database", signature: "DVAR(database, field, criteria)",     description: "Sample variance of field values for rows matching criteria" });
     registry.register_eager("DVARP",    dvarp_fn,    FunctionMeta { category: "database", signature: "DVARP(database, field, criteria)",    description: "Population variance of field values for rows matching criteria" });
 }
+
+#[cfg(test)]
+mod tests;
