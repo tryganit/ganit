@@ -119,16 +119,30 @@ impl<'a> Parser<'a> {
             return Ok((rest, args));
         }
 
-        let (r, first) = self.parse_comparison(rest)?;
-        args.push(first);
-        rest = r;
+        // Parse first argument (may be empty if it starts with comma or close paren)
+        let ws = multispace0(rest)?.0;
+        if ws.starts_with(',') || ws.starts_with(')') {
+            // Empty first argument
+            args.push(Expr::Variable(String::new(), Span::new(0, 0)));
+        } else {
+            let (r, first) = self.parse_comparison(rest)?;
+            args.push(first);
+            rest = r;
+        }
 
         loop {
             rest = multispace0(rest)?.0;
             if let Some(after_comma) = rest.strip_prefix(',') {
-                let (r, arg) = self.parse_comparison(after_comma)?;
-                args.push(arg);
-                rest = r;
+                let after_ws = multispace0(after_comma)?.0;
+                if after_ws.starts_with(',') || after_ws.starts_with(')') {
+                    // Empty argument
+                    args.push(Expr::Variable(String::new(), Span::new(0, 0)));
+                    rest = after_comma;
+                } else {
+                    let (r, arg) = self.parse_comparison(after_comma)?;
+                    args.push(arg);
+                    rest = r;
+                }
             } else {
                 break;
             }
@@ -142,7 +156,7 @@ impl<'a> Parser<'a> {
         let mut current_row: Vec<Expr> = Vec::new();
         let mut rest = multispace0(i)?.0;
         if rest.starts_with('}') {
-            return Ok((rest, current_row)); // empty array {}
+            return Ok((rest, Vec::new())); // empty array {}
         }
         let (r, first) = self.parse_comparison(rest)?;
         current_row.push(first);
@@ -154,7 +168,6 @@ impl<'a> Parser<'a> {
                 current_row.push(elem);
                 rest = r;
             } else if let Some(after_semi) = rest.strip_prefix(';') {
-                // Row separator: finish current row and start a new one.
                 rows.push(std::mem::take(&mut current_row));
                 let (r, elem) = self.parse_comparison(after_semi)?;
                 current_row.push(elem);
@@ -163,18 +176,21 @@ impl<'a> Parser<'a> {
                 break;
             }
         }
-        // If we encountered any row separators, wrap each row in its own Array node.
-        if rows.is_empty() {
-            Ok((rest, current_row))
-        } else {
-            rows.push(current_row);
-            let span_dummy = Span::new(0, 0);
-            let nested: Vec<Expr> = rows
-                .into_iter()
-                .map(|row| Expr::Array(row, span_dummy.clone()))
-                .collect();
-            Ok((rest, nested))
+        rows.push(current_row);
+        // If only one row (no semicolons), return flat vec
+        if rows.len() == 1 {
+            return Ok((rest, rows.into_iter().next().unwrap()));
         }
+        // Multiple rows → wrap each row in an Array node
+        let span_start = i;
+        let row_exprs: Vec<Expr> = rows
+            .into_iter()
+            .map(|row_elems| {
+                let s = self.span(span_start, rest);
+                Expr::Array(row_elems, s)
+            })
+            .collect();
+        Ok((rest, row_exprs))
     }
 
     // ── postfix % ─────────────────────────────────────────────────────────
