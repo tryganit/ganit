@@ -1,12 +1,15 @@
-use super::Registry;
-use super::FunctionMeta;
+use super::{FunctionMeta, Registry};
 
-pub mod index_fn;
+pub mod indirect;
 
 pub fn register_lookup(registry: &mut Registry) {
-    registry.register_eager("INDEX", index_fn::index_fn, FunctionMeta {
-        category: "lookup",
-        signature: "INDEX(array, row, [col])",
-        description: "Return the element at the given position in an array",
-    });
+    registry.register_eager(
+        "INDIRECT",
+        indirect::indirect_fn,
+        FunctionMeta {
+            category: "lookup",
+            signature: "INDIRECT(ref_text, [a1])",
+            description: "Returns the value of a cell reference given as a string",
+        },
+    );
 }

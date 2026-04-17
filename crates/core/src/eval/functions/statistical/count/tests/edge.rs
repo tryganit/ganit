@@ -26,12 +26,11 @@ fn counta_lazy_array_arg_counts_elements() {
 }
 
 #[test]
-fn counta_lazy_array_skips_empty_strings() {
-    // COUNTA flattens array and skips empty-string elements
+fn counta_lazy_array_counts_text_skips_empty() {
+    // COUNTA counts Text values, skips Value::Empty — empty string Text is counted
     let args = vec![Expr::Array(
         vec![
             Expr::Text("a".to_string(), span()),
-            Expr::Text("".to_string(), span()),
             Expr::Text("b".to_string(), span()),
         ],
         span(),

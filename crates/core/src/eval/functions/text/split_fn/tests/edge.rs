@@ -16,7 +16,8 @@ fn remove_empty_true_drops_empty_strings() {
 }
 
 #[test]
-fn remove_empty_false_keeps_empty_strings() {
+fn remove_empty_false_keeps_empty_as_empty_value() {
+    // Empty parts are represented as Value::Empty so COUNTA can correctly skip them
     let result = split_fn(&[
         Value::Text("a,,b".into()),
         Value::Text(",".into()),
@@ -27,7 +28,7 @@ fn remove_empty_false_keeps_empty_strings() {
         result,
         Value::Array(vec![
             Value::Text("a".into()),
-            Value::Text("".into()),
+            Value::Empty,
             Value::Text("b".into()),
         ])
     );

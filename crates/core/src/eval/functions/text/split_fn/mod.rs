@@ -48,7 +48,13 @@ pub fn split_fn(args: &[Value]) -> Value {
     let parts: Vec<Value> = raw_parts
         .into_iter()
         .filter(|s| !remove_empty || !s.is_empty())
-        .map(|s| Value::Text(s.to_string()))
+        .map(|s| {
+            if s.is_empty() {
+                Value::Empty
+            } else {
+                Value::Text(s.to_string())
+            }
+        })
         .collect();
 
     Value::Array(parts)
