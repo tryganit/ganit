@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0](https://github.com/tryganit/ganit-core/compare/ganit-core-v0.3.12...ganit-core-v0.4.0) - 2026-04-17
+
+### Added
+
+- implement M2/M3 lookup functions
+- implement statistical distribution functions for M3 conformance
+
+### Other
+
+- Merge pull request #352 from tryganit/feat/334-m4-logical-lambda-impl
+- Merge remote-tracking branch 'origin/main' into feat/334-m4-logical-lambda-impl
+- Merge pull request #348 from tryganit/feat/325-m3-engineering-complex
+- Merge pull request #347 from tryganit/feat/332-m4-filter
+- resolve merge conflicts with origin/main in count/mod.rs and eval/mod.rs
+- activate M2 text conformance
+- resolve merge conflicts with main; fix SPLIT to return Value::Empty for empty parts
+- re-trigger CI
+- *(test)* convert split_fn/tests.rs to tests/success/failure/edge pattern
+- add unit tests for SPLIT, TEXT, VALUE, COUNTA fixes
+- activate M2 text conformance
+
 ## [0.3.12](https://github.com/tryganit/ganit-core/compare/ganit-core-v0.3.10...ganit-core-v0.3.12) - 2026-04-16
 
 ### Other
