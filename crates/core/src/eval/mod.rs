@@ -90,14 +90,17 @@ pub fn evaluate_expr(expr: &Expr, ctx: &mut EvalCtx<'_>) -> Value {
                 }
             }
         }
+
+        // ── Immediately-invoked lambda application ──────────────────────────
+        Expr::Apply { func, call_args, .. } => {
+            eval_apply(func, call_args, ctx)
+        }
     }
 }
 
-// ── LAMBDA application ───────────────────────────────────────────────────────
-
+/// Evaluate an immediately-invoked function application `func(call_args)`.
 fn eval_apply(func: &Expr, call_args: &[Expr], ctx: &mut EvalCtx<'_>) -> Value {
-    // Only LAMBDA is supported as the func expression.
-    let (param_names, body) = match func {
+    let (lambda_params, body) = match func {
         Expr::FunctionCall { name, args: lambda_args, .. } if name == "LAMBDA" => {
             if lambda_args.is_empty() {
                 return Value::Error(ErrorKind::NA);
@@ -116,28 +119,29 @@ fn eval_apply(func: &Expr, call_args: &[Expr], ctx: &mut EvalCtx<'_>) -> Value {
         _ => return Value::Error(ErrorKind::Value),
     };
 
-    if call_args.len() != param_names.len() {
+    if call_args.len() != lambda_params.len() {
         return Value::Error(ErrorKind::NA);
     }
 
-    // Evaluate arguments before binding (avoids param name shadowing during eval).
     let mut evaluated_args: Vec<Value> = Vec::with_capacity(call_args.len());
     for arg in call_args {
-        evaluated_args.push(evaluate_expr(arg, ctx));
+        let v = evaluate_expr(arg, ctx);
+        if matches!(v, Value::Error(_)) {
+            return v;
+        }
+        evaluated_args.push(v);
     }
 
-    // Save existing values for any param names we are about to shadow.
-    let mut saved: Vec<(String, Option<Value>)> = Vec::with_capacity(param_names.len());
-    for (name, val) in param_names.iter().zip(evaluated_args) {
-        let old = ctx.ctx.set(name.clone(), val);
-        saved.push((name.clone(), old));
+    let mut saved: Vec<(String, Option<Value>)> = Vec::with_capacity(lambda_params.len());
+    for (param, val) in lambda_params.iter().zip(evaluated_args) {
+        let old = ctx.ctx.set(param.clone(), val);
+        saved.push((param.clone(), old));
     }
 
     let result = evaluate_expr(body, ctx);
 
-    // Restore context.
-    for (name, old) in saved {
-        match old {
+    for (name, old_val) in saved.into_iter().rev() {
+        match old_val {
             Some(v) => { ctx.ctx.set(name, v); }
             None    => { ctx.ctx.remove(&name); }
         }
@@ -160,6 +164,24 @@ fn type_rank(v: &Value) -> u8 {
 }
 
 fn eval_binary(op: &BinaryOp, lv: Value, rv: Value) -> Value {
+    // ── Array broadcasting ───────────────────────────────────────────────────
+    match (&lv, &rv) {
+        (Value::Array(elems), _) => {
+            let result: Vec<Value> = elems
+                .iter()
+                .map(|e| eval_binary(op, e.clone(), rv.clone()))
+                .collect();
+            return Value::Array(result);
+        }
+        (_, Value::Array(elems)) => {
+            let result: Vec<Value> = elems
+                .iter()
+                .map(|e| eval_binary(op, lv.clone(), e.clone()))
+                .collect();
+            return Value::Array(result);
+        }
+        _ => {}
+    }
     match op {
         // ── Arithmetic ──────────────────────────────────────────────────────
         BinaryOp::Add | BinaryOp::Sub | BinaryOp::Mul | BinaryOp::Div | BinaryOp::Pow => {
