@@ -25,3 +25,6 @@ pub fn isodd_fn(args: &[Value]) -> Value {
     };
     Value::Bool((n.trunc() as i64) % 2 != 0)
 }
+
+#[cfg(test)]
+mod tests;

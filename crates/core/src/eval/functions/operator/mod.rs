@@ -388,6 +388,9 @@ fn unique_elements(items: &[Value], exactly_once: bool) -> Value {
     }
 }
 
+#[cfg(test)]
+mod tests;
+
 // ── Registration ──────────────────────────────────────────────────────────────
 // Operator aliases are compiler-internal; they must not appear in list_functions().
 
