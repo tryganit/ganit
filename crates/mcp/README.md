@@ -1,6 +1,7 @@
 # ganit-mcp
 
-[![crates.io](https://img.shields.io/crates/v/ganit-mcp)](https://crates.io/crates/ganit-mcp)
+[![ganit-core](https://img.shields.io/crates/v/ganit-core?label=ganit-core)](https://crates.io/crates/ganit-core)
+[![ganit-mcp](https://img.shields.io/crates/v/ganit-mcp?label=ganit-mcp)](https://crates.io/crates/ganit-mcp)
 [![license](https://img.shields.io/crates/l/ganit-mcp)](LICENSE)
 
 MCP server that exposes [ganit](https://crates.io/crates/ganit-core) spreadsheet formula evaluation as tools for AI assistants.
@@ -10,7 +11,7 @@ Plug it into Claude Desktop (or any MCP-compatible client) and your AI can evalu
 ## Install
 
 ```sh
-cargo install ganit-mcp
+cargo install ganit-mcp --force
 ```
 
 ## Claude Desktop setup
