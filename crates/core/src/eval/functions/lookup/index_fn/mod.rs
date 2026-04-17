@@ -32,3 +32,6 @@ pub fn index_fn(args: &[Value]) -> Value {
         }
     }
 }
+
+#[cfg(test)]
+mod tests;

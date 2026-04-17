@@ -1,5 +1,43 @@
 use super::super::*;
+use crate::eval::{Context, EvalCtx, Registry};
+use crate::parser::ast::{Expr, Span};
 use crate::types::Value;
+
+fn span() -> Span { Span::new(0, 1) }
+
+fn run_counta_lazy(args: Vec<Expr>) -> Value {
+    let reg = Registry::new();
+    let mut ctx = EvalCtx::new(Context::empty(), &reg);
+    counta_lazy_fn(&args, &mut ctx)
+}
+
+#[test]
+fn counta_lazy_array_arg_counts_elements() {
+    // COUNTA with an array argument flattens and counts non-empty elements
+    let args = vec![Expr::Array(
+        vec![
+            Expr::Number(1.0, span()),
+            Expr::Number(2.0, span()),
+            Expr::Number(3.0, span()),
+        ],
+        span(),
+    )];
+    assert_eq!(run_counta_lazy(args), Value::Number(3.0));
+}
+
+#[test]
+fn counta_lazy_array_skips_empty_strings() {
+    // COUNTA flattens array and skips empty-string elements
+    let args = vec![Expr::Array(
+        vec![
+            Expr::Text("a".to_string(), span()),
+            Expr::Text("".to_string(), span()),
+            Expr::Text("b".to_string(), span()),
+        ],
+        span(),
+    )];
+    assert_eq!(run_counta_lazy(args), Value::Number(2.0));
+}
 
 #[test]
 fn count_no_args_returns_zero() {
