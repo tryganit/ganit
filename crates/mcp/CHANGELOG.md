@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0](https://github.com/tryganit/ganit-core/compare/ganit-mcp-v0.3.12...ganit-mcp-v0.4.0) - 2026-04-17
+
+### Other
+
+- release v0.4.0
+
 ## [0.3.12](https://github.com/tryganit/ganit-core/compare/ganit-mcp-v0.3.11...ganit-mcp-v0.3.12) - 2026-04-16
 
 ### Other
