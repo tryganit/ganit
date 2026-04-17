@@ -1,3 +1,4 @@
+pub mod array;
 pub mod date;
 pub mod engineering;
 pub mod financial;
@@ -75,6 +76,7 @@ impl Registry {
         date::register_date(&mut r);
         parser::register_parser(&mut r);
         engineering::register_engineering(&mut r);
+        array::register_array(&mut r);
         lookup::register_lookup(&mut r);
         r
     }

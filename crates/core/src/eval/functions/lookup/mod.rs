@@ -97,15 +97,6 @@ pub fn register_lookup(registry: &mut Registry) {
         },
     );
     registry.register_eager(
-        "INDEX",
-        index_match::index_fn,
-        FunctionMeta {
-            category: "lookup",
-            signature: "INDEX(array, row, [col])",
-            description: "Returns value at given row/col of array",
-        },
-    );
-    registry.register_eager(
         "MATCH",
         index_match::match_fn,
         FunctionMeta {
