@@ -3,7 +3,7 @@ use crate::eval::functions::lookup::{
     index_match::match_fn,
     lookup_fn::{lookup_fn, xmatch_fn},
 };
-use crate::types::Value;
+use crate::types::{ErrorKind, Value};
 use std::collections::HashMap;
 
 fn run(formula: &str) -> Value {
@@ -16,6 +16,10 @@ fn make_1d(vals: Vec<Value>) -> Value {
 
 fn n(v: f64) -> Value {
     Value::Number(v)
+}
+
+fn t(s: &str) -> Value {
+    Value::Text(s.to_string())
 }
 
 // MATCH boundary cases
@@ -58,4 +62,11 @@ fn row_with_range_ref_returns_start_row() {
 #[test]
 fn column_with_range_ref_returns_start_col() {
     assert_eq!(run("=COLUMN(C1:E5)"), n(3.0));
+}
+
+#[test]
+fn lookup_result_range_shorter_than_search_range_returns_na() {
+    let keys = make_1d(vec![n(1.0), n(2.0), n(3.0)]);
+    let vals = make_1d(vec![t("a")]);
+    assert_eq!(lookup_fn(&[n(3.0), keys, vals]), Value::Error(ErrorKind::NA));
 }
