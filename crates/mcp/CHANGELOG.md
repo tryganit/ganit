@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.4](https://github.com/truecalc/core/releases/tag/truecalc-mcp-v0.4.4) - 2026-04-18
+
+### Added
+
+- *(rebrand)* update all URLs, READMEs, npm package, and docs to truecalc
+- *(rebrand)* update Rust source files to use truecalc_core
+- *(rebrand)* rename Rust crates to truecalc-* in Cargo.toml
+- add Value::Date and implement ISDATE (closes #208)
+- *(mcp)* implement 5-tool MCP server over stdio — issue #9
+
+### Fixed
+
+- *(mcp)* make list_functions registry-driven, delete static catalogue
+- *(core)* evaluate() takes variables by reference ([#34](https://github.com/truecalc/core/pull/34))
+- *(publish)* add version to ganit-core path dep in ganit-mcp
+- *(publish)* add description and repository to crate manifests
+- *(mcp)* JSON-RPC parse errors, isError flag, graceful EOF, remove hot-path unwrap
+
+### Other
+
+- release v0.4.3
+- Merge pull request #363 from tryganit/docs/mcp-readme-badges-install
+- *(mcp)* add ganit-core badge and use --force for install
+- release v0.4.0
+- release v0.3.11
+- release v0.3.8
+- release v0.3.6
+- release v0.3.4
+- release v0.3.2
+- release v0.3.0
+- release v0.2.1
+- Merge pull request #266 from tryganit/fix/registry-driven-list-functions
+- replace static function tables with live registry reference
+- *(mcp)* add README and wire readme field in Cargo.toml
+- release v0.1.6
+- release v0.1.3
+- release v0.1.1
+- Set up Cargo workspace with core, wasm, and mcp crates
+
 ## [0.4.3](https://github.com/truecalc/core/compare/truecalc-mcp-v0.4.2...truecalc-mcp-v0.4.3) - 2026-04-17
 
 ### Other
