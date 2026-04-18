@@ -88,6 +88,18 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
 
+      - name: Post coverage table as PR comment
+        if: github.event_name == 'pull_request'
+        run: |
+          bash .github/scripts/post-coverage-comment.sh \
+            target/nextest/ci/junit.xml \
+            target/conformance-report.json \
+            "$PR_NUMBER"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+
       - name: Publish conformance report to gh-pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
