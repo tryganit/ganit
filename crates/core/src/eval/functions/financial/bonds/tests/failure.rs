@@ -92,16 +92,6 @@ fn coupdays_invalid_frequency() {
 // ---------------------------------------------------------------------------
 
 #[test]
-fn basis_0_is_valid() {
-    assert_eq!(validate_basis(0.0), Ok(0));
-}
-
-#[test]
-fn basis_4_is_valid() {
-    assert_eq!(validate_basis(4.0), Ok(4));
-}
-
-#[test]
 fn basis_5_is_invalid() {
     assert_eq!(validate_basis(5.0), Err(Value::Error(ErrorKind::Num)));
 }
@@ -114,21 +104,6 @@ fn basis_negative_is_invalid() {
 // ---------------------------------------------------------------------------
 // validate_frequency
 // ---------------------------------------------------------------------------
-
-#[test]
-fn frequency_1_annual_valid() {
-    assert_eq!(validate_frequency(1.0), Ok(1));
-}
-
-#[test]
-fn frequency_2_semiannual_valid() {
-    assert_eq!(validate_frequency(2.0), Ok(2));
-}
-
-#[test]
-fn frequency_4_quarterly_valid() {
-    assert_eq!(validate_frequency(4.0), Ok(4));
-}
 
 #[test]
 fn frequency_3_invalid() {

@@ -143,8 +143,41 @@ fn price_rate_equals_yield_returns_near_par() {
     ];
     let result = price_fn(&args);
     if let Value::Number(p) = result {
-        assert!((p - 100.0).abs() < 0.5, "price {} should be near 100", p);
+        assert!((p - 100.0).abs() < 0.1, "price {} should be near 100", p);
     } else {
         panic!("expected Number, got {:?}", result);
     }
+}
+
+// ---------------------------------------------------------------------------
+// validate_basis
+// ---------------------------------------------------------------------------
+
+#[test]
+fn basis_0_is_valid() {
+    assert_eq!(validate_basis(0.0), Ok(0));
+}
+
+#[test]
+fn basis_4_is_valid() {
+    assert_eq!(validate_basis(4.0), Ok(4));
+}
+
+// ---------------------------------------------------------------------------
+// validate_frequency
+// ---------------------------------------------------------------------------
+
+#[test]
+fn frequency_1_annual_valid() {
+    assert_eq!(validate_frequency(1.0), Ok(1));
+}
+
+#[test]
+fn frequency_2_semiannual_valid() {
+    assert_eq!(validate_frequency(2.0), Ok(2));
+}
+
+#[test]
+fn frequency_4_quarterly_valid() {
+    assert_eq!(validate_frequency(4.0), Ok(4));
 }
