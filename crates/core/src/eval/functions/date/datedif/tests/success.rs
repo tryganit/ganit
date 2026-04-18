@@ -66,3 +66,46 @@ fn unit_is_case_insensitive() {
     let args = [num(43831.0), num(45458.0), Value::Text("y".into())];
     assert_eq!(datedif_fn(&args), Value::Number(4.0));
 }
+
+// MD: days remaining after complete months are stripped
+#[test]
+fn unit_md_partial_month_days() {
+    // DATEDIF(DATE(2024,1,1), DATE(2024,1,20), "MD") = 19
+    // 45311 = 45292 + 19 = 2024-01-20
+    let args = [num(45292.0), num(45311.0), Value::Text("MD".into())];
+    assert_eq!(datedif_fn(&args), Value::Number(19.0));
+}
+
+#[test]
+fn unit_md_zero_when_same_day_of_month() {
+    // DATEDIF(DATE(2024,1,15), DATE(2024,2,15), "MD") = 0
+    // 45306 = 45292+14 = 2024-01-15, 45337 = 45306+31 = 2024-02-15
+    let args = [num(45306.0), num(45337.0), Value::Text("MD".into())];
+    assert_eq!(datedif_fn(&args), Value::Number(0.0));
+}
+
+// YM: months remaining after complete years
+#[test]
+fn unit_ym_same_year_months() {
+    // DATEDIF(DATE(2024,1,1), DATE(2024,7,1), "YM") = 6
+    // 45474 = 45292+182 = 2024-07-01
+    let args = [num(45292.0), num(45474.0), Value::Text("YM".into())];
+    assert_eq!(datedif_fn(&args), Value::Number(6.0));
+}
+
+#[test]
+fn unit_ym_strips_full_years() {
+    // DATEDIF(DATE(2023,1,1), DATE(2024,7,1), "YM") = 6
+    // 44927 = 2023-01-01, 45474 = 2024-07-01
+    let args = [num(44927.0), num(45474.0), Value::Text("YM".into())];
+    assert_eq!(datedif_fn(&args), Value::Number(6.0));
+}
+
+// YD: days from start to end as if in same year
+#[test]
+fn unit_yd_same_year() {
+    // DATEDIF(DATE(2024,1,1), DATE(2024,4,1), "YD") = 91
+    // 45383 = 45292+91 = 2024-04-01
+    let args = [num(45292.0), num(45383.0), Value::Text("YD".into())];
+    assert_eq!(datedif_fn(&args), Value::Number(91.0));
+}
