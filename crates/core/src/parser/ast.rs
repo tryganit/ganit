@@ -121,4 +121,45 @@ mod tests {
         assert_eq!(format!("{:?}", BinaryOp::Add), "Add");
         assert_eq!(format!("{:?}", BinaryOp::Eq), "Eq");
     }
+
+    #[test]
+    fn expr_variable_span() {
+        let e = Expr::Variable("x".into(), Span::new(0, 1));
+        assert_eq!(e.span().offset, 0);
+        assert_eq!(e.span().length, 1);
+    }
+
+    #[test]
+    fn expr_unary_op_span() {
+        let e = Expr::UnaryOp {
+            op: UnaryOp::Neg,
+            operand: Box::new(Expr::Number(1.0, Span::new(1, 1))),
+            span: Span::new(0, 2),
+        };
+        assert_eq!(e.span().offset, 0);
+        assert_eq!(e.span().length, 2);
+    }
+
+    #[test]
+    fn expr_binary_op_span() {
+        let e = Expr::BinaryOp {
+            op: BinaryOp::Add,
+            left: Box::new(Expr::Number(1.0, Span::new(0, 1))),
+            right: Box::new(Expr::Number(2.0, Span::new(2, 1))),
+            span: Span::new(0, 3),
+        };
+        assert_eq!(e.span().offset, 0);
+        assert_eq!(e.span().length, 3);
+    }
+
+    #[test]
+    fn expr_apply_span() {
+        let e = Expr::Apply {
+            func: Box::new(Expr::Variable("f".into(), Span::new(0, 1))),
+            call_args: vec![],
+            span: Span::new(0, 4),
+        };
+        assert_eq!(e.span().offset, 0);
+        assert_eq!(e.span().length, 4);
+    }
 }
