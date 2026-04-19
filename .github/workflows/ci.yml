@@ -118,12 +118,8 @@ jobs:
           cargo build -p truecalc-mcp 2>&1 | tail -1
           echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"list_functions","arguments":{}}}' \
             | ./target/debug/truecalc-mcp \
-            | python3 -c "
-import sys,json
-d=json.loads(sys.stdin.read())
-fns=json.loads(d['result']['content'][0]['text'])['functions']
-json.dump(sorted(fns,key=lambda f:f['name']),sys.stdout)
-" > target/functions.json
+            | python3 -c "import sys,json; d=json.loads(sys.stdin.read()); fns=json.loads(d['result']['content'][0]['text'])['functions']; json.dump(sorted(fns,key=lambda f:f['name']),sys.stdout)" \
+            > target/functions.json
           python3 .github/scripts/generate-pages-html.py \
             target/nextest/ci/junit.xml \
             target/conformance-report.json \
