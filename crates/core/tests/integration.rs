@@ -126,3 +126,534 @@ fn debug_counta_array() {
     let result = helpers::eval("=COUNTA({1,2,2,3,3,3})");
     println!("COUNTA direct array result: {:?}", result);
 }
+
+// ── CHOOSECOLS ────────────────────────────────────────────────────────────────
+
+#[test]
+fn choosecols_select_single_column() {
+    assert_eq!(
+        helpers::eval("=CHOOSECOLS({1,2,3;4,5,6},2)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(5.0)]),
+        ])
+    );
+}
+
+#[test]
+fn choosecols_select_multiple_columns() {
+    assert_eq!(
+        helpers::eval("=CHOOSECOLS({1,2,3;4,5,6},1,3)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(3.0)]),
+            Value::Array(vec![Value::Number(4.0), Value::Number(6.0)]),
+        ])
+    );
+}
+
+#[test]
+fn choosecols_negative_index_from_end() {
+    assert_eq!(
+        helpers::eval("=CHOOSECOLS({1,2,3;4,5,6},-1)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(3.0)]),
+            Value::Array(vec![Value::Number(6.0)]),
+        ])
+    );
+}
+
+#[test]
+fn choosecols_zero_index_returns_value_error() {
+    assert_eq!(helpers::eval("=CHOOSECOLS({1,2,3},0)"), Value::Error(ErrorKind::Value));
+}
+
+#[test]
+fn choosecols_out_of_bounds_returns_value_error() {
+    assert_eq!(helpers::eval("=CHOOSECOLS({1,2,3},5)"), Value::Error(ErrorKind::Value));
+}
+
+// ── CHOOSEROWS ────────────────────────────────────────────────────────────────
+
+#[test]
+fn chooserows_select_single_row() {
+    assert_eq!(
+        helpers::eval("=CHOOSEROWS({1,2;3,4;5,6},2)"),
+        Value::Array(vec![Value::Number(3.0), Value::Number(4.0)])
+    );
+}
+
+#[test]
+fn chooserows_select_multiple_rows_reorder() {
+    assert_eq!(
+        helpers::eval("=CHOOSEROWS({1,2;3,4;5,6},3,1)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(5.0), Value::Number(6.0)]),
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0)]),
+        ])
+    );
+}
+
+#[test]
+fn chooserows_negative_index_from_end() {
+    assert_eq!(
+        helpers::eval("=CHOOSEROWS({1,2;3,4;5,6},-1)"),
+        Value::Array(vec![Value::Number(5.0), Value::Number(6.0)])
+    );
+}
+
+#[test]
+fn chooserows_zero_index_returns_value_error() {
+    assert_eq!(helpers::eval("=CHOOSEROWS({1,2,3},0)"), Value::Error(ErrorKind::Value));
+}
+
+#[test]
+fn chooserows_out_of_bounds_returns_value_error() {
+    assert_eq!(helpers::eval("=CHOOSEROWS({1;2;3},5)"), Value::Error(ErrorKind::Value));
+}
+
+// ── HSTACK ────────────────────────────────────────────────────────────────────
+
+#[test]
+fn hstack_two_column_vectors() {
+    assert_eq!(
+        helpers::eval("=HSTACK({1;2},{3;4})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(3.0)]),
+            Value::Array(vec![Value::Number(2.0), Value::Number(4.0)]),
+        ])
+    );
+}
+
+#[test]
+fn hstack_two_row_arrays() {
+    assert_eq!(
+        helpers::eval("=HSTACK({1,2},{3,4})"),
+        Value::Array(vec![
+            Value::Number(1.0),
+            Value::Number(2.0),
+            Value::Number(3.0),
+            Value::Number(4.0),
+        ])
+    );
+}
+
+#[test]
+fn hstack_three_scalars() {
+    assert_eq!(
+        helpers::eval("=HSTACK({1},{2},{3})"),
+        Value::Array(vec![
+            Value::Number(1.0),
+            Value::Number(2.0),
+            Value::Number(3.0),
+        ])
+    );
+}
+
+#[test]
+fn hstack_2d_arrays() {
+    assert_eq!(
+        helpers::eval("=HSTACK({1,2;3,4},{5;6})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0), Value::Number(5.0)]),
+            Value::Array(vec![Value::Number(3.0), Value::Number(4.0), Value::Number(6.0)]),
+        ])
+    );
+}
+
+// ── VSTACK ────────────────────────────────────────────────────────────────────
+
+#[test]
+fn vstack_two_row_arrays() {
+    assert_eq!(
+        helpers::eval("=VSTACK({1,2},{3,4})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(3.0), Value::Number(4.0)]),
+        ])
+    );
+}
+
+#[test]
+fn vstack_three_rows() {
+    assert_eq!(
+        helpers::eval("=VSTACK({1,2},{3,4},{5,6})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(3.0), Value::Number(4.0)]),
+            Value::Array(vec![Value::Number(5.0), Value::Number(6.0)]),
+        ])
+    );
+}
+
+#[test]
+fn vstack_2d_on_top_of_row() {
+    assert_eq!(
+        helpers::eval("=VSTACK({1,2;3,4},{5,6})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(3.0), Value::Number(4.0)]),
+            Value::Array(vec![Value::Number(5.0), Value::Number(6.0)]),
+        ])
+    );
+}
+
+// ── TOCOL ─────────────────────────────────────────────────────────────────────
+
+#[test]
+fn tocol_flattens_row_to_column() {
+    assert_eq!(
+        helpers::eval("=TOCOL({1,2,3})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0)]),
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(3.0)]),
+        ])
+    );
+}
+
+#[test]
+fn tocol_flattens_2d_array() {
+    assert_eq!(
+        helpers::eval("=TOCOL({1,2;3,4})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0)]),
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(3.0)]),
+            Value::Array(vec![Value::Number(4.0)]),
+        ])
+    );
+}
+
+#[test]
+fn tocol_single_element() {
+    // from_2d collapses a single row to a flat Array
+    assert_eq!(
+        helpers::eval("=TOCOL({5})"),
+        Value::Array(vec![Value::Number(5.0)])
+    );
+}
+
+// ── TOROW ─────────────────────────────────────────────────────────────────────
+
+#[test]
+fn torow_flattens_column_to_row() {
+    assert_eq!(
+        helpers::eval("=TOROW({1;2;3})"),
+        Value::Array(vec![Value::Number(1.0), Value::Number(2.0), Value::Number(3.0)])
+    );
+}
+
+#[test]
+fn torow_flattens_2d_array() {
+    assert_eq!(
+        helpers::eval("=TOROW({1,2;3,4})"),
+        Value::Array(vec![
+            Value::Number(1.0),
+            Value::Number(2.0),
+            Value::Number(3.0),
+            Value::Number(4.0),
+        ])
+    );
+}
+
+#[test]
+fn torow_single_element() {
+    assert_eq!(
+        helpers::eval("=TOROW({7})"),
+        Value::Array(vec![Value::Number(7.0)])
+    );
+}
+
+// ── WRAPCOLS ──────────────────────────────────────────────────────────────────
+
+#[test]
+fn wrapcols_evenly_divisible() {
+    // {1,2,3,4,5,6} wrap=2 → rows: [1,3,5] and [2,4,6]
+    assert_eq!(
+        helpers::eval("=WRAPCOLS({1,2,3,4,5,6},2)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(3.0), Value::Number(5.0)]),
+            Value::Array(vec![Value::Number(2.0), Value::Number(4.0), Value::Number(6.0)]),
+        ])
+    );
+}
+
+#[test]
+fn wrapcols_with_padding() {
+    // {1,2,3,4,5} wrap=2 → 3 cols, 2 rows; position (1,2) is padded
+    assert_eq!(
+        helpers::eval("=WRAPCOLS({1,2,3,4,5},2)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(3.0), Value::Number(5.0)]),
+            Value::Array(vec![Value::Number(2.0), Value::Number(4.0), Value::Empty]),
+        ])
+    );
+}
+
+#[test]
+fn wrapcols_wrap_count_equals_length() {
+    assert_eq!(
+        helpers::eval("=WRAPCOLS({1,2,3},3)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0)]),
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(3.0)]),
+        ])
+    );
+}
+
+#[test]
+fn wrapcols_invalid_wrap_count_returns_value_error() {
+    assert_eq!(helpers::eval("=WRAPCOLS({1,2,3},0)"), Value::Error(ErrorKind::Value));
+}
+
+// ── WRAPROWS ──────────────────────────────────────────────────────────────────
+
+#[test]
+fn wraprows_evenly_divisible() {
+    assert_eq!(
+        helpers::eval("=WRAPROWS({1,2,3,4,5,6},3)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0), Value::Number(3.0)]),
+            Value::Array(vec![Value::Number(4.0), Value::Number(5.0), Value::Number(6.0)]),
+        ])
+    );
+}
+
+#[test]
+fn wraprows_with_padding() {
+    assert_eq!(
+        helpers::eval("=WRAPROWS({1,2,3,4,5},3)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0), Value::Number(2.0), Value::Number(3.0)]),
+            Value::Array(vec![Value::Number(4.0), Value::Number(5.0), Value::Empty]),
+        ])
+    );
+}
+
+#[test]
+fn wraprows_wrap_count_equals_length() {
+    assert_eq!(
+        helpers::eval("=WRAPROWS({1,2,3},3)"),
+        Value::Array(vec![Value::Number(1.0), Value::Number(2.0), Value::Number(3.0)])
+    );
+}
+
+#[test]
+fn wraprows_invalid_wrap_count_returns_value_error() {
+    assert_eq!(helpers::eval("=WRAPROWS({1,2,3},0)"), Value::Error(ErrorKind::Value));
+}
+
+// ── SORTBY ────────────────────────────────────────────────────────────────────
+
+#[test]
+fn sortby_ascending_by_key() {
+    // Sort {10;20;30} by key {3;1;2} ascending → {20;30;10}
+    assert_eq!(
+        helpers::eval("=SORTBY({10;20;30},{3;1;2},1)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(20.0)]),
+            Value::Array(vec![Value::Number(30.0)]),
+            Value::Array(vec![Value::Number(10.0)]),
+        ])
+    );
+}
+
+#[test]
+fn sortby_descending_by_key() {
+    // Sort {10;20;30} by key {3;1;2} descending → {10;30;20}
+    assert_eq!(
+        helpers::eval("=SORTBY({10;20;30},{3;1;2},-1)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(10.0)]),
+            Value::Array(vec![Value::Number(30.0)]),
+            Value::Array(vec![Value::Number(20.0)]),
+        ])
+    );
+}
+
+#[test]
+fn sortby_default_ascending() {
+    assert_eq!(
+        helpers::eval("=SORTBY({30;10;20},{3;1;2})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(10.0)]),
+            Value::Array(vec![Value::Number(20.0)]),
+            Value::Array(vec![Value::Number(30.0)]),
+        ])
+    );
+}
+
+#[test]
+fn sortby_mismatched_key_length_returns_value_error() {
+    assert_eq!(
+        helpers::eval("=SORTBY({10;20;30},{1;2})"),
+        Value::Error(ErrorKind::Value)
+    );
+}
+
+// ── MMULT ─────────────────────────────────────────────────────────────────────
+
+#[test]
+fn mmult_2x2_identity() {
+    assert_eq!(
+        helpers::eval("=MMULT({1,0;0,1},{5,6;7,8})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(5.0), Value::Number(6.0)]),
+            Value::Array(vec![Value::Number(7.0), Value::Number(8.0)]),
+        ])
+    );
+}
+
+#[test]
+fn mmult_2x2_matrices() {
+    // {1,2;3,4} * {5,6;7,8} = {19,22;43,50}
+    assert_eq!(
+        helpers::eval("=MMULT({1,2;3,4},{5,6;7,8})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(19.0), Value::Number(22.0)]),
+            Value::Array(vec![Value::Number(43.0), Value::Number(50.0)]),
+        ])
+    );
+}
+
+#[test]
+fn mmult_1x2_by_2x1() {
+    // {1,2} * {3;4} = 11
+    assert_eq!(
+        helpers::eval("=MMULT({1,2},{3;4})"),
+        Value::Array(vec![Value::Number(11.0)])
+    );
+}
+
+#[test]
+fn mmult_incompatible_dimensions_returns_value_error() {
+    assert_eq!(
+        helpers::eval("=MMULT({1,2},{1,2,3})"),
+        Value::Error(ErrorKind::Value)
+    );
+}
+
+// ── MDETERM ───────────────────────────────────────────────────────────────────
+
+#[test]
+fn mdeterm_1x1() {
+    assert_eq!(helpers::eval("=MDETERM({7})"), Value::Number(7.0));
+}
+
+#[test]
+fn mdeterm_2x2() {
+    // det({1,2;3,4}) = 4 - 6 = -2
+    assert_eq!(helpers::eval("=MDETERM({1,2;3,4})"), Value::Number(-2.0));
+}
+
+#[test]
+fn mdeterm_3x3_singular() {
+    // det({1,2,3;4,5,6;7,8,9}) = 0 (linearly dependent rows)
+    assert_eq!(helpers::eval("=MDETERM({1,2,3;4,5,6;7,8,9})"), Value::Number(0.0));
+}
+
+#[test]
+fn mdeterm_non_square_returns_value_error() {
+    assert_eq!(helpers::eval("=MDETERM({1,2,3;4,5,6})"), Value::Error(ErrorKind::Value));
+}
+
+// ── FREQUENCY ─────────────────────────────────────────────────────────────────
+
+#[test]
+fn frequency_basic_bins() {
+    // data={1,2,3,4,5}, bins={2,4} → counts: [2, 2, 1]
+    assert_eq!(
+        helpers::eval("=FREQUENCY({1,2,3,4,5},{2,4})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(1.0)]),
+        ])
+    );
+}
+
+#[test]
+fn frequency_single_bin() {
+    // data={1,2,3}, bins={2} → [2, 1]
+    assert_eq!(
+        helpers::eval("=FREQUENCY({1,2,3},{2})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(1.0)]),
+        ])
+    );
+}
+
+#[test]
+fn frequency_all_below_bin() {
+    // data={1,2}, bins={5} → [2, 0]
+    assert_eq!(
+        helpers::eval("=FREQUENCY({1,2},{5})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(2.0)]),
+            Value::Array(vec![Value::Number(0.0)]),
+        ])
+    );
+}
+
+#[test]
+fn frequency_all_above_bin() {
+    // data={6,7,8}, bins={5} → [0, 3]
+    assert_eq!(
+        helpers::eval("=FREQUENCY({6,7,8},{5})"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(0.0)]),
+            Value::Array(vec![Value::Number(3.0)]),
+        ])
+    );
+}
+
+// ── INDEX edge cases ──────────────────────────────────────────────────────────
+
+#[test]
+fn index_returns_whole_row() {
+    // INDEX({1,2,3;4,5,6}, 1) → {1,2,3}
+    assert_eq!(
+        helpers::eval("=INDEX({1,2,3;4,5,6},1)"),
+        Value::Array(vec![Value::Number(1.0), Value::Number(2.0), Value::Number(3.0)])
+    );
+}
+
+#[test]
+fn index_returns_second_row() {
+    assert_eq!(
+        helpers::eval("=INDEX({1,2,3;4,5,6},2)"),
+        Value::Array(vec![Value::Number(4.0), Value::Number(5.0), Value::Number(6.0)])
+    );
+}
+
+#[test]
+fn index_returns_whole_column() {
+    // INDEX({1,2;3,4}, 0, 1) → column vector {1;3}
+    assert_eq!(
+        helpers::eval("=INDEX({1,2;3,4},0,1)"),
+        Value::Array(vec![
+            Value::Array(vec![Value::Number(1.0)]),
+            Value::Array(vec![Value::Number(3.0)]),
+        ])
+    );
+}
+
+#[test]
+fn index_out_of_bounds_row_returns_ref_error() {
+    assert_eq!(helpers::eval("=INDEX({1,2,3;4,5,6},5,1)"), Value::Error(ErrorKind::Ref));
+}
+
+#[test]
+fn index_out_of_bounds_col_returns_ref_error() {
+    assert_eq!(helpers::eval("=INDEX({1,2,3;4,5,6},1,10)"), Value::Error(ErrorKind::Ref));
+}
+
+// ── TRANSPOSE of empty array ──────────────────────────────────────────────────
+
+#[test]
+fn transpose_single_element_passthrough() {
+    // TRANSPOSE of a 1-element array returns a 1-element array
+    assert_eq!(helpers::eval("=TRANSPOSE({1})"), Value::Array(vec![Value::Number(1.0)]));
+}

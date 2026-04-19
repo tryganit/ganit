@@ -105,3 +105,78 @@ fn too_many_args_returns_na_error() {
         Value::Error(ErrorKind::NA)
     );
 }
+
+// ── type error paths ──────────────────────────────────────────────────────────
+
+#[test]
+fn non_numeric_first_arg_returns_value_error() {
+    // ISBETWEEN("text", 1, 10) → #VALUE!
+    assert_eq!(
+        isbetween_fn(&[
+            Value::Text("text".to_string()),
+            Value::Number(1.0),
+            Value::Number(10.0),
+        ]),
+        Value::Error(ErrorKind::Value)
+    );
+}
+
+#[test]
+fn non_boolean_fourth_arg_returns_value_error() {
+    // ISBETWEEN(5, 1, 10, "bad") → #VALUE!
+    assert_eq!(
+        isbetween_fn(&[
+            Value::Number(5.0),
+            Value::Number(1.0),
+            Value::Number(10.0),
+            Value::Text("bad".to_string()),
+        ]),
+        Value::Error(ErrorKind::Value)
+    );
+}
+
+// ── exclusive boundary edge cases ─────────────────────────────────────────────
+
+#[test]
+fn exclusive_both_ends_value_at_boundary_returns_false() {
+    // ISBETWEEN(5, 1, 10, FALSE, FALSE) with value NOT at boundary returns true
+    assert_eq!(
+        isbetween_fn(&[
+            Value::Number(5.0),
+            Value::Number(1.0),
+            Value::Number(10.0),
+            Value::Bool(false),
+            Value::Bool(false),
+        ]),
+        Value::Bool(true)
+    );
+}
+
+#[test]
+fn exclusive_lower_value_equals_lower_returns_false() {
+    // ISBETWEEN(1, 1, 10, FALSE) → false (exclusive lower, value equals lower)
+    assert_eq!(
+        isbetween_fn(&[
+            Value::Number(1.0),
+            Value::Number(1.0),
+            Value::Number(10.0),
+            Value::Bool(false),
+        ]),
+        Value::Bool(false)
+    );
+}
+
+#[test]
+fn exclusive_upper_value_equals_upper_returns_false() {
+    // ISBETWEEN(10, 1, 10, TRUE, FALSE) → false (exclusive upper, value equals upper)
+    assert_eq!(
+        isbetween_fn(&[
+            Value::Number(10.0),
+            Value::Number(1.0),
+            Value::Number(10.0),
+            Value::Bool(true),
+            Value::Bool(false),
+        ]),
+        Value::Bool(false)
+    );
+}
