@@ -113,3 +113,29 @@ fn uminus_wrong_arity_returns_na() {
     assert_eq!(uminus_fn(&[]), Value::Error(ErrorKind::NA));
     assert_eq!(uminus_fn(&[n(1.0), n(2.0)]), Value::Error(ErrorKind::NA));
 }
+
+// ── Overflow → #NUM! ─────────────────────────────────────────────────────────
+
+#[test]
+fn add_overflow_returns_num_error() {
+    // 1e308 + 1e308 overflows f64 to infinity
+    assert_eq!(add_fn(&[n(1e308), n(1e308)]), Value::Error(ErrorKind::Num));
+}
+
+#[test]
+fn minus_overflow_returns_num_error() {
+    // 1e308 - (-1e308) = 1e308 + 1e308 → overflow
+    assert_eq!(minus_fn(&[n(1e308), n(-1e308)]), Value::Error(ErrorKind::Num));
+}
+
+#[test]
+fn multiply_overflow_returns_num_error() {
+    // 1e308 * 2 overflows f64
+    assert_eq!(multiply_fn(&[n(1e308), n(2.0)]), Value::Error(ErrorKind::Num));
+}
+
+#[test]
+fn pow_overflow_returns_num_error() {
+    // 1e308 ^ 2 overflows f64
+    assert_eq!(pow_fn(&[n(1e308), n(2.0)]), Value::Error(ErrorKind::Num));
+}
