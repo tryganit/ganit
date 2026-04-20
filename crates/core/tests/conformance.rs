@@ -33,6 +33,32 @@ fn fixture(name: &str) -> PathBuf {
     fixture_dir().join(name)
 }
 
+/// Decode xlsx `_xNNNN_` XML-escape sequences (e.g. `_x0001_` → U+0001).
+fn decode_xlsx_escapes(s: &str) -> String {
+    let mut result = String::new();
+    let mut rest = s;
+    while let Some(start) = rest.find("_x") {
+        result.push_str(&rest[..start]);
+        let after = &rest[start + 2..];
+        if let Some(end) = after.find('_') {
+            let hex = &after[..end];
+            if hex.len() == 4 && hex.chars().all(|c| c.is_ascii_hexdigit()) {
+                if let Ok(n) = u32::from_str_radix(hex, 16) {
+                    if let Some(c) = char::from_u32(n) {
+                        result.push(c);
+                        rest = &after[end + 1..];
+                        continue;
+                    }
+                }
+            }
+        }
+        result.push_str("_x");
+        rest = after;
+    }
+    result.push_str(rest);
+    result
+}
+
 /// Parse an error string like "#DIV/0!" into an ErrorKind, or return None.
 fn parse_error_string(s: &str) -> Option<ErrorKind> {
     match s {
@@ -89,7 +115,10 @@ pub fn parse_expected(value: &str, expected_type: &str) -> Option<Value> {
             _       => None,
         },
         "error" => parse_error_string(value).map(Value::Error),
-        "string" => Some(Value::Text(value.to_string())),
+        "string" => {
+            // Decode xlsx `_xNNNN_` XML escapes preserved from the migration.
+            Some(Value::Text(decode_xlsx_escapes(value)))
+        }
         "array"  => {
             // Store the array literal string as-is; comparison handled in values_match
             Some(Value::Text(value.to_string()))
@@ -203,11 +232,13 @@ fn run_tsv_fixture(path: &Path) {
 
         let desc          = record[0].trim();
         let formula       = record[1].trim();
-        let expected_str  = record[2].trim();
+        // NOTE: do NOT trim expected_str — values like "  Hello World" have meaningful
+        // leading whitespace (e.g. PROPER("  hello world") preserves leading spaces).
+        let expected_str  = &record[2];
         let _test_category = record[3].trim();
         let expected_type = record[4].trim();
 
-        if formula.is_empty() || expected_str.is_empty() {
+        if formula.is_empty() || expected_str.trim().is_empty() {
             continue;
         }
 
