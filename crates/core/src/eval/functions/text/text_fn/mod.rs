@@ -75,7 +75,9 @@ fn apply_format(n: f64, fmt: &str) -> String {
             || lower.contains("mm") || lower.contains("dd")
         {
             if let Some(date) = serial_to_date(n) {
-                let mut out = fmt.to_string();
+                // Work on a lowercase copy so replacements are case-insensitive,
+                // then return the normalised (lowercase) result.
+                let mut out = lower;
                 // Replace in order from longest to shortest to avoid partial replacements
                 out = out.replace("yyyy", &format!("{:04}", date.year()));
                 out = out.replace("yy", &format!("{:02}", date.year() % 100));
@@ -83,6 +85,58 @@ fn apply_format(n: f64, fmt: &str) -> String {
                 out = out.replace("dd", &format!("{:02}", date.day()));
                 return out;
             }
+        }
+    }
+
+    // ── Scientific notation: e.g. "0.00E+00" ────────────────────────────────
+    // Detect only when format has digit tokens before E and sign+digits after.
+    {
+        // Find 'E' or 'e' that is preceded by a digit token and followed by '+'/'-'
+        let sci_pos = fmt.char_indices().find(|&(i, c)| {
+            if c != 'E' && c != 'e' {
+                return false;
+            }
+            let before = &fmt[..i];
+            let after = &fmt[i + 1..];
+            // before must contain at least one '0' or '#'
+            let has_digit_token = before.contains('0') || before.contains('#');
+            // after must start with '+' or '-'
+            let has_sign = after.starts_with('+') || after.starts_with('-');
+            has_digit_token && has_sign
+        });
+
+        if let Some((e_pos, _)) = sci_pos {
+            // Count decimal places before E (e.g. "0.00E+00" → 2)
+            let before_e = &fmt[..e_pos];
+            let decimal_places = if let Some(dot_pos) = before_e.find('.') {
+                before_e[dot_pos + 1..].len()
+            } else {
+                0
+            };
+            // Count exponent digits after E+/- sign
+            let after_e = &fmt[e_pos + 1..];
+            let exp_digits = after_e.trim_start_matches(['+', '-']).len();
+            let exp_digits = exp_digits.max(2);
+
+            // Compute mantissa and exponent
+            let abs_n = n.abs();
+            let (mantissa, exponent) = if abs_n == 0.0 {
+                (0.0_f64, 0_i32)
+            } else {
+                let exp = abs_n.log10().floor() as i32;
+                (abs_n / 10f64.powi(exp), exp)
+            };
+            let sign = if n < 0.0 { "-" } else { "" };
+            let exp_sign = if exponent < 0 { "-" } else { "+" };
+            return format!(
+                "{}{:.prec$}E{}{:0>width$}",
+                sign,
+                mantissa,
+                exp_sign,
+                exponent.unsigned_abs(),
+                prec = decimal_places,
+                width = exp_digits,
+            );
         }
     }
 
@@ -108,12 +162,15 @@ fn apply_format(n: f64, fmt: &str) -> String {
         }
     }
 
-    // ── Comma + decimal format: e.g. "#,##0.00", "#,##0" ───────────────────
+    // ── Comma + decimal format: e.g. "$#,##0.00", "#,##0.00", "#,##0" ───────
     let has_comma = fmt.contains(',');
     let negative = n < 0.0;
     let abs_n = n.abs();
 
     if has_comma {
+        // Extract any currency prefix (characters before the first '#' or '0')
+        let prefix: String = fmt.chars().take_while(|c| *c != '#' && *c != '0').collect();
+
         if let Some(dot_pos) = fmt.find('.') {
             let decimal_part = &fmt[dot_pos + 1..];
             if decimal_part.chars().all(|c| c == '0' || c == '#') {
@@ -124,15 +181,13 @@ fn apply_format(n: f64, fmt: &str) -> String {
                 let frac = rounded - int_part as f64;
                 let frac_digits = (frac * scale).round() as u64;
                 let int_str = format_with_commas(int_part);
-                let result = format!("{}.{:0>width$}", int_str, frac_digits, width = places);
+                let result = format!("{}{}.{:0>width$}", prefix, int_str, frac_digits, width = places);
                 return if negative { format!("-{}", result) } else { result };
             }
         } else {
             // No decimal point — just comma grouping
-            let fmt_core = fmt.trim_matches(|c| c == '#' || c == ',' || c == '0');
-            let _ = fmt_core; // unused, just checking it's a valid pattern
             let int_part = abs_n.round() as u64;
-            let result = format_with_commas(int_part);
+            let result = format!("{}{}", prefix, format_with_commas(int_part));
             return if negative { format!("-{}", result) } else { result };
         }
     }
