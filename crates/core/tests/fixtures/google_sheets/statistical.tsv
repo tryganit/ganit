@@ -800,3 +800,17 @@ BETA.INV p=0.1 a=1 b=2	=BETA.INV(0.1,1,2)	0.05131670194948612	statistical	number
 BETA.INV p=0.9 a=5 b=2	=BETA.INV(0.9,5,2)	0.9074047410868713	statistical	number
 BETA.INV p=0.5 a=1 b=1	=BETA.INV(0.5,1,1)	0.49999999999999956	statistical	number
 BETA.INV p=0.5 a=5 b=5	=BETA.INV(0.5,5,5)	0.5000000000000001	statistical	number
+AVERAGE.WEIGHTED basic	=AVERAGE.WEIGHTED({1,2,3},{1,2,1})	2	statistical	number
+CONFIDENCE basic	=CONFIDENCE(0.05,1,100)	0.1959963986120195	statistical	number
+CONFIDENCE.NORM basic	=CONFIDENCE.NORM(0.05,1,100)	0.1959963986120195	statistical	number
+CONFIDENCE.T basic	=CONFIDENCE.T(0.05,1,100)	0.19842169515864957	statistical	number
+FISHER basic	=FISHER(0.5)	0.5493061443340549	statistical	number
+FISHERINV zero	=FISHERINV(0)	0	statistical	number
+GAMMA integer	=GAMMA(5)	24	statistical	number
+GAUSS basic	=GAUSS(1)	0.3413447361676363	statistical	number
+PEARSON perfect	=PEARSON({1,2,3},{1,2,3})	1	statistical	number
+PHI basic	=PHI(1)	0.24197072451914337	statistical	number
+STANDARDIZE basic	=STANDARDIZE(1,0,1)	1	statistical	number
+STDEVP basic	=STDEVP(2,4,4,4,5,5,7,9)	2	statistical	number
+TDIST two-tailed	=TDIST(1.96,60,2)	0.0546449297365279	statistical	number
+VARP basic	=VARP(2,4,4,4,5,5,7,9)	4	statistical	number

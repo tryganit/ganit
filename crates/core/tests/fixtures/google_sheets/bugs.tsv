@@ -71,3 +71,8 @@ LINEST intercept=TRUE stats=FALSE	=LINEST({2,4,6,8},{1,2,3,4},TRUE,FALSE)	1.9999
 BETA.INV p=0.01 a=2 b=5 explicit	=BETA.INV(0.01,2,5,0,1)	0.02676319114275505	statistical	number
 HYPGEOM.DIST ns=15 s=2 M=10 N=20 exact	=HYPGEOM.DIST(2,15,10,20,FALSE)	#NUM!	statistical	error
 HYPGEOM.DIST ns=15 s=2 M=10 N=20 cumulative	=HYPGEOM.DIST(2,15,10,20,TRUE)	#NUM!	statistical	error
+IMCOTH returns number not complex string	"=IMCOTH(""1"")"	1.3130352854993315	engineering	string
+IMLOG returns number not complex string	"=IMLOG(""1"",2)"	0	engineering	string
+IMTANH returns number not complex string	"=IMTANH(""1"")"	0.7615941559557649	engineering	string
+TREND returns array not scalar	=TREND({2,4,6},{1,2,3},{4})	8	statistical	number
+MARGINOFERROR not implemented	=MARGINOFERROR(0.05,1,100)	0.1959963986120195	statistical	number
