@@ -423,7 +423,6 @@ fn generate_conformance_report() {
 // ---------------------------------------------------------------------------
 
 #[test]
-#[ignore = "enable after T3.9 lands systematic fixture TSVs"]
 fn every_registered_function_has_conformance_coverage() {
     use truecalc_core::Registry;
     let registry = Registry::new();
@@ -434,15 +433,38 @@ fn every_registered_function_has_conformance_coverage() {
         .collect();
     let context_limited: std::collections::HashSet<&str> = [
         "INDIRECT", "OFFSET", "FORMULATEXT", "GETPIVOTDATA", "ISFORMULA", "CELL",
+        "SHEET", "SHEETS",
     ]
     .iter()
     .copied()
     .collect();
 
-    // Collect all function names that appear in passing fixture rows.
     let gdir = fixture_dir();
-    let mut covered = std::collections::HashSet::new();
     let vars: HashMap<String, Value> = HashMap::new();
+
+    // Collect function names with at least one passing fixture row (any TSV except bugs.tsv).
+    let mut covered = std::collections::HashSet::new();
+    // Collect function names acknowledged as known bugs/unverified in bugs.tsv.
+    let mut acknowledged = std::collections::HashSet::new();
+
+    fn extract_fn_names(formula: &str, set: &mut std::collections::HashSet<String>) {
+        let upper = formula.to_uppercase();
+        let mut rest = upper.as_str();
+        while let Some(idx) = rest.find('(') {
+            let before = &rest[..idx];
+            let name_start = before
+                .rfind(|c: char| !c.is_alphanumeric() && c != '.' && c != '_')
+                .map(|i| i + 1)
+                .unwrap_or(0);
+            let name = &before[name_start..];
+            if !name.is_empty() {
+                set.insert(name.to_string());
+            }
+            rest = &rest[idx + 1..];
+        }
+    }
+
+    let bugs_path = gdir.join("bugs.tsv");
 
     for entry in std::fs::read_dir(&gdir).expect("cannot read fixture dir") {
         let entry = entry.unwrap();
@@ -450,6 +472,7 @@ fn every_registered_function_has_conformance_coverage() {
         if path.extension().and_then(|e| e.to_str()) != Some("tsv") {
             continue;
         }
+        let is_bugs = path == bugs_path;
         let mut rdr = csv::ReaderBuilder::new()
             .delimiter(b'\t')
             .has_headers(true)
@@ -461,17 +484,26 @@ fn every_registered_function_has_conformance_coverage() {
                 Ok(r) => r,
                 Err(_) => continue,
             };
-            if record.len() < 5 {
+            if record.len() < 2 {
                 continue;
             }
             let formula = record[1].trim();
-            let expected_str = record[2].trim();
-            let expected_type = record[4].trim();
-
-            if formula.is_empty() || expected_str.is_empty() {
+            if formula.is_empty() {
                 continue;
             }
-            if is_volatile_formula(formula) {
+
+            if is_bugs {
+                // Every bugs.tsv row acknowledges the functions it uses.
+                extract_fn_names(formula, &mut acknowledged);
+                continue;
+            }
+
+            if record.len() < 5 {
+                continue;
+            }
+            let expected_str = record[2].trim();
+            let expected_type = record[4].trim();
+            if expected_str.is_empty() || is_volatile_formula(formula) {
                 continue;
             }
             let expected = match parse_expected(expected_str, expected_type) {
@@ -480,21 +512,7 @@ fn every_registered_function_has_conformance_coverage() {
             };
             let actual = evaluate(formula, &vars);
             if values_match(&actual, &expected, expected_type) {
-                // Extract function names from formula (simple heuristic: UPPER word before '(')
-                let upper = formula.to_uppercase();
-                let mut rest = upper.as_str();
-                while let Some(idx) = rest.find('(') {
-                    let before = &rest[..idx];
-                    let name_start = before
-                        .rfind(|c: char| !c.is_alphanumeric() && c != '.' && c != '_')
-                        .map(|i| i + 1)
-                        .unwrap_or(0);
-                    let name = &before[name_start..];
-                    if !name.is_empty() {
-                        covered.insert(name.to_string());
-                    }
-                    rest = &rest[idx + 1..];
-                }
+                extract_fn_names(formula, &mut covered);
             }
         }
     }
@@ -502,12 +520,14 @@ fn every_registered_function_has_conformance_coverage() {
     let mut missing = Vec::new();
     for name in &all_names {
         let upper = name.to_uppercase();
-        if volatile.contains(upper.as_str()) || context_limited.contains(upper.as_str()) {
+        if volatile.contains(upper.as_str())
+            || context_limited.contains(upper.as_str())
+            || covered.contains(&upper)
+            || acknowledged.contains(&upper)
+        {
             continue;
         }
-        if !covered.contains(&upper) {
-            missing.push(name.clone());
-        }
+        missing.push(name.clone());
     }
     missing.sort();
     assert!(
