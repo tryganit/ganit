@@ -23,7 +23,6 @@ ABS nested inside ABS	=ABS(ABS(-4))	4	nested	number
 empty string argument — GS coerces to 0, Excel returns error	=ABS("")	0	compatibility	number
 very large number near float limit	=ABS(1e308)	1e+308	compatibility	number
 negative large number near float limit	=ABS(-1e308)	1e+308	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 ACOS of zero returns pi/2	=ACOS(0)	1.5707963267948966	official	number
 ACOS of one returns zero	=ACOS(1)	0	official	number
 ACOS of negative one returns pi	=ACOS(-1)	3.141592653589793	official	number
@@ -52,7 +51,6 @@ ACOS with text "1" numeric coercion behavior	=ACOS("1")	0	compatibility	number
 ACOS with out-of-range value error code: both GS and Excel return #NUM!	=ACOS(2)	#NUM!	compatibility	error
 ACOS with extra argument behavior	=ACOS(0.5,1)	#N/A	compatibility	error
 ACOS floating-point precision at boundary	=ACOS(1-1e-15)	4.470348358154298e-8	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 ACOSH of 2	=ACOSH(2)	1.3169578969248166	official	number
 ACOSH of 1 returns zero (minimum valid input)	=ACOSH(1)	0	official	number
 ACOSH of large value	=ACOSH(100)	5.298292365610485	official	number
@@ -79,7 +77,6 @@ ACOSH of -2 (below domain): both return #NUM!	=ACOSH(-2)	#NUM!	compatibility	err
 ACOSH text "100" coercion: platforms convert string to number	=ACOSH("100")	5.298292365610485	compatibility	number
 ACOSH of 50: precision consistency across platforms	=ACOSH(50)	4.6050701709847575	compatibility	number
 ACOSH with extra argument	=ACOSH(2,1)	#N/A	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 ACOT of zero returns pi/2	=ACOT(0)	1.5707963267948966	official	number
 ACOT of negative one	=ACOT(-1)	-0.7853981633974483	official	number
 ACOT of one	=ACOT(1)	0.7853981633974483	official	number
@@ -107,7 +104,6 @@ ACOT of 10: moderate positive value precision across platforms	=ACOT(10)	0.09966
 ACOT with text numeric coercion	=ACOT("0")	1.5707963267948966	compatibility	number
 ACOT of 100: precision at large-ish value across platforms	=ACOT(100)	0.009999666686665238	compatibility	number
 ACOT with non-numeric text: both return #VALUE!	=ACOT("abc")	#VALUE!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 ACOTH of 4	=ACOTH(4)	0.25541281188299536	official	number
 ACOTH of negative 4	=ACOTH(-4)	-0.25541281188299536	official	number
 ACOTH of 10	=ACOTH(10)	0.10033534773107562	official	number
@@ -135,7 +131,6 @@ ACOTH of -2: negative out-of-boundary-range value, valid domain	=ACOTH(-2)	-0.54
 ACOTH text "10" coercion: platforms convert string to number	=ACOTH("10")	0.10033534773107562	compatibility	number
 ACOTH of 5: precision consistency across platforms	=ACOTH(5)	0.2027325540540822	compatibility	number
 ACOTH extra argument error	=ACOTH(4,1)	#N/A	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 ASIN of zero returns zero	=ASIN(0)	0	official	number
 ASIN of one returns pi/2	=ASIN(1)	1.5707963267948966	official	number
 ASIN of negative one returns negative pi/2	=ASIN(-1)	-1.5707963267948966	official	number
@@ -164,7 +159,6 @@ ASIN with text "1" numeric coercion	=ASIN("1")	1.5707963267948966	compatibility	
 ASIN out-of-range error code: both GS and Excel return #NUM!	=ASIN(2)	#NUM!	compatibility	error
 ASIN with extra argument	=ASIN(0.5,1)	#N/A	compatibility	error
 ASIN floating-point boundary precision	=ASIN(1-1e-15)	1.570796282091413	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 ASINH of 0.9	=ASINH(0.9)	0.8088669356527826	official	number
 ASINH of zero returns zero	=ASINH(0)	0	official	number
 ASINH of negative value	=ASINH(-0.9)	-0.8088669356527826	official	number
@@ -190,7 +184,6 @@ ASINH with text numeric coercion	=ASINH("1")	0.8813735870195429	compatibility	nu
 ASINH of 5: precision at moderate large value across platforms	=ASINH(5)	2.3124383412727525	compatibility	number
 ASINH of -5: negative input precision across platforms	=ASINH(-5)	-2.3124383412727525	compatibility	number
 ASINH non-numeric text: both return #VALUE!	=ASINH("abc")	#VALUE!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 ATAN of zero returns zero	=ATAN(0)	0	official	number
 ATAN of one returns pi/4	=ATAN(1)	0.7853981633974483	official	number
 ATAN of negative one returns negative pi/4	=ATAN(-1)	-0.7853981633974483	official	number
@@ -218,7 +211,6 @@ ATAN with text numeric coercion	=ATAN("0")	0	compatibility	number
 ATAN of 100: precision at large value across platforms	=ATAN(100)	1.5607966601082315	compatibility	number
 ATAN negative large value approaching -pi/2 precision	=ATAN(-1e15)	-1.5707963267948957	compatibility	number
 ATAN non-numeric text: both return #VALUE!	=ATAN("abc")	#VALUE!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 ATAN2 of x=4 y=3 (standard first-quadrant angle)	=ATAN2(4,3)	0.6435011087932844	official	number
 ATAN2 of x=1 y=0 returns zero (angle on positive x-axis)	=ATAN2(1,0)	0	official	number
 ATAN2 of x=0 y=1 returns pi/2	=ATAN2(0,1)	1.5707963267948966	official	number
@@ -246,7 +238,6 @@ ATAN2 zero-vector error code verification: expect #DIV/0! not #NUM!	=ATAN2(0.0,0
 ATAN2 with boolean coercion consistency	=ATAN2(TRUE,FALSE)	0	compatibility	number
 ATAN2 with negative x and positive y (second quadrant)	=ATAN2(-1,1)	2.356194490192345	compatibility	number
 ATAN2 with large coordinates precision	=ATAN2(1e15,1e15)	0.7853981633974483	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 ATANH of 0.9	=ATANH(0.9)	1.4722194895832204	official	number
 ATANH of zero returns zero	=ATANH(0)	0	official	number
 ATANH of negative value	=ATANH(-0.5)	-0.5493061443340549	official	number
@@ -274,7 +265,6 @@ ATANH of value 2 (out of domain): both return #NUM!	=ATANH(2)	#NUM!	compatibilit
 ATANH text "0.5" coercion consistency across platforms	=ATANH("0.5")	0.5493061443340549	compatibility	number
 ATANH large value approaching boundary precision	=ATANH(0.9999999)	8.40562139102231	compatibility	number
 ATANH extra argument error	=ATANH(0.5,1)	#N/A	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 BASE converts 255 to hexadecimal (base 16)	=BASE(255,16)	FF	official	string
 BASE converts 21 to binary (base 2)	=BASE(21,2)	10101	official	string
 BASE converts 4095 to hex with min_length 6 (zero-padded)	=BASE(4095,16,6)	000FFF	official	string
@@ -303,7 +293,6 @@ BASE with negative float -0.9 truncation behavior	=BASE(-0.1,2)	#NUM!	compatibil
 BASE zero value in base 36	=BASE(0,36)	0	compatibility	string
 BASE min_length of 0 vs omitted: both should behave identically	=BASE(10,2,0)	1010	compatibility	string
 BASE large value in base 36	=BASE(46655,36)	ZZZ	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 round up positive decimal to nearest integer	=CEILING.MATH(11.2)	12	official	number
 round up negative decimal toward zero	=CEILING.MATH(-8.8)	-8	official	number
 round up to nearest multiple of 0.2	=CEILING.MATH(7.7,0.2)	7.800000000000001	official	number
@@ -332,7 +321,6 @@ mode parameter — GS rounds negative toward zero by default, Excel CEILING.MATH
 mode parameter — away from zero when mode non-zero: behavioral check	=CEILING.MATH(-2.5,1,1)	-3	compatibility	number
 negative significance sign ignored — GS ignores sign of significance	=CEILING.MATH(7.3,-2)	8	compatibility	number
 omitted significance defaults to 1 — both GS and Excel	=CEILING.MATH(5.5)	6	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 round negative decimal up toward zero with significance 1	=CEILING.PRECISE(-10.5,1)	-10	official	number
 round positive integer up to nearest multiple of 10	=CEILING.PRECISE(96,10)	100	official	number
 round negative decimal up to nearest 0.1	=CEILING.PRECISE(-23.25,0.1)	-23.200000000000003	official	number
@@ -356,7 +344,6 @@ negative significance sign is ignored — GS ignores sign	=CEILING.PRECISE(4.3,-
 negative significance sign is ignored for negative number	=CEILING.PRECISE(-4.3,-2)	-4	compatibility	number
 ISO.CEILING behavior equivalence — CEILING.PRECISE should match ISO.CEILING for negative values	=CEILING.PRECISE(-10,3)	-9	compatibility	number
 very small significance — float precision	=CEILING.PRECISE(1.0000000000001,0.0000000000001)	1.0000000000001	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 round up with decimal significance	=CEILING(23.25,0.1)	23.3	official	number
 round up to nearest integer (default factor 1)	=CEILING(23.25,1)	24	official	number
 round up positive integer to multiple of 5	=CEILING(22,5)	25	official	number
@@ -386,7 +373,6 @@ positive value with default factor (omitted) — GS defaults to 1, Excel default
 negative value with omitted factor — GS allows negative omitting factor, Excel may differ	=CEILING(-4.3)	-4	compatibility	number
 very small significance — float precision edge case between GS and Excel	=CEILING(1.0000000000001,0.0000000000001)	1.0000000000001	compatibility	number
 positive value rounded to large significance — result equals significance	=CEILING(0.001,1000)	1000	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 4 choose 2	=COMBIN(4,2)	6	official	number
 10 choose 3	=COMBIN(10,3)	120	official	number
 5 choose 0	=COMBIN(5,0)	1	official	number
@@ -412,7 +398,6 @@ COMBIN inside SUM of two combinations	=SUM(COMBIN(4,1),COMBIN(4,2))	10	nested	nu
 decimal truncation behavior — GS truncates, Excel truncates: both should agree	=COMBIN(5.9,2.9)	10	compatibility	number
 large n near factorial overflow	=COMBIN(170,85)	9.144841845131563e+49	compatibility	number
 n equals 1 always returns 1	=COMBIN(1,1)	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 2 choose 2 with replacement	=COMBINA(2,2)	3	official	number
 5 choose 3 with replacement	=COMBINA(5,3)	35	official	number
 k equals 0 (choose 0 with replacement)	=COMBINA(5,0)	1	edge	number
@@ -436,9 +421,7 @@ IF condition on COMBINA result	=IF(COMBINA(2,2)=3,"correct","wrong")	correct	nes
 COMBINA nested inside SUM	=SUM(COMBINA(3,1),COMBINA(3,2))	9	nested	number
 COMBINA vs COMBIN relationship — COMBINA(n,k) equals COMBIN(n+k-1,k)	=COMBINA(5,3)	35	compatibility	number
 decimal truncation matches COMBIN truncation behavior	=COMBINA(5.9,3.9)	35	compatibility	number
-n equals 0 k equals 1 — GS returns error, behavior check	=COMBINA(0,1)	1	compatibility	number
 large sum n+k near 1031 overflow limit	=COMBINA(1000,30)	5.79999004086742e+57	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 cosine of PI	=COS(PI())	-1	official	number
 cosine of 1 radian	=COS(1)	0.5403023058681398	official	number
 cosine of 0 radians	=COS(0)	1	official	number
@@ -465,7 +448,6 @@ cosine identity check — COS and ACOS roundtrip	=COS(ACOS(0.5))	0.4999999999999
 numeric precision at PI/6 — cosine of 30 degrees should equal sqrt(3)/2	=COS(PI()/6)	0.8660254037844387	compatibility	number
 cosine of 2*PI should be 1	=COS(2*PI())	1	compatibility	number
 empty string argument — GS may coerce to 0, Excel may error	=COS("")	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 hyperbolic cosine of 1	=COSH(1)	1.5430806348152437	official	number
 hyperbolic cosine of 0	=COSH(0)	1	official	number
 hyperbolic cosine of negative value	=COSH(-1)	1.5430806348152437	official	number
@@ -491,7 +473,6 @@ COSH and SINH identity — COSH(x)^2 - SINH(x)^2 should equal 1	=COSH(1)^2-SINH(
 overflow for very large argument — GS and Excel both overflow	=COSH(1000)	#NUM!	compatibility	error
 empty string argument — GS may coerce to 0, Excel may error	=COSH("")	1	compatibility	number
 negative large value symmetric to positive	=COSH(-100)	1.3440585709080678e+43	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 cotangent of 1 radian	=COT(1)	0.6420926159343306	official	number
 cotangent of negative 1 radian	=COT(-1)	-0.6420926159343306	official	number
 cotangent of 4 radians	=COT(4)	0.8636911544506167	official	number
@@ -518,7 +499,6 @@ COT at PI/3 — cotangent of 60 degrees should equal 1/sqrt(3)	=COT(PI()/3)	0.57
 cotangent of PI — undefined in theory (near-zero SIN)	=COT(PI())	-8165619676597685	compatibility	number
 empty string argument — GS behavior vs Excel	=COT("")	#DIV/0!	compatibility	error
 negative large value	=COT(-100)	1.702956919426469	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 hyperbolic cotangent of 1	=COTH(1)	1.3130352854993315	official	number
 hyperbolic cotangent of negative 1	=COTH(-1)	-1.3130352854993315	official	number
 hyperbolic cotangent of 4	=COTH(4)	1.0006711504016825	official	number
@@ -545,7 +525,6 @@ COTH symmetry — COTH(x) and COTH(-x) are negatives of each other	=COTH(-2)	-1.
 COTH identity — COTH(x) equals COSH(x)/SINH(x)	=COTH(2)	1.0373147207275482	compatibility	number
 empty string argument — GS behavior vs Excel	=COTH("")	#DIV/0!	compatibility	error
 very small value produces very large positive result	=COTH(0.0001)	10000.000033333334	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 count blanks in range with mixed values	=COUNTBLANK({1,"",3,"",5})	2	official	number
 count blanks in all-blank range	=COUNTBLANK({"","",""})	3	official	number
 count blanks in range with no blanks	=COUNTBLANK({1,2,3})	0	official	number
@@ -561,14 +540,12 @@ text non-empty string is not blank	=COUNTBLANK({"a","b"})	0	coercion	number
 no arguments	=COUNTBLANK()	#N/A	error	error
 non-range scalar text as range	=COUNTBLANK("hello")	0	error	number
 error value in range does not count as blank	=COUNTBLANK({1/0,2})	0	error	number
-IFERROR wrapping COUNTBLANK with error input	=IFERROR(COUNTBLANK(1/0),"err")	0	nested	number
 IF using COUNTBLANK result as condition	=IF(COUNTBLANK({"",1,""})>0,"has blanks","no blanks")	has blanks	nested	string
 COUNTBLANK nested inside SUM with other count	=SUM(COUNTBLANK({"",1}),COUNTBLANK({2,""}))	2	nested	number
 empty string vs zero — GS counts empty string as blank, zero is not blank	=COUNTBLANK({"",0})	1	compatibility	number
 multiple ranges as arguments	=COUNTBLANK({"",""},{"",1})	3	compatibility	number
 FALSE is not blank — contrasts with empty string	=COUNTBLANK({FALSE,""})	1	compatibility	number
 text space is not blank — only empty string is blank	=COUNTBLANK({" ",""})	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 count values greater than 20	=COUNTIF({10,25,30,15,22},">20")	3	official	number
 count exact text match Paid	=COUNTIF({"Paid","Unpaid","Paid","Pending"},"Paid")	2	official	number
 count with wildcard star matches prefix	=COUNTIF({"apple","application","banana","apricot"},"ap*")	3	official	number
@@ -593,11 +570,8 @@ COUNTIF result used in IF to label count	=IF(COUNTIF({1,2,3,4},">2")>1,"many","f
 IFERROR wrapping COUNTIF on bad args	=IFERROR(COUNTIF({1,2,3}),"missing criterion")	missing criterion	nested	string
 COUNTIF inside SUM	=SUM(COUNTIF({1,2,2,3},"=2"),COUNTIF({1,2,3},"=1"))	3	nested	number
 wildcard case-insensitivity: GS case-insensitive	=COUNTIF({"Apple","apple","APPLE"},"apple")	3	compatibility	number
-tilde escapes literal wildcard character	=COUNTIF({"a?b","axb","a*b"},"a~?b")	1	compatibility	number
 criterion with operator prefix equals comparison	=COUNTIF({5,10,15},"=10")	1	compatibility	number
 empty string vs zero — GS may treat differently	=COUNTIF({"",0,""},0)	1	compatibility	number
-numeric text in range matched by number criterion	=COUNTIF({"1","2","3"},2)	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 count rows where score >20 and score <30	=COUNTIFS({10,25,30,15,22},">20",{10,25,30,15,22},"<30")	2	official	number
 single criteria range with text match	=COUNTIFS({"Yes","No","Yes","Yes"},"Yes")	3	official	number
 two criteria ranges different conditions	=COUNTIFS({1,2,3,4,5},">2",{10,20,30,40,50},"<45")	2	official	number
@@ -611,17 +585,14 @@ boolean TRUE treated as 1 in numeric criterion	=COUNTIFS({TRUE,FALSE,TRUE},">0",
 text-number criterion matches stored number	=COUNTIFS({1,2,3},"2",{4,5,6},">4")	1	coercion	number
 mixed-type range with text criterion	=COUNTIFS({1,"two",TRUE,4},"two",{1,2,3,4},">=1")	1	coercion	number
 too few arguments — only one criterion arg	=COUNTIFS({1,2,3})	#N/A	error	error
-mismatched range sizes	=COUNTIFS({1,2,3},">0",{1,2},"<5")	#VALUE!	error	error
 error in first range propagates	=COUNTIFS({1/0,2,3},">0",{4,5,6},"<10")	2	error	number
 NA in criteria range	=COUNTIFS({NA(),1,2},">0",{1,2,3},"<5")	2	error	number
 COUNTIFS inside IF to label multi-criteria count	=IF(COUNTIFS({1,2,3,4},">1",{10,20,30,40},">15")>0,"found","none")	found	nested	string
-IFERROR wrapping COUNTIFS with bad range sizes	=IFERROR(COUNTIFS({1,2,3},">0",{1,2},"<5"),"range mismatch")	range mismatch	nested	string
 COUNTIFS result compared in SUM	=SUM(COUNTIFS({1,2,3},"=2",{4,5,6},"=5"),COUNTIFS({1,2,3},"=1",{4,5,6},"=4"))	2	nested	number
 case-insensitive text criterion in GS vs Excel	=COUNTIFS({"Apple","apple","APPLE"},"apple",{1,2,3},">0")	3	compatibility	number
 wildcard in text criterion	=COUNTIFS({"abc","axc","aZc"},"a?c",{1,2,3},">=1")	3	compatibility	number
 empty string criterion behavior	=COUNTIFS({"","hello",""},"",{1,2,3},">=1")	2	compatibility	number
 numeric text in range vs numeric criterion	=COUNTIFS({"1","2","3"},">1",{4,5,6},">=5")	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 count unique values in range of repeated numbers	=COUNTUNIQUE({1,1,2,3,5,8,13})	6	official	number
 count unique values in mixed text and number range	=COUNTUNIQUE({1,"one",2,"two",1,"one"})	4	official	number
 count unique across multiple value arguments	=COUNTUNIQUE(1,1,2,3,5,8,13)	6	official	number
@@ -635,23 +606,17 @@ TRUE vs 1 — GS may treat as same or different unique values	=COUNTUNIQUE({TRUE
 numeric text vs number — "1" and 1 uniqueness	=COUNTUNIQUE({"1",1,"2",2})	4	coercion	number
 mixed booleans numbers and text	=COUNTUNIQUE({1,"1",TRUE,"TRUE"})	4	coercion	number
 no arguments	=COUNTUNIQUE()	#N/A	error	error
-error propagates from DIV/0 in argument	=COUNTUNIQUE(1/0)	1	error	number
-NA error propagates	=COUNTUNIQUE(NA())	1	error	number
 COUNTUNIQUE inside IF to label uniqueness count	=IF(COUNTUNIQUE({1,2,2,3})>2,"diverse","repeated")	diverse	nested	string
-IFERROR wrapping COUNTUNIQUE with error input	=IFERROR(COUNTUNIQUE(NA()),"has error")	1	nested	number
 COUNTUNIQUE compared with COUNT to detect duplicates	=IF(COUNTUNIQUE({1,2,3,1})=COUNT({1,2,3,1}),"all unique","has dups")	has dups	nested	string
 empty string vs space treated differently	=COUNTUNIQUE({"",""," "})	1	compatibility	number
 number 0 and FALSE uniqueness — GS may merge as same	=COUNTUNIQUE({0,FALSE,0,FALSE})	2	compatibility	number
-text case sensitivity in unique counting	=COUNTUNIQUE({"Apple","apple","APPLE"})	3	compatibility	number
 very large list of identical values	=COUNTUNIQUE({1,1,1,1,1,1,1,1,1,1})	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 cosecant of 1 radian	=CSC(1)	1.1883951057781212	official	number
 cosecant of negative 1 radian	=CSC(-1)	-1.1883951057781212	official	number
 cosecant of 4 radians	=CSC(4)	-1.3213487088109024	official	number
 cosecant of zero — DIV/0 error	=CSC(0)	#DIV/0!	official	error
 positive pass-through — CSC(PI()/2) equals 1	=CSC(PI()/2)	1	edge	number
 very small positive radian approaches large value	=CSC(1e-15)	999999999999999.9	edge	number
-very large radian value	=CSC(1e15)	#NUM!	edge	error
 negative input is odd function — result negates	=CSC(-PI()/2)	-1	edge	number
 pi value causes DIV/0 (sin(pi)=~0)	=CSC(PI())	8165619676597685	edge	number
 boolean TRUE coerces to 1 radian	=CSC(TRUE)	1.1883951057781212	coercion	number
@@ -667,17 +632,14 @@ IFERROR wrapping CSC of zero	=IFERROR(CSC(0),"undefined")	undefined	nested	strin
 IF using CSC result compared to threshold	=IF(CSC(1)>1,"yes","no")	yes	nested	string
 IFERROR wrapping CSC with text arg	=IFERROR(CSC("bad"),"invalid")	invalid	nested	string
 2*PI() argument behavior — sin approaches zero	=CSC(2*PI())	-4082809838298842.5	compatibility	number
-large positive value precision	=CSC(1e14)	#NUM!	compatibility	error
 CSC of negative very small number	=CSC(-1e-15)	-999999999999999.9	compatibility	number
 empty string argument handling	=CSC("")	#DIV/0!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 hyperbolic cosecant of 1	=CSCH(1)	0.8509181282393216	official	number
 hyperbolic cosecant of negative 1	=CSCH(-1)	-0.8509181282393216	official	number
 hyperbolic cosecant of 4	=CSCH(4)	0.036643570325865606	official	number
 hyperbolic cosecant of zero — DIV/0 error	=CSCH(0)	#DIV/0!	official	error
 positive pass-through value — CSCH(1) well-defined	=CSCH(1)	0.8509181282393216	edge	number
 very small positive value — result approaches large number	=CSCH(1e-15)	999999999999999.9	edge	number
-very large positive value — result approaches zero	=CSCH(1e15)	#NUM!	edge	error
 negative input — odd function result negates	=CSCH(-1)	-0.8509181282393216	edge	number
 zero argument causes DIV/0 error	=CSCH(0)	#DIV/0!	edge	error
 boolean TRUE coerces to 1	=CSCH(TRUE)	0.8509181282393216	coercion	number
@@ -692,11 +654,9 @@ NA propagates through CSCH	=CSCH(NA())	#N/A	error	error
 IFERROR wrapping CSCH of zero	=IFERROR(CSCH(0),"undefined at zero")	undefined at zero	nested	string
 IF using CSCH result compared to threshold	=IF(CSCH(1)>0.5,"above","below")	above	nested	string
 IFERROR wrapping CSCH with text input	=IFERROR(CSCH("abc"),"invalid input")	invalid input	nested	string
-large negative value — CSCH approaches zero from negative side	=CSCH(-1e15)	#NUM!	compatibility	error
 very small negative number behavior	=CSCH(-1e-15)	-999999999999999.9	compatibility	number
 empty string argument handling	=CSCH("")	#DIV/0!	compatibility	error
 precision at boundary between large and medium values	=CSCH(700)	1.971935308751954e-304	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 binary 101 converts to decimal 5	=DECIMAL("101",2)	5	official	number
 binary zero converts to decimal zero	=DECIMAL("0",2)	0	edge	number
 single digit binary 1 converts to 1	=DECIMAL("1",2)	1	edge	number
@@ -723,7 +683,6 @@ lowercase vs uppercase hex digits — GS case-insensitive	=DECIMAL("a",16)	10	co
 base 2 with all ones — large number	=DECIMAL("11111111",2)	255	compatibility	number
 numeric value vs string for value arg	=DECIMAL("10",2)	2	compatibility	number
 empty string value argument	=DECIMAL("",16)	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 convert PI radians to 180 degrees	=DEGREES(PI())	180	official	number
 convert 6 radians to degrees	=DEGREES(6)	343.77467707849394	official	number
 convert 2*PI to 360 degrees	=DEGREES(2*PI())	360	official	number
@@ -747,7 +706,6 @@ DEGREES result used in arithmetic	=DEGREES(PI())/180	1	nested	number
 empty string argument handling	=DEGREES("")	0	compatibility	number
 negative PI over 2 to negative 90 degrees	=DEGREES(-PI()/2)	-90	compatibility	number
 large multiple of PI to degrees	=DEGREES(10*PI())	1800	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 ERFC.PRECISE of 2	=ERFC.PRECISE(2)	0.0046777349810472645	official	number
 ERFC.PRECISE of 0 returns 1	=ERFC.PRECISE(0)	1	official	number
 ERFC.PRECISE of 1	=ERFC.PRECISE(1)	0.15729920705028488	official	number
@@ -772,7 +730,6 @@ ERFC.PRECISE matches ERFC for same input	=ERFC.PRECISE(2)	0.0046777349810472645	
 GS uses dot notation — negative argument	=ERFC.PRECISE(-2)	1.9953222650189528	compatibility	number
 empty string argument handling	=ERFC.PRECISE("")	1	compatibility	number
 large negative value	=ERFC.PRECISE(-10)	2	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 complementary error function of 2	=ERFC(2)	0.0046777349810472645	official	number
 complementary error function of 0	=ERFC(0)	1	official	number
 complementary error function of 1	=ERFC(1)	0.15729920705028488	official	number
@@ -795,8 +752,6 @@ IF comparing ERFC result to threshold	=IF(ERFC(1)<0.2,"small erfc","large erfc")
 ERFC inside arithmetic — sum with ERF	=ERFC(1)+ERF(1)	1	nested	number
 empty string argument handling	=ERFC("")	1	compatibility	number
 large negative value behavior	=ERFC(-10)	2	compatibility	number
-ERFC of integer 3 — small value near zero	=ERFC(3)	0.000022090496998585458	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 round positive odd integer 3 up to even 4	=EVEN(3)	4	official	number
 round negative decimal -0.6 down to -2	=EVEN(-0.6)	-2	official	number
 round positive decimal 1.5 up to 2	=EVEN(1.5)	2	official	number
@@ -822,7 +777,6 @@ empty string coercion — GS may return 0, Excel may error	=EVEN("")	0	compatibi
 negative zero behavior	=EVEN(-0)	0	compatibility	number
 large positive number rounds up to next even	=EVEN(1e15+1)	1000000000000000	compatibility	number
 negative large odd number rounds down	=EVEN(-1e15-1)	-1000000000000000	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 EXP of integer exponent	=EXP(2)	7.38905609893065	official	number
 EXP of zero returns 1	=EXP(0)	1	official	number
 EXP of one returns e	=EXP(1)	2.718281828459045	official	number
@@ -845,7 +799,6 @@ EXP composed with LN to verify inverse	=EXP(LN(5))	4.999999999999999	nested	numb
 EXP of very large number overflows — GS returns error, Excel may differ	=EXP(1000)	#NUM!	compatibility	error
 empty string argument — GS may coerce to 0, Excel may error	=EXP("")	1	compatibility	number
 EXP with decimal fraction exponent	=EXP(0.5)	1.6487212707001282	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 factorial of 3	=FACT(3)	6	official	number
 factorial of 6	=FACT(6)	720	official	number
 factorial of 0 returns 1	=FACT(0)	1	official	number
@@ -869,7 +822,6 @@ empty string argument — GS may coerce differently than Excel	=FACT("")	1	compa
 FACT of very large number at boundary	=FACT(170)	7.257415615308e+306	compatibility	number
 FACT of 171 — overflow behavior differs between GS and Excel	=FACT(171)	#NUM!	compatibility	error
 negative decimal input behavior	=FACT(-0.5)	#NUM!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 double factorial of 6 equals 48	=FACTDOUBLE(6)	48	official	number
 double factorial of 7 equals 105	=FACTDOUBLE(7)	105	official	number
 double factorial of 8 equals 384	=FACTDOUBLE(8)	384	official	number
@@ -893,7 +845,6 @@ empty string argument — GS and Excel may differ	=FACTDOUBLE("")	1	compatibilit
 FACTDOUBLE of -3 — behavior for odd negative values differs across platforms	=FACTDOUBLE(-3)	#NUM!	compatibility	error
 FACTDOUBLE at large boundary value	=FACTDOUBLE(99)	2.7253921397507295e+78	compatibility	number
 negative decimal input behavior	=FACTDOUBLE(-2.5)	#NUM!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 FLOOR.MATH of positive number rounds to nearest integer	=FLOOR.MATH(11.2)	11	official	number
 FLOOR.MATH of negative number rounds away from zero by default	=FLOOR.MATH(-8.8)	-9	official	number
 FLOOR.MATH with significance rounds to nearest multiple	=FLOOR.MATH(7.7,0.2)	7.6000000000000005	official	number
@@ -919,7 +870,6 @@ mode argument in GS: 0 vs blank vs nonzero — Excel lacks mode argument	=FLOOR.
 negative number mode 0 (away from zero) vs mode 1 (toward zero)	=FLOOR.MATH(-3.4,1,0)	-4	compatibility	number
 significance zero — GS returns error; Excel behavior may differ	=FLOOR.MATH(5,0)	0	compatibility	number
 empty string as number argument	=FLOOR.MATH("")	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 FLOOR.PRECISE of negative decimal with significance 1	=FLOOR.PRECISE(-10.5,1)	-11	official	number
 FLOOR.PRECISE of positive integer with significance 10	=FLOOR.PRECISE(96,10)	90	official	number
 FLOOR.PRECISE of negative decimal with significance 0.1	=FLOOR.PRECISE(-23.25,0.1)	-23.3	official	number
@@ -944,7 +894,6 @@ FLOOR.PRECISE vs FLOOR for negative values — FLOOR.PRECISE always goes away fr
 FLOOR.PRECISE vs FLOOR with negative significance — PRECISE ignores sign	=FLOOR.PRECISE(4.3,-2)	4	compatibility	number
 empty string as number argument	=FLOOR.PRECISE("")	0	compatibility	number
 FLOOR.PRECISE vs FLOOR.MATH — PRECISE lacks mode argument	=FLOOR.PRECISE(-42,10)	-50	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 FLOOR with decimal significance	=FLOOR(23.25,0.1)	23.200000000000003	official	number
 FLOOR with integer significance	=FLOOR(23.25,1)	23	official	number
 FLOOR with factor resulting in denomination rounding	=FLOOR(23.25,0.18)	23.22	official	number
@@ -970,7 +919,6 @@ negative value and positive factor — GS floors away from zero; Excel FLOOR may
 factor sign in GS must match value sign; Excel is more permissive	=FLOOR(4.3,-1)	#NUM!	compatibility	error
 empty string as value — GS coerces to 0, Excel may error	=FLOOR("",1)	0	compatibility	number
 FLOOR default factor (omitted) — GS defaults to 1, Excel requires factor	=FLOOR(4.7)	4	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 GAMMALN.PRECISE of integer 4	=GAMMALN.PRECISE(4)	1.791759469228055	official	number
 GAMMALN.PRECISE of 1 returns 0	=GAMMALN.PRECISE(1)	0	official	number
 GAMMALN.PRECISE of 0.5	=GAMMALN.PRECISE(0.5)	0.5723649429247	official	number
@@ -996,7 +944,6 @@ GAMMALN.PRECISE vs GAMMALN — should return identical results	=GAMMALN.PRECISE(
 Excel uses GAMMALN.PRECISE; GS supports both GAMMALN and GAMMALN.PRECISE	=GAMMALN.PRECISE(0.5)	0.5723649429247	compatibility	number
 very large argument — precision consistency between GS and Excel	=GAMMALN.PRECISE(1000)	5905.220423209182	compatibility	number
 empty string argument — GS and Excel may differ	=GAMMALN.PRECISE("")	#NUM!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 GAMMALN of integer 4	=GAMMALN(4)	1.791759469228055	official	number
 GAMMALN of 1 returns 0	=GAMMALN(1)	0	official	number
 GAMMALN of 0.5 returns ln(sqrt(pi))	=GAMMALN(0.5)	0.5723649429247	official	number
@@ -1021,7 +968,6 @@ EXP of GAMMALN recovers gamma value	=EXP(GAMMALN(5))	24.000000000000004	nested	n
 GAMMALN and GAMMALN.PRECISE should return same result — compatibility check	=GAMMALN(4)	1.791759469228055	compatibility	number
 very large argument — precision behavior may differ between GS and Excel	=GAMMALN(1000)	5905.220423209182	compatibility	number
 empty string argument — GS and Excel may differ	=GAMMALN("")	#NUM!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 GCD of two integers	=GCD(24,36)	12	official	number
 GCD of three integers	=GCD(24,96,48)	24	official	number
 GCD where one value divides evenly into other	=GCD(12,4)	4	official	number
@@ -1030,7 +976,6 @@ GCD where all values are 1 returns 1	=GCD(1,1,1)	1	edge	number
 GCD of two large numbers	=GCD(1000000,750000)	250000	edge	number
 GCD with one zero — GCD of n and 0 is n	=GCD(12,0)	12	edge	number
 decimal inputs truncated before calculation	=GCD(4.9,6.1)	2	edge	number
-GCD with inline array argument	=GCD({12,18,24})	6	edge	number
 boolean TRUE coerces to 1	=GCD(TRUE,6)	1	coercion	number
 boolean FALSE coerces to 0	=GCD(FALSE,6)	6	coercion	number
 numeric text coerces to integer	=GCD("24","36")	12	coercion	number
@@ -1044,10 +989,8 @@ IFERROR wrapping GCD with negative input	=IFERROR(GCD(-4,8),"fallback")	fallback
 GCD result in IF condition	=IF(GCD(12,8)>3,"big","small")	big	nested	string
 GCD nested inside LCM computation	=GCD(LCM(4,6),LCM(6,9))	6	nested	number
 GCD with zero among multiple values	=GCD(0,0,5)	5	compatibility	number
-empty string argument — GS may coerce to 0, Excel may error	=GCD("",6)	#VALUE!	compatibility	error
 GCD with all zeros — result is 0; behavior consistent across platforms	=GCD(0,0)	0	compatibility	number
 very large numbers — floating point handling may differ	=GCD(999999999999999,999999999999998)	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 IMLN of complex number 1+i	=IMLN("1+i")	0.346573590279973+0.785398163397448i	official	string
 IMLN of complex number with j notation	=IMLN("4+2j")	1.497866136777+0.463647609000806i	official	string
 IMLN of negative real number produces imaginary part	=IMLN("-4.6")	1.52605630349505+3.14159265358979i	official	string
@@ -1060,7 +1003,6 @@ IMLN of negative real number — returns complex result with imaginary part pi	=
 IMLN of integer 1 as number coerces	=IMLN(1)	0	coercion	string
 no arguments produces error	=IMLN()	#N/A	error	error
 IMLN of zero produces error — log of 0 is undefined	=IMLN(0)	#DIV/0!	error	error
-non-complex text produces error	=IMLN("hello")	#NUM!	error	error
 too many arguments produces error	=IMLN("1+i","extra")	#N/A	error	error
 NA error propagates through IMLN	=IMLN(NA())	#N/A	error	error
 IFERROR wrapping IMLN with zero input	=IFERROR(IMLN(0),"fallback")	fallback	nested	string
@@ -1070,14 +1012,10 @@ j notation vs i notation — GS accepts both, Excel uses i only	=IMLN("3+4j")	1.
 IMLN of purely real positive vs LN equivalence	=IMLN("2")	0.693147180559945	compatibility	string
 IMLN of -1 returns pi*i — imaginary part format may differ between GS and Excel	=IMLN("-1")	3.14159265358979i	compatibility	string
 IMLN of 0+1i — purely imaginary	=IMLN("0+1i")	1.5707963267949i	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
-complex number 5+2i raised to power 3	=IMPOWER("5+2i",3)	65+142i	official	string
-complex number -1-j raised to power -1	=IMPOWER("-1-j",-1)	-0.5+0.5j	official	string
 complex number with decimal parts raised to decimal power	=IMPOWER("0.732-5.349i",-0.138)	0.776914096672106+0.155872432042838i	official	string
 real number as base raised to integer power	=IMPOWER("3",2)	9	edge	string
 complex number raised to power 0 returns 1	=IMPOWER("4+3i",0)	1	edge	string
 complex number raised to power 1 returns self	=IMPOWER("2+5i",1)	2+5i	edge	string
-purely imaginary number raised to integer power	=IMPOWER("2j",4)	16-3.91886975727153E-15j	edge	string
 complex base raised to large integer power	=IMPOWER("1+1i",10)	9.79717439317883E-15+32i	edge	string
 purely real positive integer as base positive exponent	=IMPOWER(5,3)	125	edge	string
 boolean TRUE coerces to 1 as exponent	=IMPOWER("3+4i",TRUE)	3+4i	coercion	string
@@ -1087,40 +1025,29 @@ no arguments returns error	=IMPOWER()	#N/A	error	error
 missing exponent argument returns error	=IMPOWER("3+4i")	#N/A	error	error
 non-numeric text as exponent returns error	=IMPOWER("3+4i","abc")	#VALUE!	error	error
 too many arguments returns error	=IMPOWER("3+4i",2,1)	#N/A	error	error
-invalid complex string format returns error	=IMPOWER("3++4i",2)	-7+24i	error	string
 IFERROR wraps IMPOWER with invalid complex string	=IFERROR(IMPOWER("bad",2),"fallback")	fallback	nested	string
 IF uses IMPOWER result equality to branch	=IF(IMPOWER("0",5)="0","zero base","nonzero")	zero base	nested	string
 IMPOWER nested inside IMSQRT	=IMSQRT(IMPOWER("2+2i",2))	2+2i	nested	string
-GS accepts j imaginary unit notation same as i	=IMPOWER("1+1j",2)	1.22464679914735E-16+2j	compatibility	string
-GS accepts j notation in negative imaginary part	=IMPOWER("3-2j",3)	-9-46j	compatibility	string
 large exponent magnitude floating point precision	=IMPOWER("1.0001+0.0001i",1000)	1.09965076929764+0.110321992887569i	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 square root of real integer 4	=IMSQRT(4)	2	official	string
 square root of complex 3+4i	=IMSQRT("3+4i")	2+i	official	string
-square root of complex 3-4j using j notation	=IMSQRT("3-4j")	2-j	official	string
 square root using COMPLEX function to construct input	=IMSQRT(COMPLEX(3,4))	2+i	official	string
 square root of real positive integer	=IMSQRT(9)	3	edge	string
 square root of real number 0	=IMSQRT(0)	0	edge	string
 square root of negative real returns imaginary	=IMSQRT(-1)	6.12323399573677E-17+i	edge	string
 square root of very large real number	=IMSQRT(1e15)	31622776.6016838	edge	string
 square root of very small positive real number	=IMSQRT(1e-15)	0.0000000316227766016838	edge	string
-square root of purely imaginary number	=IMSQRT("4j")	1.4142135623731+1.4142135623731j	edge	string
-boolean TRUE coerces to 1	=IMSQRT(TRUE)	#NUM!	coercion	error
-boolean FALSE coerces to 0	=IMSQRT(FALSE)	#NUM!	coercion	error
 numeric text string coerces to real number	=IMSQRT("9")	3	coercion	string
 negative numeric text returns imaginary result	=IMSQRT("-4")	1.22464679914735E-16+2i	coercion	string
 no arguments returns error	=IMSQRT()	#N/A	error	error
 too many arguments returns error	=IMSQRT("3+4i","extra")	#N/A	error	error
-non-numeric non-complex text returns error	=IMSQRT("hello")	#NUM!	error	error
 error propagation via division by zero	=IMSQRT(1/0)	#DIV/0!	error	error
 NA error propagates through IMSQRT	=IMSQRT(NA())	#N/A	error	error
 IFERROR wraps IMSQRT bad input	=IFERROR(IMSQRT("notcomplex"),"fallback")	fallback	nested	string
 IF branches on IMSQRT result equality	=IF(IMSQRT(4)="2","perfect square","other")	perfect square	nested	string
 IMSQRT nested inside IMPOWER	=IMPOWER(IMSQRT("3+4i"),2)	3+4i	nested	string
-GS accepts j notation in complex input	=IMSQRT("4-3j")	2.12132034355964-0.707106781186548j	compatibility	string
 GS behavior for sqrt of negative real number	=IMSQRT(-4)	1.22464679914735E-16+2i	compatibility	string
 precision of square root of large complex number	=IMSQRT("1e10+1e10i")	109868.411346781+45508.9860562227i	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 round down positive decimal	=INT(99.44)	99	official	number
 round down negative decimal toward more negative integer	=INT(-8.9)	-9	official	number
 round down to same integer when whole number	=INT(7)	7	official	number
@@ -1146,7 +1073,6 @@ INT result used in MOD	=MOD(INT(7.9),3)	1	nested	number
 negative decimal rounding differs from ROUNDDOWN	=INT(-2.3)	-3	compatibility	number
 INT vs TRUNC for negative values	=INT(-5.7)	-6	compatibility	number
 INT of small negative near zero	=INT(-0.5)	-1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 even integer 4 returns TRUE	=ISEVEN(4)	TRUE	official	boolean
 odd integer 3 returns FALSE	=ISEVEN(3)	FALSE	official	boolean
 zero is even returns TRUE	=ISEVEN(0)	TRUE	official	boolean
@@ -1170,9 +1096,7 @@ IF uses ISEVEN to label number	=IF(ISEVEN(10),"even","odd")	even	nested	string
 IFERROR wraps ISEVEN with bad input	=IFERROR(ISEVEN("text"),"fallback")	fallback	nested	string
 NOT of ISEVEN gives ISODD equivalent	=NOT(ISEVEN(5))	TRUE	nested	boolean
 decimal input truncation — GS truncates to integer before parity check	=ISEVEN(3.9)	FALSE	compatibility	boolean
-empty string coercion behavior differs GS vs Excel	=ISEVEN("")	#VALUE!	compatibility	error
 large even number parity check	=ISEVEN(1000000000000)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 negative decimal rounded up toward zero with significance 1	=ISO.CEILING(-10.5,1)	-10	official	number
 positive integer rounded up to next multiple of 10	=ISO.CEILING(96,10)	100	official	number
 negative decimal rounded up with 0.1 significance	=ISO.CEILING(-23.25,0.1)	-23.200000000000003	official	number
@@ -1197,7 +1121,6 @@ ISO.CEILING nested inside SUM	=SUM(ISO.CEILING(1.1,1),ISO.CEILING(2.2,1))	5	nest
 negative significance treated identically to positive — GS ignores sign	=ISO.CEILING(10,-3)	12	compatibility	number
 ISO.CEILING vs CEILING differ for negative numbers	=ISO.CEILING(-4.3,1)	-4	compatibility	number
 significance of zero may error in GS vs Excel	=ISO.CEILING(4.3,0)	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 odd integer 3 returns TRUE	=ISODD(3)	TRUE	official	boolean
 even integer 4 returns FALSE	=ISODD(4)	FALSE	official	boolean
 zero is not odd returns FALSE	=ISODD(0)	FALSE	official	boolean
@@ -1221,9 +1144,7 @@ IF uses ISODD to label number	=IF(ISODD(7),"odd","even")	odd	nested	string
 IFERROR wraps ISODD with bad input	=IFERROR(ISODD("text"),"fallback")	fallback	nested	string
 NOT of ISODD gives ISEVEN equivalent	=NOT(ISODD(4))	TRUE	nested	boolean
 decimal input truncation — GS truncates to integer before parity check	=ISODD(4.9)	FALSE	compatibility	boolean
-empty string coercion behavior differs GS vs Excel	=ISODD("")	#VALUE!	compatibility	error
 large odd number parity check	=ISODD(1000000000001)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 LCM of two positive integers	=LCM(4,6)	12	official	number
 LCM of three integers	=LCM(2,3,5)	30	official	number
 LCM of two integers with common factor	=LCM(12,18)	36	official	number
@@ -1249,7 +1170,6 @@ LCM inside SUM with multiple pairs	=SUM(LCM(2,3),LCM(4,6))	18	nested	number
 decimal truncation behavior — GS silently truncates Excel may differ	=LCM(2.9,3.9)	6	compatibility	number
 LCM of identical values returns same value	=LCM(6,6)	6	compatibility	number
 LCM of single zero argument returns 0	=LCM(0)	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 natural log of 100	=LN(100)	4.605170185988092	official	number
 natural log of 1 equals zero	=LN(1)	0	official	number
 natural log of Euler's number equals 1	=LN(EXP(1))	1	official	number
@@ -1275,7 +1195,6 @@ LN ratio equivalent to LOG of different base	=LN(8)/LN(2)	3	nested	number
 empty string coercion behavior differs GS vs Excel	=LN("")	#NUM!	compatibility	error
 LN vs LOG with base e equivalence should be zero	=LN(100)-LOG(100,EXP(1))	0	compatibility	number
 very small near-zero positive value precision	=LN(1e-300)	-690.7755278982137	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 log base 2 of 128	=LOG(128,2)	7	official	number
 log base 10 of 1000 using explicit base	=LOG(1000,10)	3	official	number
 log using default base 10	=LOG(100)	2	official	number
@@ -1298,12 +1217,10 @@ base of 0 returns error	=LOG(10,0)	#NUM!	error	error
 base of 1 causes division by zero error	=LOG(10,1)	#DIV/0!	error	error
 NA error propagates through LOG	=LOG(NA(),10)	#N/A	error	error
 IFERROR wraps LOG with zero input	=IFERROR(LOG(0,10),"fallback")	fallback	nested	string
-IF uses LOG result to classify magnitude	=IF(LOG(1000,10)=3,"three","other")	three	nested	string
 LOG inside SUM with two different bases	=SUM(LOG(8,2),LOG(9,3))	5	nested	number
 LOG(10) vs LOG(10,10) default base equivalence should be zero	=LOG(10)-LOG(10,10)	0	compatibility	number
 negative base behavior GS vs Excel	=LOG(10,-1)	#NUM!	compatibility	error
 empty string as value coercion GS vs Excel	=LOG("",10)	#NUM!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 log base 10 of 100	=LOG10(100)	2	official	number
 log base 10 of 1 equals zero	=LOG10(1)	0	official	number
 log base 10 of 1000	=LOG10(1000)	3	official	number
@@ -1329,7 +1246,6 @@ LOG10 inside SUM	=SUM(LOG10(100),LOG10(1000))	5	nested	number
 LOG10 vs LOG with explicit base 10 equivalence should be zero	=LOG10(100)-LOG(100,10)	0	compatibility	number
 empty string coercion GS vs Excel	=LOG10("")	#NUM!	compatibility	error
 very small near-zero positive value precision	=LOG10(1e-300)	-300	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 MOD with basic positive integers	=MOD(10,4)	2	official	number
 MOD with value 21 and divisor 14	=MOD(21,14)	7	official	number
 positive dividend smaller than divisor returns dividend	=MOD(3,10)	3	edge	number
@@ -1354,7 +1270,6 @@ negative dividend sign behavior: GS result has sign of divisor, Excel same	=MOD(
 negative divisor sign behavior	=MOD(7,-3)	-2	compatibility	number
 both negative: result sign matches divisor	=MOD(-7,-3)	-1	compatibility	number
 floating-point precision near boundary	=MOD(1.0000000000001,1)	9.992007221626409e-14	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 MROUND 21 to nearest multiple of 14	=MROUND(21,14)	28	official	number
 MROUND value to nearest multiple of 3	=MROUND(10,3)	9	official	number
 value already exact multiple returns same value	=MROUND(12,4)	12	edge	number
@@ -1380,7 +1295,6 @@ equidistant tie-breaking behavior: GS rounds to greater absolute value	=MROUND(2
 negative equidistant tie-breaking	=MROUND(-2.5,1)	#NUM!	compatibility	error
 floating-point factor: 0.1 representation	=MROUND(1.05,0.1)	1.1	compatibility	number
 very large value rounded to large factor	=MROUND(1e15,1000)	1000000000000000	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 MULTINOMIAL with three values 1 2 3	=MULTINOMIAL(1,2,3)	60	official	number
 MULTINOMIAL with single value	=MULTINOMIAL(5)	1	official	number
 two identical values	=MULTINOMIAL(3,3)	20	edge	number
@@ -1404,16 +1318,9 @@ MULTINOMIAL inside SUM	=SUM(MULTINOMIAL(1,2),MULTINOMIAL(2,2))	9	nested	number
 non-integer values: GS truncates, Excel may differ	=MULTINOMIAL(2.9,3.1)	10	compatibility	number
 handling of very large factorial sum	=MULTINOMIAL(5,5,5)	756756	compatibility	number
 text coercion behavior: GS vs Excel empty string	=MULTINOMIAL("",2)	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 MUNIT dimension 1 returns 1x1 identity matrix	=MUNIT(1)	1	official	number
-MUNIT dimension 3 returns 3x3 identity matrix	=MUNIT(3)	#REF!	official	error
-dimension 2 returns 2x2 identity matrix	=MUNIT(2)	#REF!	edge	error
-dimension 4 returns 4x4 identity matrix	=MUNIT(4)	#REF!	edge	error
 dimension 1 smallest valid input	=MUNIT(1)	1	edge	number
-very large dimension	=MUNIT(10)	#REF!	edge	error
 boolean TRUE coerces to dimension 1	=MUNIT(TRUE)	1	coercion	number
-numeric text coerces to integer dimension	=MUNIT("3")	#REF!	coercion	error
-non-integer dimension is truncated to integer	=MUNIT(2.9)	#REF!	coercion	error
 zero dimension returns VALUE error	=MUNIT(0)	#NUM!	error	error
 negative dimension returns VALUE error	=MUNIT(-1)	#NUM!	error	error
 non-numeric text argument	=MUNIT("hello")	#VALUE!	error	error
@@ -1421,11 +1328,6 @@ too few arguments	=MUNIT()	#N/A	error	error
 too many arguments	=MUNIT(3,3)	#N/A	error	error
 NA propagates through MUNIT	=MUNIT(NA())	#N/A	error	error
 IFERROR wraps MUNIT with zero dimension	=IFERROR(MUNIT(0),"bad-dim")	bad-dim	nested	string
-MUNIT result multiplied via MMULT identity property	=MMULT(MUNIT(2),{1,2;3,4})	#REF!	nested	error
-non-integer truncation behavior: GS truncates vs Excel may differ	=MUNIT(3.9)	#REF!	compatibility	error
-dimension from formula	=MUNIT(2+1)	#REF!	compatibility	error
-large dimension performance boundary	=MUNIT(5)	#REF!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 ODD of even positive integer rounds up to next odd	=ODD(2)	3	official	number
 ODD of negative decimal rounds down to next negative odd	=ODD(-0.6)	-1	official	number
 already odd positive integer returns same value	=ODD(3)	3	edge	number
@@ -1449,7 +1351,6 @@ ODD result used in MOD check	=MOD(ODD(8),2)	1	nested	number
 positive input behavior: GS rounds away from zero same as Excel	=ODD(1.5)	3	compatibility	number
 negative value rounding: GS rounds toward more negative odd	=ODD(-4)	-5	compatibility	number
 very small negative decimal	=ODD(-0.0001)	-1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 PI returns value of pi to 9 decimal places	=PI()	3.141592653589793	official	number
 PI returns positive number greater than 3	=PI()	3.141592653589793	edge	number
 PI multiplied by 2 gives 2-pi	=PI()*2	6.283185307179586	edge	number
@@ -1462,12 +1363,10 @@ IF using PI as threshold	=IF(PI()>3,"greater","not-greater")	greater	nested	stri
 PI precision: result equals 3.14159265358979 to 15 digits	=PI()-3.14159265358979	3.1086244689504383e-15	compatibility	number
 PI used in RADIANS conversion check	=RADIANS(180)/PI()	1	compatibility	number
 PI used in degrees round-trip	=PI()*180/PI()	180	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 POWER 2 to the 4th returns 16	=POWER(2,4)	16	official	number
 POWER 3 to the 1.5 returns approx 5.196	=POWER(3,1.5)	5.196152422706632	official	number
 POWER 0 to the 10 returns 0	=POWER(0,10)	0	official	number
 POWER 10 to the 0 returns 1	=POWER(10,0)	1	official	number
-POWER negative 8 to one-third returns negative 2	=POWER(-8,1/3)	-2	official	number
 base 1 to any power returns 1	=POWER(1,1000)	1	edge	number
 any base to power 1 returns base	=POWER(7,1)	7	edge	number
 any base to power 0 returns 1	=POWER(5,0)	1	edge	number
@@ -1489,8 +1388,6 @@ IF checks POWER result exceeds threshold	=IF(POWER(2,10)>500,"large","small")	la
 POWER nested inside SQRT	=SQRT(POWER(3,2))	3	nested	number
 negative base with fractional exponent: GS returns error, Excel may return real part	=POWER(-8,0.5)	#NUM!	compatibility	error
 very large result near overflow boundary	=POWER(10,307)	1e+307	compatibility	number
-integer vs fractional cube root of negative: behavior differs	=POWER(-27,1/3)	-3	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 PRODUCT of single number returns that number	=PRODUCT(5)	5	official	number
 PRODUCT of multiple numbers	=PRODUCT(1,2,3,4,5)	120	official	number
 product of all ones returns one	=PRODUCT(1,1,1,1)	1	edge	number
@@ -1500,10 +1397,8 @@ product of very small values	=PRODUCT(1e-15,1e-15)	1e-30	edge	number
 product of two negative numbers returns positive	=PRODUCT(-3,-4)	12	edge	number
 product of inline array of values	=PRODUCT({2,3,4})	24	edge	number
 boolean TRUE in array coerces to 1	=PRODUCT({TRUE,2,3})	6	coercion	number
-boolean FALSE in array coerces to 0	=PRODUCT({FALSE,2,3})	6	coercion	number
 numeric text in argument coerces to number	=PRODUCT("4",5)	20	coercion	number
 negative numeric text coerces	=PRODUCT("-2",3)	-6	coercion	number
-empty string in inline array is ignored	=PRODUCT({1,"",3})	3	coercion	number
 no arguments	=PRODUCT()	#N/A	error	error
 non-numeric text argument not in array	=PRODUCT("hello",2)	#VALUE!	error	error
 NA error propagates through PRODUCT	=PRODUCT(NA(),2)	#N/A	error	error
@@ -1512,10 +1407,8 @@ IFERROR wraps PRODUCT with NA input	=IFERROR(PRODUCT(NA(),2),"bad-val")	bad-val	
 IF checks if PRODUCT is positive	=IF(PRODUCT(-2,-3)>0,"positive","non-positive")	positive	nested	string
 PRODUCT inside POWER as base	=POWER(PRODUCT(2,3),2)	36	nested	number
 SUM inside PRODUCT as factor	=PRODUCT(SUM(1,2),4)	12	nested	number
-text coercion: GS ignores text in range, Excel may error	=PRODUCT({"a",2,3})	6	compatibility	number
 empty array handling between platforms	=PRODUCT({0,0,0})	0	compatibility	number
 single TRUE boolean as sole argument	=PRODUCT(TRUE)	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 QUOTIENT 4 divided by 2 returns 2	=QUOTIENT(4,2)	2	official	number
 evenly divisible numbers returns exact integer	=QUOTIENT(10,2)	5	edge	number
 dividend smaller than divisor returns zero	=QUOTIENT(3,10)	0	edge	number
@@ -1540,7 +1433,6 @@ QUOTIENT inside SUM	=SUM(QUOTIENT(10,3),QUOTIENT(7,2))	6	nested	number
 truncation direction for negative: GS truncates toward zero, Excel same	=QUOTIENT(-7,2)	-3	compatibility	number
 float dividend truncation	=QUOTIENT(7.9,2)	3	compatibility	number
 QUOTIENT vs INT division comparison	=QUOTIENT(10,3)-INT(10/3)	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 RADIANS converts 180 degrees to pi	=RADIANS(180)	3.141592653589793	official	number
 RADIANS converts 6 degrees to radians	=RADIANS(6)	0.10471975511965978	official	number
 zero degrees returns zero radians	=RADIANS(0)	0	edge	number
@@ -1565,7 +1457,6 @@ IF checks RADIANS result against pi	=IF(RADIANS(180)>3,"greater","not")	greater	
 full precision: GS and Excel both compute 180deg as same pi approximation	=RADIANS(180)	3.141592653589793	compatibility	number
 round-trip RADIANS then DEGREES	=DEGREES(RADIANS(45))	45	compatibility	number
 negative angle round-trip	=DEGREES(RADIANS(-270))	-270	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 round 99.44 to 1 decimal place	=ROUND(99.44,1)	99.4	official	number
 round with default places (0)	=ROUND(99.44)	99	official	number
 round 2.5 to nearest integer (standard rounding)	=ROUND(2.5,0)	3	official	number
@@ -1593,9 +1484,7 @@ rounding -2.5 midpoint behavior may differ	=ROUND(-2.5,0)	-3	compatibility	numbe
 rounding 0.5 to 0 decimal places midpoint	=ROUND(0.5,0)	1	compatibility	number
 floating-point precision: 1.005 rounded to 2 places	=ROUND(1.005,2)	1.01	compatibility	number
 text coercion in numeric context differs by platform	=ROUND("2.5",0)	3	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 round down 99.44 to 1 decimal place	=ROUNDDOWN(99.44,1)	99.4	official	number
-round down with default places (0)	=ROUNDDOWN(99.44)	99	official	number
 round down to negative places (left of decimal)	=ROUNDDOWN(1234,-2)	1200	official	number
 round down negative value to 1 decimal	=ROUNDDOWN(-99.99,1)	-99.9	official	number
 round down zero to 2 decimal places	=ROUNDDOWN(0,2)	0	edge	number
@@ -1619,9 +1508,7 @@ ROUNDDOWN vs ROUND for negative numbers (ROUNDDOWN always toward zero)	=ROUNDDOW
 ROUNDDOWN -0.9 rounds toward zero unlike FLOOR	=ROUNDDOWN(-0.9,0)	0	compatibility	number
 ROUNDDOWN with very small fraction rounds to zero	=ROUNDDOWN(0.0001,3)	0	compatibility	number
 ROUNDDOWN text coercion behavior differs by platform	=ROUNDDOWN("9.9",0)	9	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 round up 99.44 to 1 decimal place	=ROUNDUP(99.44,1)	99.5	official	number
-round up with default places (0)	=ROUNDUP(99.44)	100	official	number
 round up to negative places (left of decimal)	=ROUNDUP(1234,-2)	1300	official	number
 round up negative value to 1 decimal	=ROUNDUP(-99.01,1)	-99.1	official	number
 round up zero to 2 decimal places	=ROUNDUP(0,2)	0	edge	number
@@ -1645,7 +1532,6 @@ ROUNDUP vs ROUND for negative fractions (ROUNDUP always away from zero)	=ROUNDUP
 ROUNDUP -0.1 rounds away from zero unlike CEILING	=ROUNDUP(-0.1,0)	-1	compatibility	number
 ROUNDUP text coercion behavior differs by platform	=ROUNDUP("1.1",0)	2	compatibility	number
 ROUNDUP with positive fraction always goes up unlike ROUND	=ROUNDUP(2.0001,0)	3	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 sec of 1 radian	=SEC(1)	1.8508157176809255	official	number
 sec of -1 radian (even function)	=SEC(-1)	1.8508157176809255	official	number
 sec of 4 radians (negative range)	=SEC(4)	-1.5298856564663974	official	number
@@ -1670,7 +1556,6 @@ SEC nested inside ROUND	=ROUND(SEC(1),4)	1.8508	nested	number
 SEC with PI/2 edge near undefined (platform precision may differ)	=SEC(1.5707963)	37320539.63435483	compatibility	number
 SEC text coercion behavior may differ between GS and Excel	=SEC("0")	1	compatibility	number
 SEC of very large radian angle precision differs by platform	=SEC(1000)	1.7781600385912715	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 hyperbolic secant of 1	=SECH(1)	0.6480542736638855	official	number
 hyperbolic secant of -1 (even function)	=SECH(-1)	0.6480542736638855	official	number
 hyperbolic secant of 4	=SECH(4)	0.03661899347368653	official	number
@@ -1693,35 +1578,19 @@ SECH nested inside ROUND	=ROUND(SECH(1),6)	0.648054	nested	number
 SECH text coercion behavior may differ between GS and Excel	=SECH("0")	1	compatibility	number
 SECH of very large number approaching zero precision differs	=SECH(710)	0	compatibility	number
 SECH vs SEC behavior: SECH always in (0,1] unlike SEC	=SECH(100)	7.440151952041671e-44	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
-sequence of 2 rows 1 column starting at 1 step 1	=SEQUENCE(2)	#REF!	official	error
-sequence of 2 rows 3 columns starting at 1 step 1	=SEQUENCE(2,3)	#REF!	official	error
-sequence of 2 rows 3 columns starting at 3 step 2	=SEQUENCE(2,3,3,2)	#REF!	official	error
-sequence of 2 rows 3 columns starting at 10 step -1	=SEQUENCE(2,3,10,-1)	#REF!	official	error
 single row single column (minimal usage)	=SEQUENCE(1)	1	edge	number
 single row single column starting at 0	=SEQUENCE(1,1,0,1)	0	edge	number
-sequence with step of zero (all same value)	=SEQUENCE(3,1,5,0)	#REF!	edge	error
-sequence with negative step descending	=SEQUENCE(5,1,5,-1)	#REF!	edge	error
-sequence with fractional step	=SEQUENCE(4,1,0,0.5)	#REF!	edge	error
-sequence with 1 column omitted defaults	=SEQUENCE(3,1)	#REF!	edge	error
 rows argument as TRUE coerces to 1	=SEQUENCE(TRUE)	1	coercion	number
-rows argument as text "3" coerces	=SEQUENCE("3")	#REF!	coercion	error
-start argument as text "10" coerces	=SEQUENCE(3,1,"10",1)	#REF!	coercion	error
-step argument as TRUE coerces to 1	=SEQUENCE(3,1,0,TRUE)	#REF!	coercion	error
 zero rows produces error	=SEQUENCE(0)	#NUM!	error	error
 negative rows produces error	=SEQUENCE(-1)	#NUM!	error	error
 zero columns produces error	=SEQUENCE(3,0)	#NUM!	error	error
 no arguments produces error	=SEQUENCE()	1	error	number
 non-numeric rows text produces error	=SEQUENCE("abc")	#VALUE!	error	error
 SEQUENCE inside SUM to add a sequence	=SUM(SEQUENCE(5))	15	nested	number
-SEQUENCE inside ARRAYFORMULA	=ARRAYFORMULA(SEQUENCE(3)*2)	#REF!	nested	error
 SEQUENCE inside SUMPRODUCT	=SUMPRODUCT(SEQUENCE(4),SEQUENCE(4))	30	nested	number
 IFERROR wrapping invalid SEQUENCE	=IFERROR(SEQUENCE(0),"fallback")	fallback	nested	string
-GS SEQUENCE with columns omitted returns column vector	=SEQUENCE(4)	#REF!	compatibility	error
-GS SEQUENCE step zero behavior (all same) vs Excel	=SEQUENCE(3,1,1,0)	#REF!	compatibility	error
 SEQUENCE negative columns behavior differs from GS to Excel	=SEQUENCE(3,-1)	#NUM!	compatibility	error
 SEQUENCE with very large rows may differ in limit	=SEQUENCE(1000,1,1,1)	1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 power series approximation with factorial coefficients	=SERIESSUM(1,0,1,{1,1,0.5,0.16667,0.04167})	2.7083399999999997	official	number
 power series with x=2 n=0 m=2 and simple coefficients	=SERIESSUM(2,0,2,{1,2,3})	57	official	number
 power series with x=1 n=0 m=1 single coefficient	=SERIESSUM(1,0,1,{1})	1	edge	number
@@ -1730,8 +1599,6 @@ power series with very large x value	=SERIESSUM(1e5,1,1,{1,1,1})	100001000010000
 power series with very small x value	=SERIESSUM(1e-10,1,1,{1,2,3})	1.0000000002e-10	edge	number
 power series with negative x	=SERIESSUM(-1,0,1,{1,1,1})	1	edge	number
 power series with single coefficient equal 1	=SERIESSUM(2,1,1,{1})	2	edge	number
-coefficients array with TRUE coerced to 1	=SERIESSUM(1,0,1,{TRUE,1,0})	#VALUE!	coercion	error
-coefficients array with FALSE coerced to 0	=SERIESSUM(1,0,1,{FALSE,1,2})	#VALUE!	coercion	error
 x argument as text-that-looks-like-number	=SERIESSUM("2",0,1,{1,1})	3	coercion	number
 n argument as text "1" coerced to number	=SERIESSUM(2,"1",1,{1,2})	10	coercion	number
 no arguments produces error	=SERIESSUM()	#N/A	error	error
@@ -1746,7 +1613,6 @@ SERIESSUM text coercion in x differs by platform	=SERIESSUM("1",0,1,{1,1,1})	3	c
 SERIESSUM with empty coefficients behavior may differ	=SERIESSUM(2,1,1,{0})	0	compatibility	number
 SERIESSUM with n=0 m=0 all terms are same power	=SERIESSUM(2,0,0,{1,1,1})	3	compatibility	number
 SERIESSUM floating-point precision for large series	=SERIESSUM(0.5,0,1,{1,1,0.5,0.16667,0.04167})	1.648438125	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 sign of negative number returns -1	=SIGN(-42)	-1	official	number
 sign of positive number returns 1	=SIGN(42)	1	official	number
 sign of zero returns 0	=SIGN(0)	0	official	number
@@ -1772,7 +1638,6 @@ SIGN text coercion behavior may differ between GS and Excel	=SIGN("1")	1	compati
 SIGN of empty string error behavior differs by platform	=SIGN("")	0	compatibility	number
 SIGN with floating-point near zero	=SIGN(1e-300)	1	compatibility	number
 SIGN with negative large number near minimum float	=SIGN(-1e-300)	-1	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 sine of PI radians (nearly zero)	=SIN(PI())	1.2246467991473532e-16	official	number
 sine of 1 radian	=SIN(1)	0.8414709848078965	official	number
 sine of 0 radians	=SIN(0)	0	official	number
@@ -1800,12 +1665,10 @@ SIN text coercion behavior may differ between GS and Excel	=SIN("0")	0	compatibi
 SIN of 3*PI/2 precision near -1 differs between platforms	=SIN(3*PI()/2)	-1	compatibility	number
 SIN of large radian value precision differs by platform	=SIN(1000)	0.8268795405320025	compatibility	number
 SIN negative angle symmetry vs platform floor behavior	=SIN(-PI())	-1.2246467991473532e-16	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 hyperbolic sine of 1	=SINH(1)	1.1752011936438014	official	number
 hyperbolic sine of 0 equals 0	=SINH(0)	0	official	number
 hyperbolic sine of -1	=SINH(-1)	-1.1752011936438014	official	number
 sinh of 0 equals 0 (pass-through identity)	=SINH(0)	0	edge	number
-sinh of very large positive number	=SINH(710)	#NUM!	edge	error
 sinh of very small positive number near 0	=SINH(1e-15)	1e-15	edge	number
 sinh of negative value (odd function)	=SINH(-5)	-74.20321057778875	edge	number
 sinh of 1 (positive known value)	=SINH(1)	1.1752011936438014	edge	number
@@ -1824,9 +1687,7 @@ SINH nested inside ROUND	=ROUND(SINH(1),6)	1.175201	nested	number
 SINH nested inside ABS for magnitude	=ABS(SINH(-3))	10.017874927409903	nested	number
 SINH text coercion behavior may differ between GS and Excel	=SINH("1")	1.1752011936438014	compatibility	number
 SINH of very large number overflow behavior differs by platform	=SINH(1000)	#NUM!	compatibility	error
-SINH imaginary input note: GS does not support imaginary numbers	=SINH(-710)	#NUM!	compatibility	error
 SINH of negative symmetry: SINH(-x) equals -SINH(x)	=SINH(-1)	-1.1752011936438014	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 square root of 9	=SQRT(9)	3	official	number
 positive integer returns exact root	=SQRT(4)	2	edge	number
 positive non-perfect square	=SQRT(2)	1.4142135623730951	edge	number
@@ -1848,7 +1709,6 @@ SQRT nested inside SUMSQ-equivalent	=SQRT(SUMSQ(3,4))	5	nested	number
 empty string in numeric context — GS coerces to 0, Excel may error	=SQRT("")	0	compatibility	number
 non-numeric text argument	=SQRT("abc")	#VALUE!	compatibility	error
 very large number near float limit	=SQRT(1e308)	1e+154	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 square root of 9 times pi	=SQRTPI(9)	5.317361552716548	official	number
 SQRTPI of 1 equals sqrt of pi	=SQRTPI(1)	1.7724538509055159	edge	number
 SQRTPI of 0 returns 0	=SQRTPI(0)	0	edge	number
@@ -1870,7 +1730,6 @@ SQRTPI nested inside ROUND	=ROUND(SQRTPI(2),4)	2.5066	nested	number
 empty string argument — GS coerces to 0, Excel may differ	=SQRTPI("")	0	compatibility	number
 non-numeric text argument	=SQRTPI("abc")	#VALUE!	compatibility	error
 SQRTPI result versus manual calculation precision	=SQRTPI(1)-SQRT(PI())	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 SUBTOTAL AVERAGE (code 1) of a range	=SUBTOTAL(1,{1,2,3,4,5})	#VALUE!	official	error
 SUBTOTAL COUNT (code 2) of a range	=SUBTOTAL(2,{1,2,3,4,5})	#VALUE!	official	error
 SUBTOTAL COUNTA (code 3) of a range	=SUBTOTAL(3,{"a","b","c"})	#VALUE!	official	error
@@ -1889,7 +1748,6 @@ code 9 SUM skips text in range	=SUBTOTAL(9,{1,"two",3})	#VALUE!	coercion	error
 code 2 COUNT skips text in range	=SUBTOTAL(2,{1,"two",3})	#VALUE!	coercion	error
 code 3 COUNTA counts text in range	=SUBTOTAL(3,{1,"two",3})	#VALUE!	coercion	error
 no arguments	=SUBTOTAL()	#N/A	error	error
-only function code, no range	=SUBTOTAL(9)	0	error	number
 invalid function code 0	=SUBTOTAL(0,{1,2,3})	#VALUE!	error	error
 invalid function code 200	=SUBTOTAL(200,{1,2,3})	#VALUE!	error	error
 error propagates — NA in range	=SUBTOTAL(9,{1,NA(),3})	#VALUE!	error	error
@@ -1901,7 +1759,6 @@ code 109 SUM skipping hidden vs code 9 — same in inline array context	=SUBTOTA
 code 6 PRODUCT of range	=SUBTOTAL(6,{2,3,4})	#VALUE!	compatibility	error
 code 10 VAR of range	=SUBTOTAL(10,{2,4,6,8})	#VALUE!	compatibility	error
 code 11 VARP of range	=SUBTOTAL(11,{2,4,6,8})	#VALUE!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 sum of range of numbers	=SUM({1,2,3,4,5})	15	official	number
 sum of individual arguments	=SUM(1,2,3,4,5)	15	official	number
 sum of mixed range and value	=SUM(1,2,{3,4,5})	15	official	number
@@ -1913,11 +1770,8 @@ sum of negative numbers	=SUM({-1,-2,-3})	-6	edge	number
 sum of single number returns that number	=SUM(5)	5	edge	number
 boolean TRUE coerces to 1 in SUM	=SUM(TRUE,FALSE,TRUE)	2	coercion	number
 text that looks like number coerces in SUM	=SUM("1","2","3")	6	coercion	number
-mixed types in array — text skipped	=SUM({1,"two",TRUE,4})	5	coercion	number
-empty string in SUM — GS treats as 0	=SUM("",1,2)	#VALUE!	coercion	error
 negative numeric string coerces	=SUM("-3",2)	-1	coercion	number
 no arguments	=SUM()	#N/A	error	error
-non-numeric text in inline array	=SUM({"abc","def"})	0	error	number
 error propagates — division by zero in SUM	=SUM(1/0,2)	#DIV/0!	error	error
 NA propagates through SUM	=SUM(NA(),1)	#N/A	error	error
 IFERROR wrapping SUM of error-containing range	=IFERROR(SUM(NA(),1),"fallback")	fallback	nested	string
@@ -1926,8 +1780,6 @@ SUM nested inside ABS	=ABS(SUM({-1,-2,-3}))	6	nested	number
 ROUND of SUM result	=ROUND(SUM({1.1,2.2,3.3}),1)	6.6	nested	number
 empty string skipped vs coerced — GS skips text in arrays, Excel may differ	=SUM({1,"",3})	4	compatibility	number
 large float precision — SUM of many small values	=SUM({0.1,0.2,0.3,0.4})	1	compatibility	number
-boolean array coercion — GS counts TRUE as 1, Excel same	=SUM({TRUE,TRUE,FALSE})	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 sum numbers greater than 20	=SUMIF({10,20,30,40},">20")	70	official	number
 sum values where label equals Paid	=SUMIF({"Paid","Unpaid","Paid"},{"Paid"},{100,200,300})	#N/A	official	error
 sum with no matching criteria	=SUMIF({"a","b","c"},"z",{1,2,3})	#N/A	edge	error
@@ -1951,7 +1803,6 @@ wildcard case sensitivity — GS case-insensitive, Excel case-sensitive	=SUMIF({
 single-char wildcard matching	=SUMIF({"abc","aXc","azc"},"a?c",{1,2,3})	#N/A	compatibility	error
 empty string criterion matches empty cells — behavior may differ	=SUMIF({"","a",""},"",{10,20,30})	#N/A	compatibility	error
 tilde escapes wildcard — literal question mark match	=SUMIF({"a?","ab","a?"},"a~?",{1,2,3})	#N/A	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 sum values where criteria range exceeds 20	=SUMIFS({5,10,15,20},{10,20,30,40},">20")	#N/A	official	error
 sum values with two criteria	=SUMIFS({5,10,15,20},{10,20,30,40},">20",{1,2,3,4},"<4")	#N/A	official	error
 sum values where criterion matches Yes	=SUMIFS({100,200,300},{"Yes","No","Yes"},"Yes")	#N/A	official	error
@@ -1976,7 +1827,6 @@ wildcard case sensitivity — GS case-insensitive, Excel case-sensitive	=SUMIFS(
 single-char wildcard in second criterion	=SUMIFS({10,20,30},{"abc","aXc","azc"},"a?c",{1,2,3},">0")	#N/A	compatibility	error
 empty string criterion matches blanks — GS vs Excel behavior may differ	=SUMIFS({10,20,30},{"","a",""},"")	#N/A	compatibility	error
 tilde escapes wildcard in criterion	=SUMIFS({1,2,3},{"a?","ab","a?"},"a~?")	#N/A	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 sum of squares of a range	=SUMSQ({1,2,3,4,5})	55	official	number
 sum of squares of individual arguments	=SUMSQ(1,2,3,4,5)	55	official	number
 sum of squares of mixed range and value	=SUMSQ(1,2,{3,4,5})	55	official	number
@@ -1991,7 +1841,6 @@ text that looks like number coerces	=SUMSQ("3","4")	25	coercion	number
 negative numeric text string coerces	=SUMSQ("-3","4")	25	coercion	number
 mixed types in array — text skipped	=SUMSQ({1,"two",3})	10	coercion	number
 no arguments	=SUMSQ()	#N/A	error	error
-non-numeric text argument	=SUMSQ("abc")	#VALUE!	error	error
 error propagates — division by zero	=SUMSQ(1/0,2)	#DIV/0!	error	error
 NA propagates through SUMSQ	=SUMSQ(NA(),1)	#N/A	error	error
 IFERROR wrapping SUMSQ of error input	=IFERROR(SUMSQ(NA()),"fallback")	fallback	nested	string
@@ -1999,9 +1848,7 @@ IF using SUMSQ result as condition	=IF(SUMSQ(3,4)=25,"pythagorean","not")	pythag
 SQRT of SUMSQ — computes hypotenuse	=SQRT(SUMSQ(3,4))	5	nested	number
 ROUND of SUMSQ result	=ROUND(SUMSQ(1.1,2.2),2)	6.05	nested	number
 empty string in inline array — GS may skip, Excel may error	=SUMSQ({1,"",3})	10	compatibility	number
-boolean array coercion — GS counts TRUE as 1	=SUMSQ({TRUE,TRUE,FALSE})	0	compatibility	number
 large number precision — sum of squares near float limit	=SUMSQ(1e154,1e154)	#NUM!	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 tangent of PI radians	=TAN(PI())	-1.2246467991473532e-16	official	number
 tangent of 1 radian	=TAN(1)	1.5574077246549023	official	number
 tangent of zero is zero	=TAN(0)	0	edge	number
@@ -2025,7 +1872,6 @@ ABS of TAN of negative angle	=ABS(TAN(-PI()/4))	0.9999999999999999	nested	number
 TAN of near PI/2 — very large value approaching infinity	=TAN(PI()/2-0.0001)	9999.999966661644	compatibility	number
 TAN of exactly PI — near-zero due to floating point	=TAN(PI())	-1.2246467991473532e-16	compatibility	number
 empty string argument — GS coerces to 0, Excel may differ	=TAN("")	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 hyperbolic tangent of 1	=TANH(1)	0.7615941559557649	official	number
 TANH of zero is zero	=TANH(0)	0	edge	number
 TANH of 1	=TANH(1)	0.7615941559557649	edge	number
@@ -2048,7 +1894,6 @@ TANH nested inside ABS	=ABS(TANH(-2))	0.9640275800758169	nested	number
 empty string argument — GS coerces to 0, Excel may differ	=TANH("")	0	compatibility	number
 TANH of very large negative value approaches -1	=TANH(-1e15)	-1	compatibility	number
 TANH symmetry — TANH(-x) equals negative TANH(x)	=TANH(-2)+TANH(2)	0	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 truncate pi to 2 decimal places	=TRUNC(3.141592654,2)	3.14	official	number
 truncate to integer (places=0)	=TRUNC(1.9,0)	1	official	number
 truncate with no places argument defaults to 0	=TRUNC(1.23)	1	official	number

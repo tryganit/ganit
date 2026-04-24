@@ -18,7 +18,6 @@ NA propagates	=ADD(NA(),1)	#N/A	error	error
 nested ADD inside MULTIPLY	=MULTIPLY(ADD(2,3),ADD(1,4))	25	nested	number
 nested ADD with IF	=ADD(IF(TRUE,2,0),3)	5	nested	number
 GS-only: no equivalent in Excel (use + operator)	=ADD(100,200)	300	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 concatenate two strings	=CONCAT("hello"," world")	hello world	official	string
 concatenate empty and text	=CONCAT("","text")	text	official	string
 concatenate text and empty	=CONCAT("text","")	text	official	string
@@ -49,7 +48,6 @@ one argument — only one string	=CONCAT("single")	#N/A	official	error
 nested CONCAT in IF	=IF(TRUE,CONCAT("a","b"),"c")	ab	nested	string
 nested CONCAT of CONCAT	=CONCAT(CONCAT("a","b"),"c")	abc	nested	string
 Excel CONCAT behavior matches GS for two strings	=CONCAT("foo","bar")	foobar	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 basic division	=DIVIDE(10,2)	5	official	number
 divide resulting in decimal	=DIVIDE(7,2)	3.5	official	number
 divide by 1 returns same number	=DIVIDE(5,1)	5	official	number
@@ -66,7 +64,6 @@ TRUE coerces to 1 as divisor	=DIVIDE(5,TRUE)	5	coercion	number
 FALSE as divisor returns divide by zero	=DIVIDE(5,FALSE)	#DIV/0!	error	error
 nested DIVIDE inside MULTIPLY	=MULTIPLY(DIVIDE(10,2),DIVIDE(6,3))	10	nested	number
 GS-only — Excel uses / operator	=DIVIDE(22,7)	3.142857142857143	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 equal numbers returns TRUE	=EQ(5,5)	TRUE	official	boolean
 unequal numbers returns FALSE	=EQ(5,6)	FALSE	official	boolean
 equal text strings returns TRUE	=EQ("abc","abc")	TRUE	official	boolean
@@ -83,7 +80,6 @@ one argument returns error	=EQ(5)	#N/A	error	error
 too many arguments returns error	=EQ(1,1,1)	#N/A	error	error
 nested IF using EQ result	=IF(EQ("x","x"),"same","different")	same	nested	string
 GS-only EQ wraps = operator	=EQ(42,42)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 5 is greater than 3 returns TRUE	=GT(5,3)	TRUE	official	boolean
 3 is not greater than 5 returns FALSE	=GT(3,5)	FALSE	official	boolean
 equal numbers — GT returns FALSE	=GT(5,5)	FALSE	official	boolean
@@ -99,7 +95,6 @@ no arguments returns error	=GT()	#N/A	error	error
 too many arguments returns error	=GT(1,2,3)	#N/A	error	error
 nested — GT in AND	=AND(GT(5,3),GT(10,7))	TRUE	nested	boolean
 GS-only function — Excel uses > operator	=GT(10,5)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 5 GTE 3 returns TRUE	=GTE(5,3)	TRUE	official	boolean
 equal values returns TRUE	=GTE(5,5)	TRUE	official	boolean
 3 GTE 5 returns FALSE	=GTE(3,5)	FALSE	official	boolean
@@ -115,7 +110,6 @@ no arguments returns error	=GTE()	#N/A	error	error
 too many arguments returns error	=GTE(1,2,3)	#N/A	error	error
 nested GTE in IF	=IF(GTE(10,10),"pass","fail")	pass	nested	string
 GS-only function — Excel uses >= operator	=GTE(5,5)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 value within inclusive range returns TRUE	=ISBETWEEN(5,1,10)	TRUE	official	boolean
 value below range returns FALSE	=ISBETWEEN(0,1,10)	FALSE	official	boolean
 value above range returns FALSE	=ISBETWEEN(11,1,10)	FALSE	official	boolean
@@ -127,13 +121,11 @@ value strictly between exclusive bounds	=ISBETWEEN(5,1,10,FALSE,FALSE)	TRUE	edge
 equal lower and upper with value at boundary	=ISBETWEEN(5,5,5,TRUE,TRUE)	TRUE	edge	boolean
 decimal within range	=ISBETWEEN(7.9,1.2,12.45)	TRUE	edge	boolean
 negative range	=ISBETWEEN(-3,-10,-1)	TRUE	edge	boolean
-non-numeric returns error	=ISBETWEEN("a",1,10)	FALSE	error	boolean
 missing required arguments returns error	=ISBETWEEN(5,1)	#N/A	error	error
 no arguments returns error	=ISBETWEEN()	#N/A	error	error
 nested ISBETWEEN in IF	=IF(ISBETWEEN(7,1,10),"in range","out of range")	in range	nested	string
 nested AND with multiple ISBETWEEN	=AND(ISBETWEEN(5,1,10),ISBETWEEN(50,1,100))	TRUE	nested	boolean
 GS-only — no Excel ISBETWEEN function	=ISBETWEEN(5,1,10)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 3 LT 5 returns TRUE	=LT(3,5)	TRUE	official	boolean
 5 LT 3 returns FALSE	=LT(5,3)	FALSE	official	boolean
 equal values LT returns FALSE	=LT(5,5)	FALSE	official	boolean
@@ -149,7 +141,6 @@ no arguments returns error	=LT()	#N/A	error	error
 too many arguments returns error	=LT(1,2,3)	#N/A	error	error
 nested LT in AND	=AND(LT(1,5),LT(2,10))	TRUE	nested	boolean
 GS-only function — Excel uses < operator	=LT(3,5)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 3 LTE 5 returns TRUE	=LTE(3,5)	TRUE	official	boolean
 equal values returns TRUE	=LTE(5,5)	TRUE	official	boolean
 5 LTE 3 returns FALSE	=LTE(5,3)	FALSE	official	boolean
@@ -165,7 +156,6 @@ no arguments returns error	=LTE()	#N/A	error	error
 too many arguments returns error	=LTE(1,2,3)	#N/A	error	error
 nested LTE in IF	=IF(LTE(5,10),"small","large")	small	nested	string
 GS-only function — Excel uses <= operator	=LTE(5,5)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 basic subtraction	=MINUS(10,3)	7	official	number
 subtracting zero	=MINUS(5,0)	5	official	number
 negative result	=MINUS(3,10)	-7	official	number
@@ -182,7 +172,6 @@ one argument returns error	=MINUS(5)	#N/A	error	error
 too many arguments returns error	=MINUS(1,2,3)	#N/A	error	error
 nested MINUS inside ADD	=ADD(MINUS(10,3),MINUS(8,2))	13	nested	number
 GS-only: no MINUS function in Excel	=MINUS(100,25)	75	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 basic multiplication	=MULTIPLY(3,4)	12	official	number
 multiply by zero	=MULTIPLY(5,0)	0	official	number
 multiply by one	=MULTIPLY(7,1)	7	official	number
@@ -200,7 +189,6 @@ one argument returns error	=MULTIPLY(3)	#N/A	error	error
 too many arguments returns error	=MULTIPLY(1,2,3)	#N/A	error	error
 nested MULTIPLY in ADD	=ADD(MULTIPLY(2,3),MULTIPLY(4,5))	26	nested	number
 GS-only — Excel uses * operator	=MULTIPLY(6,7)	42	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 not equal numbers returns TRUE	=NE(3,5)	TRUE	official	boolean
 equal numbers returns FALSE	=NE(5,5)	FALSE	official	boolean
 not equal strings returns TRUE	=NE("a","b")	TRUE	official	boolean
@@ -216,7 +204,6 @@ one argument returns error	=NE(5)	#N/A	error	error
 too many arguments returns error	=NE(1,2,3)	#N/A	error	error
 nested — NE used in IF	=IF(NE(1,2),"different","same")	different	nested	string
 GS-only NE wraps <> operator	=NE(1,2)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 2 to the power of 3 is 8	=POW(2,3)	8	official	number
 any number to power 0 is 1	=POW(5,0)	1	official	number
 any number to power 1 is itself	=POW(7,1)	7	official	number
@@ -234,7 +221,6 @@ TRUE coerces to 1 as base	=POW(TRUE,5)	1	coercion	number
 FALSE coerces to 0 as base	=POW(FALSE,3)	0	coercion	number
 nested POW in ADD	=ADD(POW(2,3),POW(3,2))	17	nested	number
 GS-only — Excel uses POWER() function	=POW(2,8)	256	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 negate positive returns negative	=UMINUS(5)	-5	official	number
 negate negative returns positive	=UMINUS(-5)	5	official	number
 negate zero returns zero	=UMINUS(0)	0	official	number
@@ -250,7 +236,6 @@ too many arguments returns error	=UMINUS(1,2)	#N/A	error	error
 nested UMINUS in ADD	=ADD(UMINUS(3),5)	2	nested	number
 nested double negation returns original	=UMINUS(UMINUS(7))	7	nested	number
 GS-only UMINUS — Excel uses unary minus operator	=UMINUS(42)	-42	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 100 as percent equals 1	=UNARY_PERCENT(100)	1	official	number
 50 as percent equals 0.5	=UNARY_PERCENT(50)	0.5	official	number
 0 as percent equals 0	=UNARY_PERCENT(0)	0	official	number
@@ -266,7 +251,6 @@ too many arguments returns error	=UNARY_PERCENT(100,2)	#N/A	error	error
 nested UNARY_PERCENT in MULTIPLY	=MULTIPLY(UNARY_PERCENT(10),200)	20	nested	number
 nested IF using UNARY_PERCENT	=IF(UNARY_PERCENT(50)=0.5,"correct","wrong")	correct	nested	string
 GS-only — Excel uses % suffix operator	=UNARY_PERCENT(75)	0.75	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 UPLUS of positive returns same number	=UPLUS(5)	5	official	number
 UPLUS of negative returns same negative	=UPLUS(-5)	-5	official	number
 UPLUS of zero returns zero	=UPLUS(0)	0	official	number

@@ -359,6 +359,7 @@ conformance_tsv_test!(database_conformance,    "database.tsv");
 conformance_tsv_test!(array_conformance,       "array.tsv");
 conformance_tsv_test!(filter_conformance,      "filter.tsv");
 conformance_tsv_test!(web_conformance,         "web.tsv");
+conformance_tsv_test!(google_conformance,      "google.tsv");
 
 #[test]
 #[ignore = "financial fixtures are pending implementation"]
@@ -394,7 +395,7 @@ fn generate_conformance_report() {
     let categories = [
         "math", "logical", "info", "statistical", "operator", "text",
         "date", "engineering", "lookup", "parser", "database",
-        "array", "filter", "web", "financial",
+        "array", "filter", "web", "google", "financial",
     ];
 
     for cat in &categories {

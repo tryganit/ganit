@@ -18,7 +18,6 @@ ENCODEURL nested inside HYPERLINK	=HYPERLINK("https://example.com?q="&ENCODEURL(
 ENCODEURL not available in Excel for Web or Mac	=ENCODEURL("hello world")	hello%20world	compatibility	string
 ENCODEURL both platforms encode space as %20	=ENCODEURL("hello world")	hello%20world	compatibility	string
 ENCODEURL both platforms encode ampersand as %26	=ENCODEURL("a&b")	a%26b	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 HYPERLINK with URL and link label	=HYPERLINK("https://www.google.com","Google")	Google	official	string
 HYPERLINK with https URL only omitted label shows URL	=HYPERLINK("https://example.com")	https://example.com	official	string
 HYPERLINK with mailto protocol	=HYPERLINK("mailto:test@example.com","Email us")	Email us	official	string
@@ -37,7 +36,6 @@ HYPERLINK inside IF returns correct link	=IF(TRUE,HYPERLINK("https://example.com
 HYPERLINK GS allows aim: protocol Excel does not	=HYPERLINK("https://example.com","safe link")	safe link	compatibility	string
 HYPERLINK Excel supports UNC paths GS does not	=HYPERLINK("https://example.com","portable")	portable	compatibility	string
 HYPERLINK returns link label in both platforms when label given	=HYPERLINK("https://example.com","My Link")	My Link	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 ISURL valid https URL returns TRUE	=ISURL("https://www.google.com")	TRUE	official	boolean
 ISURL valid http URL returns TRUE	=ISURL("http://example.com")	TRUE	official	boolean
 ISURL URL without protocol returns TRUE (GS infers)	=ISURL("www.google.com")	TRUE	official	boolean

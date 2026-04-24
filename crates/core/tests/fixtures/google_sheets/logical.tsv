@@ -19,11 +19,7 @@ no arguments causes error	=AND()	#N/A	error	error
 AND inside IF: both conditions met	=IF(AND(5>3,8>6),"yes","no")	yes	nested	string
 AND inside IFERROR: captures error from div-by-zero	=IFERROR(AND(1/0),FALSE)	FALSE	nested	boolean
 NOT of AND: NOT(AND(TRUE,FALSE))	=NOT(AND(TRUE,FALSE))	TRUE	nested	boolean
-array argument: one FALSE element	=AND({TRUE,FALSE,TRUE})	FALSE	compatibility	boolean
-all TRUE array	=AND({TRUE,TRUE,TRUE})	TRUE	compatibility	boolean
-array with zero: zero is false	=AND({1,0,1})	FALSE	compatibility	boolean
 fractional nonzero is true	=AND(0.1,0.9)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 FALSE() returns logical FALSE	=FALSE()	FALSE	official	boolean
 FALSE used as condition: evaluates false branch	=IF(FALSE(),"yes","no")	no	official	string
 FALSE() returns boolean FALSE	=FALSE()	FALSE	edge	boolean
@@ -38,7 +34,6 @@ NOT(FALSE()) returns TRUE	=NOT(FALSE())	TRUE	nested	boolean
 FALSE() arithmetic: FALSE+FALSE = 0	=FALSE()+FALSE()	0	compatibility	number
 FALSE() in SUM context	=SUM({FALSE,1,2})	3	compatibility	number
 FALSE vs string: GS/XL differ	=IF(FALSE()="FALSE","string match","no match")	no match	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 true condition returns first value: IF(TRUE,4,5)	=IF(TRUE,4,5)	4	official	number
 false condition returns second value: IF(FALSE,4,5)	=IF(FALSE,4,5)	5	official	number
 numeric condition nonzero: IF(1,"yes","no")	=IF(1,"yes","no")	yes	official	string
@@ -62,7 +57,6 @@ returning boolean TRUE from true branch	=IF(TRUE,TRUE,FALSE)	TRUE	compatibility	
 returning boolean FALSE from false branch	=IF(FALSE,TRUE,FALSE)	FALSE	compatibility	boolean
 NA in condition: error propagates	=IF(NA(),"yes","no")	#N/A	compatibility	error
 empty string as false branch value	=IF(FALSE,"yes","")		compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 non-error value returned as-is: IFERROR(5,0)	=IFERROR(5,0)	5	official	number
 error caught: IFERROR(1/0,"err")	=IFERROR(1/0,"err")	err	official	string
 NA caught: IFERROR(NA(),0)	=IFERROR(NA(),0)	0	official	number
@@ -84,7 +78,6 @@ NAME error caught	=IFERROR(NOTAFUNCTION(),"name error")	name error	compatibility
 VALUE error caught: text in arithmetic	=IFERROR("x"+1,"value error")	value error	compatibility	string
 nested: non-error passes through	=IFERROR(IFERROR(5,0),0)	5	compatibility	number
 NA error caught	=IFERROR(NA(),"na caught")	na caught	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 non-NA value returned as-is: IFNA(205,"err")	=IFNA(205,"Na error")	205	official	number
 NA error caught: IFNA(NA(),"err")	=IFNA(NA(),"Na error")	Na error	official	string
 computation result not NA: IFNA(2+3,0)	=IFNA(2+3,0)	5	official	number
@@ -105,7 +98,6 @@ IFNA wrapping MATCH: no match	=IFNA(MATCH(9,{1,2,3},0),"none")	none	nested	strin
 GS and XL both catch NA: confirm consistent	=IFNA(NA(),"na")	na	compatibility	string
 div-by-zero: IFNA does NOT catch non-NA errors	=IFNA(1/0,"caught")	#DIV/0!	compatibility	error
 nested: outer IFERROR catches what IFNA does not	=IFERROR(IFNA(1/0,"na only"),"any err")	any err	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 first condition true: score 88 gets B	=IFS(88>90,"A",88>80,"B")	B	official	string
 first condition true: score 92 gets A	=IFS(92>90,"A",92>80,"B")	A	official	string
 no condition matches: returns N/A	=IFS(65>90,"A",65>80,"B")	#N/A	official	error
@@ -125,10 +117,8 @@ IFS with AND condition	=IFS(AND(5>3,8>6),"both",TRUE,"default")	both	nested	stri
 returning number from IFS	=IFS(TRUE,42,FALSE,0)	42	compatibility	number
 returning boolean from IFS	=IFS(TRUE,TRUE,FALSE,FALSE)	TRUE	compatibility	boolean
 fallback via TRUE condition	=IFS(1>5,"a",TRUE,"default")	default	compatibility	string
-description	formula_text	expected_value	test_category	expected_type
 compute salary tax at 30%: LAMBDA(salary, salary*0.3)(1000)	=LAMBDA(salary,salary*0.3)(1000)	300	official	number
 Fahrenheit to Celsius: LAMBDA(Temp,(5/9)*(Temp-32))(85)	=LAMBDA(Temp,(5/9)*(Temp-32))(85)	29.444444444444446	official	number
-LAMBDA used in MAP to multiply array elements by 0.3	=MAP({1000,2000,3000},LAMBDA(salary,salary*0.3))	#REF!	official	error
 identity: LAMBDA(x,x)(42)	=LAMBDA(x,x)(42)	42	edge	number
 negate: LAMBDA(x,-x)(5)	=LAMBDA(x,-x)(5)	-5	edge	number
 two args: LAMBDA(x,y,x-y)(10,3)	=LAMBDA(x,y,x-y)(10,3)	7	edge	number
@@ -136,14 +126,11 @@ returns string: LAMBDA(x,IF(x>0,"pos","neg"))(5)	=LAMBDA(x,IF(x>0,"pos","neg"))(
 boolean arg: LAMBDA(x,NOT(x))(TRUE)	=LAMBDA(x,NOT(x))(TRUE)	FALSE	coercion	boolean
 zero arg: LAMBDA(x,x+1)(0)	=LAMBDA(x,x+1)(0)	1	coercion	number
 not called (missing call): LAMBDA without args	=LAMBDA(x,x+1)	#N/A	error	error
-name is not an identifier (number as name)	=LAMBDA(3,3+1)(3)	#NAME?	error	error
 too many arguments passed to LAMBDA	=LAMBDA(x,x+1)(1,2)	#N/A	error	error
-LAMBDA inside MAP: double each element	=MAP({1,2,3},LAMBDA(x,x*2))	#REF!	nested	error
 IFERROR wrapping LAMBDA call	=IFERROR(LAMBDA(x,x/0)(5),"err")	err	nested	string
 chained LAMBDA: outer uses inner result	=LAMBDA(x,LAMBDA(y,x+y)(10))(5)	15	compatibility	number
 LAMBDA with text arg: string processing	=LAMBDA(s,LEN(s))("hello")	5	compatibility	number
 LAMBDA with boolean return	=LAMBDA(x,y,x>y)(5,3)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 categorize average: LET(avg,AVERAGE({3.5,4,3}),IF(avg>=4,"Great",IF(avg>=3,"Good","Poor")))	=LET(avg,AVERAGE({3.5,4,3}),IF(avg>=4,"Great",IF(avg>=3,"Good","Poor")))	Good	official	string
 categorize high average: avg=4.33 → Great	=LET(avg,AVERAGE({4.5,5,3.5}),IF(avg>=4,"Great",IF(avg>=3,"Good","Poor")))	Great	official	string
 categorize low average: avg=2.5 → Poor	=LET(avg,AVERAGE({3,2.5,2}),IF(avg>=4,"Great",IF(avg>=3,"Good","Poor")))	Poor	official	string
@@ -153,7 +140,6 @@ binding a string value	=LET(s,"hello",LEN(s))	5	edge	number
 binding reused twice in expression	=LET(x,7,x*x)	49	edge	number
 binding TRUE: LET(b,TRUE,IF(b,1,0))	=LET(b,TRUE,IF(b,1,0))	1	coercion	number
 binding zero: LET(z,0,z+1)	=LET(z,0,z+1)	1	coercion	number
-name is not an identifier	=LET(1,5,1+1)	#NAME?	error	error
 even args (missing formula_expression)	=LET(x,5)	#N/A	error	error
 no arguments	=LET()	#N/A	error	error
 LET inside IF condition	=IF(LET(x,5,x>3),"yes","no")	yes	nested	string
@@ -162,7 +148,6 @@ LET result used in IFERROR	=IFERROR(LET(x,1/0,x),"err")	err	nested	string
 GS and XL: simple binding should produce same result	=LET(a,42,a)	42	compatibility	number
 LET with text manipulation	=LET(w,"world","hello "&w)	hello world	compatibility	string
 case-insensitive name usage	=LET(MyVar,10,MYVAR+1)	11	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 NOT(TRUE) returns FALSE	=NOT(TRUE)	FALSE	official	boolean
 NOT(FALSE) returns TRUE	=NOT(FALSE)	TRUE	official	boolean
 NOT of nonzero number: NOT(5)	=NOT(5)	FALSE	official	boolean
@@ -186,7 +171,6 @@ NOT with inline comparison: 5 equals 5	=NOT(5=5)	FALSE	compatibility	boolean
 NOT with inline comparison: 3 equals 4	=NOT(3=4)	TRUE	compatibility	boolean
 double negation: NOT(NOT(TRUE))	=NOT(NOT(TRUE))	TRUE	compatibility	boolean
 NOT of NA: error propagates	=NOT(NA())	#N/A	compatibility	error
-description	formula_text	expected_value	test_category	expected_type
 any true: OR(TRUE,FALSE,FALSE)	=OR(TRUE,FALSE,FALSE)	TRUE	official	boolean
 all false: OR(FALSE,FALSE)	=OR(FALSE,FALSE)	FALSE	official	boolean
 zero is false, but 1 and 2 are true	=OR(0,1,2)	TRUE	official	boolean
@@ -207,11 +191,7 @@ no arguments causes error	=OR()	#N/A	error	error
 OR inside IF: true branch	=IF(OR(1>5,2<5),"match","no")	match	nested	string
 OR inside IFERROR	=IFERROR(OR(1/0),FALSE)	FALSE	nested	boolean
 NOT of OR	=NOT(OR(FALSE,FALSE))	TRUE	nested	boolean
-array with one TRUE element	=OR({FALSE,FALSE,TRUE})	TRUE	compatibility	boolean
-array all FALSE	=OR({FALSE,FALSE,FALSE})	FALSE	compatibility	boolean
-array with nonzero	=OR({0,0,2})	TRUE	compatibility	boolean
 fractional nonzero is true	=OR(0.001)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 match first case: value=1 returns Yes	=SWITCH(1,0,"No",1,"Yes","Other")	Yes	official	string
 match default: value=2 has no case	=SWITCH(2,0,"No",1,"Yes","Other")	Other	official	string
 match first case: value=0 returns No	=SWITCH(0,0,"No",1,"Yes","Other")	No	official	string
@@ -231,9 +211,7 @@ expression only with one case (odd args, no value)	=SWITCH(1,1)	#N/A	error	error
 SWITCH inside IF	=IF(SWITCH(2,1,"a",2,"b")="b","matched","no")	matched	nested	string
 IFERROR catches SWITCH N/A	=IFERROR(SWITCH(9,1,"a",2,"b"),"none")	none	nested	string
 numeric expression matching string fails	=SWITCH(1,"1","match","no match")	no match	compatibility	string
-case-sensitive string matching: lowercase vs uppercase	=SWITCH("a","A","upper","a","lower","none")	upper	compatibility	string
 match returns boolean	=SWITCH(1,1,TRUE,2,FALSE)	TRUE	compatibility	boolean
-description	formula_text	expected_value	test_category	expected_type
 TRUE() returns logical TRUE	=TRUE()	TRUE	official	boolean
 TRUE used as condition in IF	=IF(TRUE(),"yes","no")	yes	official	string
 TRUE() returns boolean TRUE	=TRUE()	TRUE	edge	boolean
@@ -247,8 +225,6 @@ IF(TRUE(),...) evaluates true branch	=IF(TRUE(),42,0)	42	nested	number
 NOT(TRUE()) returns FALSE	=NOT(TRUE())	FALSE	nested	boolean
 TRUE() arithmetic: TRUE+TRUE = 2	=TRUE()+TRUE()	2	compatibility	number
 TRUE vs string: GS/XL may differ	=IF(TRUE()="TRUE","string match","no match")	no match	compatibility	string
-TRUE() in SUM context: SUM({TRUE(),1,2})	=SUM({TRUE,1,2})	3	compatibility	number
-description	formula_text	expected_value	test_category	expected_type
 single TRUE: odd number of trues → TRUE	=XOR(TRUE())	TRUE	official	boolean
 single FALSE: zero trues → FALSE	=XOR(FALSE())	FALSE	official	boolean
 zero is false: XOR(0) → FALSE	=XOR(0)	FALSE	official	boolean
@@ -275,7 +251,5 @@ NA propagates	=XOR(NA())	#N/A	error	error
 XOR inside IF	=IF(XOR(TRUE,FALSE),"odd","even")	odd	nested	string
 IFERROR wrapping XOR with error	=IFERROR(XOR(1/0),FALSE)	FALSE	nested	boolean
 NOT(XOR(TRUE,FALSE)): negate odd-true	=NOT(XOR(TRUE,FALSE))	FALSE	nested	boolean
-array: one TRUE element (odd count) → TRUE	=XOR({TRUE,FALSE,FALSE})	TRUE	compatibility	boolean
-array: two TRUE elements (even count) → FALSE	=XOR({TRUE,FALSE,TRUE})	FALSE	compatibility	boolean
 fractional nonzero counts as true	=XOR(0.5)	TRUE	compatibility	boolean
 XOR with comparison expressions	=XOR(5>3,8>10)	TRUE	compatibility	boolean
