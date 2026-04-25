@@ -181,7 +181,8 @@ fn collect_cashflows_with_guess(args: &[Value]) -> Result<(Vec<f64>, f64), Value
         return Ok((cfs, guess));
     }
 
-    // Case 2: all args are scalars — treat them all as cash flows (skip booleans)
+    // Case 2: all args are scalars — treat them all as cash flows (skip booleans only;
+    // text as a scalar arg causes #VALUE! in GS, which to_number propagates naturally)
     let mut cfs = Vec::with_capacity(args.len());
     for arg in args {
         match arg {
@@ -193,7 +194,8 @@ fn collect_cashflows_with_guess(args: &[Value]) -> Result<(Vec<f64>, f64), Value
 }
 
 /// Flatten a `Vec<Value>` (may be nested arrays) into f64 cash flows.
-/// Boolean values are skipped (Excel/GS ignore them in IRR arrays).
+/// Booleans and text strings are skipped — Excel/GS ignore non-numeric
+/// types in IRR arrays rather than coercing them.
 fn flatten_values(items: Vec<Value>) -> Result<Vec<f64>, Value> {
     let mut out = Vec::new();
     for v in items {
@@ -202,7 +204,7 @@ fn flatten_values(items: Vec<Value>) -> Result<Vec<f64>, Value> {
                 let sub = flatten_values(inner)?;
                 out.extend(sub);
             }
-            Value::Bool(_) => {} // ignored per Excel/GS semantics
+            Value::Bool(_) | Value::Text(_) => {} // ignored per Excel/GS semantics
             other => out.push(to_number(other)?),
         }
     }

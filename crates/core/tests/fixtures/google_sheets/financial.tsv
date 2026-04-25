@@ -983,3 +983,6 @@ unit=1 boundary: fraction/1 returns fraction as-is added to integer part	=DOLLAR
 nested DOLLARFR inside DOLLARFR using result as price	=DOLLARFR(DOLLARFR(1.125,16),8)	1.016	nested	number
 IRR for 5-period cash flow with initial investment of -4000 and guess 10%	=IRR({-4000,200,250,300,350},0.1)	-0.3524266235692171	official	number
 RATE with explicit guess=0.05	=RATE(12,-100,400,0,0,0.05)	0.22893307097709573	edge	number
+text-that-looks-like-number in cash flow array (ignored or error)	"=IRR({-1000,""200"",300,400,500})"	0.08896339469334472	coercion	number
+empty string in cash flow array (ignored or error)	"=IRR({-1000,"""",300,400,500})"	0.08896339469334472	coercion	number
+"Excel ignores text/logical in array; GS may differ: text ""200"" in cash flow"	"=IRR({-1000,""200"",200,200,200,300})"	-0.038372994640897294	compatibility	number

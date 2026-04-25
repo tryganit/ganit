@@ -1451,8 +1451,6 @@ text maturity date passed as string	"=COUPPCD(DATE(2011,1,25),""2011-11-15"",2,1
 negative rate returns #NUM!	=CUMIPMT(-0.1,10,1000,1,5,0)	#NUM!	error	error
 negative present value: pv<=0 returns #NUM!	=CUMPRINC(0.05,12,-1000,1,6,0)	#NUM!	error	error
 negative yield returns NUM error	=DURATION(DATE(2020,1,1),DATE(2030,1,1),0.05,-0.06,2)	#NUM!	error	error
-text-that-looks-like-number in cash flow array (ignored or error)	"=IRR({-1000,""200"",300,400,500})"	0.08896339469334472	coercion	number
-empty string in cash flow array (ignored or error)	"=IRR({-1000,"""",300,400,500})"	0.08896339469334472	coercion	number
 negative coupon returns error	=MDURATION(DATE(2010,1,1),DATE(2020,1,1),-0.08,0.09,2,0)	#NUM!	error	error
 MIRR with only negative cash flows (no positive income)	=MIRR({-1000,-200,-300},0.08,0.1)	#DIV/0!	error	error
 MIRR: logical TRUE in cash flow array — GS vs Excel differ on inclusion	=MIRR({-1000,TRUE,800,500},0.08,0.1)	0.1747340124470731	compatibility	number
@@ -1510,7 +1508,6 @@ MIRR: text values in cash flow — GS returns error, Excel ignores them	"=MIRR({
 NPV: logical values in array — Excel ignores booleans, GS may include them	=NPV(0.1,{TRUE,FALSE,1000,2000})	2561.98347107438	compatibility	number
 VDB factor 0: behavior may differ between GS and Excel	=VDB(1000,100,10,0,1,0)	#NUM!	compatibility	error
 period=life+1 boundary: one period beyond life end with different asset	=DB(2000,200,6,7)	#NUM!	compatibility	error
-"Excel ignores text/logical in array; GS may differ: text ""200"" in cash flow"	"=IRR({-1000,""200"",200,200,200,300})"	-0.038372994640897294	compatibility	number
 negative yield returns error	=MDURATION(DATE(2010,1,1),DATE(2020,1,1),0.08,-0.01,2,0)	#NUM!	error	error
 RECEIVED text date string instead of DATE() function	"=RECEIVED(""2010-01-01"",""2020-01-01"",1000,0.05)"	2000	coercion	number
 TBILLYIELD with text date string instead of DATE function	"=TBILLYIELD(""2020-01-01"",""2020-07-01"",98.45)"	0.031142042315226614	compatibility	number
