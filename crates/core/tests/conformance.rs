@@ -16,6 +16,7 @@
 use truecalc_core::{evaluate, ErrorKind, Value};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
+use chrono::NaiveDate;
 
 mod conformance_reporter;
 use conformance_reporter::{collect_tsv_fixture_results, ConformanceReport, KNOWN_DEVIATIONS};
@@ -144,6 +145,17 @@ fn flatten_array(v: &Value) -> Vec<Value> {
     }
 }
 
+/// Parse a GAS UTC ISO-8601 date string (e.g. "2011-05-15T07:00:00.000Z") to an
+/// Excel date serial (days since 1899-12-30). GAS serialises Date cell values as
+/// ISO strings; our evaluator returns them as Number serials — this bridge lets
+/// the conformance test treat them as equivalent.
+fn gas_iso_date_to_serial(s: &str) -> Option<f64> {
+    let date_part = s.split('T').next()?;
+    let date = NaiveDate::parse_from_str(date_part, "%Y-%m-%d").ok()?;
+    let epoch = NaiveDate::from_ymd_opt(1899, 12, 30)?;
+    Some(date.signed_duration_since(epoch).num_days() as f64)
+}
+
 pub fn values_match(actual: &Value, expected: &Value, expected_type: &str) -> bool {
     if expected_type == "array" {
         // expected is stored as Text(array_literal)
@@ -175,6 +187,16 @@ pub fn values_match(actual: &Value, expected: &Value, expected_type: &str) -> bo
         (Value::Text(s), Value::Number(b)) => {
             if let Ok(v) = s.trim().parse::<f64>() {
                 (v - b).abs() <= b.abs() * 1e-9 + 1e-10
+            } else {
+                false
+            }
+        }
+        // GAS artifact: COUPNCD/COUPPCD etc. return Number serials; GAS serialises
+        // Date cell values as UTC ISO-8601 strings. Convert the date part to an
+        // Excel serial and compare numerically.
+        (Value::Number(a), Value::Text(s)) => {
+            if let Some(serial) = gas_iso_date_to_serial(s) {
+                (a - serial).abs() <= 1.0
             } else {
                 false
             }
