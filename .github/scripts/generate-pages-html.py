@@ -90,6 +90,9 @@ tot_unit += core_unit
 tot_grand += core_unit
 tot_prop_fns = sum(prop_fns.values())
 
+# Total Rust test functions executed by nextest (shown in GitHub Checks)
+nextest_total = sum(int(s.get('tests', 0)) for s in root.findall('testsuite'))
+
 # ── Functions data ─────────────────────────────────────────────────────────────
 def esc(s):
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
@@ -235,7 +238,11 @@ print(f"""<!DOCTYPE html>
       (e.g. a locale difference or an unsupported edge case).<br><br>
       <strong>Property tests</strong> go further: for each formula category, randomly generated inputs
       are checked against mathematical invariants (e.g. <code>ABS(x) ≥ 0</code> for all x,
-      <code>SQRT(x)² ≈ x</code> for x &gt; 0). Each property runs {CASES:,} random cases per commit.
+      <code>SQRT(x)² ≈ x</code> for x &gt; 0). Each property runs {CASES:,} random cases per commit.<br><br>
+      <strong>About the totals:</strong> The <em>Total</em> column counts formula evaluations — each
+      conformance row and each property case counts as one. GitHub Checks reports
+      <strong>{nextest_total:,} Rust test functions</strong> (nextest), a different metric: one entry
+      per <code>#[test]</code> item regardless of how many formulas it evaluates internally.
     </div>
 
     <table>

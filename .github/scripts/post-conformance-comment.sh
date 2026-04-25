@@ -74,7 +74,6 @@ truecalc calculations match Google Sheets — ${passed}/${total} tests passing (
 ${category_section}
 **Total: ${passed}/${total} (${pct}%)**
 
-**Property tests:** 65 properties × 500 cases = 32,500 generated inputs — all passed
 "
 
 if [[ -n "$regression_section" ]]; then

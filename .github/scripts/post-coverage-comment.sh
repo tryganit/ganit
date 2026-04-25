@@ -131,6 +131,9 @@ footer = (
     f'| **{prop_total_cell}** | **~{total_grand:,}** |'
 )
 
+# Total Rust test functions reported by nextest (shown in GitHub Checks)
+nextest_total = sum(int(s.get('tests', 0)) for s in root.findall('testsuite'))
+
 table = '\n'.join(rows)
 
 print(f'''## Test Coverage by Category
@@ -140,7 +143,7 @@ print(f'''## Test Coverage by Category
 {table}
 {footer}
 
-<sub>Oracle: Google Sheets · ✓ = 100% passing · ⚠ = known deviation</sub>''')
+<sub>Oracle: Google Sheets · ✓ = 100% passing · ⚠ = known deviation · The ~{total_grand:,} total counts formula evaluations (each conformance row and each property case = 1). GitHub Checks reports {nextest_total:,} Rust test functions.</sub>''')
 PYEOF
 )
 
