@@ -963,3 +963,23 @@ future value: 200% rate, 12 periods, 100 payment, 400 present value	=FV(2,12,100
 period greater than nper returns error	=IPMT(0.1,13,12,1000)	#NUM!	error	error
 NPER with zero interest rate	=NPER(0,-200,1000)	5	edge	number
 RRI with fractional nper — GS supports, Excel may differ	=RRI(10.5,10,3)	-0.10833437505113597	compatibility	number
+IRR for cash flows with no guess (uses default 10%)	=IRR({-4000,200,250,300,350})	-0.3524266235692171	official	number
+FALSE in cash flows (treated as 0, ignored in Excel)	=IRR({-1000,FALSE,300,400,500})	0.08896339469334472	coercion	number
+Excel ignores TRUE as 1; GS may treat as 1: boolean in positive cash flow slot	=IRR({-500,TRUE,200,200,200})	0.097010257403273	compatibility	number
+convergence sensitivity: guess far from solution may diverge	=IRR({-70000,12000,15000,18000,21000,26000},0.9)	0.08663094803651268	compatibility	number
+RATE with beginning-of-period payments	=RATE(12,-100,400,0,1,0.1)	0.31724347887615895	edge	number
+unit=1: denominator of 1 means fraction part divided by 1	=DOLLARDE(1.5,1)	1.5	edge	number
+boolean TRUE as unit: TRUE coerced to 1	=DOLLARDE(1.5,TRUE)	1.5	coercion	number
+fractional unit truncated: 8.9 truncated to 8	=DOLLARDE(1.04,8.9)	1.05	coercion	number
+RATE with pv=0 and fv=0 — division edge case	=RATE(12,-100,0,0)	#NUM!	compatibility	error
+boolean TRUE coerced to 1 as unit argument	=DOLLARFR(1.5,TRUE)	1.5	coercion	number
+RATE nested in IFERROR for non-convergent case	"=IFERROR(RATE(12,1000,100),""no solution"")"	no solution	nested	string
+boolean TRUE in cash flows treated as 1 (ignored in Excel, treated as 1 in GS)	=IRR({-1000,TRUE,TRUE,500,600})	0.06394102980498532	coercion	number
+RATE with guess=0 vs default — convergence difference	=RATE(12,-100,400,0,0,0)	0.228933070977093	compatibility	number
+unit 1 (minimum valid unit): any decimal should return same value	=DOLLARFR(2.5,1)	2.5	edge	number
+RATE non-convergent: impossible parameters	=RATE(12,1000,100)	#NUM!	error	error
+DOLLARDE with 8ths: 100.01 in 8ths equals 100.125	=DOLLARDE(100.01,8)	100.0125	official	number
+unit=1 boundary: fraction/1 returns fraction as-is added to integer part	=DOLLARDE(2.07,1)	2.07	compatibility	number
+nested DOLLARFR inside DOLLARFR using result as price	=DOLLARFR(DOLLARFR(1.125,16),8)	1.016	nested	number
+IRR for 5-period cash flow with initial investment of -4000 and guess 10%	=IRR({-4000,200,250,300,350},0.1)	-0.3524266235692171	official	number
+RATE with explicit guess=0.05	=RATE(12,-100,400,0,0,0.05)	0.22893307097709573	edge	number
