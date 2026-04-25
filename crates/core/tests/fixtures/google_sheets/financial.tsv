@@ -1015,3 +1015,12 @@ MIRR: text values in cash flow — GS returns error, Excel ignores them	"=MIRR({
 NPV: logical values in array — Excel ignores booleans, GS may include them	=NPV(0.1,{TRUE,FALSE,1000,2000})	2561.98347107438	compatibility	number
 MIRR coercion: text numbers in cash flow array ignored by Excel but not GS	"=MIRR({-1000,""500"",800},0.08,0.1)"	-0.19999999999999996	coercion	number
 NPV with mixed types in array cash flow	"=NPV(0.1,{1000,""two"",TRUE,4000})"	4214.876033057851	coercion	number
+Sixth period depreciation with actual/actual basis (basis=1)	=AMORLINC(1000,DATE(1969,7,20),DATE(1969,8,20),100,6,0.15,1)	137.2602739726027	official	number
+First period depreciation (period=0) with default basis	=AMORLINC(1000,DATE(2010,1,1),DATE(2010,12,31),100,0,0.15)	150	edge	number
+IFERROR wrapping invalid basis	"=IFERROR(AMORLINC(1000,DATE(2010,1,1),DATE(2010,12,31),100,1,0.15,5),""invalid"")"	invalid	nested	string
+Basis out of range (5) returns error	=AMORLINC(1000,DATE(2010,1,1),DATE(2010,12,31),100,1,0.15,5)	#NUM!	error	error
+IFERROR wrapping purchase-date-after-period-end error	=IFERROR(AMORLINC(1000,DATE(2011,1,1),DATE(2010,12,31),100,1,0.15),0)	0	nested	number
+Fractional period less than 1 rounds up to 1	=AMORLINC(1000,DATE(2010,1,1),DATE(2010,12,31),100,0.5,0.15)	150	edge	number
+Rate as percentage (0.15) vs decimal: both platforms should treat equally	=AMORLINC(1000,DATE(2010,7,20),DATE(2010,8,20),100,6,0.15,4)	137.5	compatibility	number
+Purchase date after first_period_end returns error	=AMORLINC(1000,DATE(2010,12,31),DATE(2010,1,1),100,1,0.15)	#NUM!	error	error
+Sixth period depreciation with 30/360 basis (default)	=AMORLINC(1000,DATE(1969,7,20),DATE(1969,8,20),100,6,0.15)	137.5	official	number

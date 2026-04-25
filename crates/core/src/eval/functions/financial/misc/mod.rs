@@ -4,6 +4,8 @@
 /// NOMINAL, PDURATION, PPMT, RRI, SLN, SYD, VDB, XIRR, XNPV
 use crate::eval::coercion::to_number;
 use crate::eval::functions::check_arity;
+use crate::eval::functions::date::serial::serial_to_date;
+use crate::eval::functions::financial::bonds::yearfrac;
 use crate::types::{ErrorKind, Value};
 
 fn opt_number(args: &[Value], idx: usize, default: f64) -> Result<f64, Value> {
@@ -543,48 +545,56 @@ pub fn vdb_fn(args: &[Value]) -> Value {
 /// `AMORLINC(cost, date_purchased, first_period, salvage, period, rate, [basis])`
 ///
 /// French linear depreciation for each accounting period.
+/// Periods are 0-indexed: period 0 is prorated by date fraction, periods 1+ are full.
 pub fn amorlinc_fn(args: &[Value]) -> Value {
     if let Some(err) = check_arity(args, 6, 7) {
         return err;
     }
     let cost           = match to_number(args[0].clone()) { Ok(n) => n, Err(e) => return e };
-    let _date_purchased = match to_number(args[1].clone()) { Ok(n) => n, Err(e) => return e };
-    let _first_period  = match to_number(args[2].clone()) { Ok(n) => n, Err(e) => return e };
+    let date_purchased = match to_number(args[1].clone()) { Ok(n) => n, Err(e) => return e };
+    let first_period_s = match to_number(args[2].clone()) { Ok(n) => n, Err(e) => return e };
     let salvage        = match to_number(args[3].clone()) { Ok(n) => n, Err(e) => return e };
     let period         = match to_number(args[4].clone()) { Ok(n) => n, Err(e) => return e };
     let rate           = match to_number(args[5].clone()) { Ok(n) => n, Err(e) => return e };
-    let _basis         = match opt_number(args, 6, 0.0) { Ok(n) => n, Err(e) => return e };
+    let basis_raw      = match opt_number(args, 6, 0.0) { Ok(n) => n, Err(e) => return e };
+    let basis = basis_raw.floor() as i32;
 
-    if cost < salvage {
+    if cost < salvage || cost <= 0.0 || rate <= 0.0 {
         return Value::Error(ErrorKind::Num);
     }
-    if rate <= 0.0 || cost <= 0.0 {
+    if basis < 0 || basis > 4 {
+        return Value::Error(ErrorKind::Num);
+    }
+    if date_purchased > first_period_s {
         return Value::Error(ErrorKind::Num);
     }
 
-    let per = period.floor() as i64;
-    // AMORLINC: each full period depreciates at rate * cost
-    // Period 1: cost * rate (for the full first year of accounting period)
-    // Subsequent periods: cost * rate, until fully depreciated to salvage
-    let dep_per_period = cost * rate;
-    // Excel AMORLINC: life = INT((cost-salvage)/dep_per_period); period >= life returns 0
-    let life = ((cost - salvage) / dep_per_period).floor() as i64;
-
-    if per < 1 || per >= life {
+    // Fractional periods round up (GS ceiling semantics)
+    let per = period.ceil() as i64;
+    if per < 0 {
         return Value::Number(0.0);
     }
 
-    // Calculate cumulative depreciation before this period
-    let cumulative_before = dep_per_period * (per - 1) as f64;
-    let remaining = cost - salvage - cumulative_before;
+    // Period 0: prorated by the year-fraction from purchase to first_period end
+    let d_purch  = match serial_to_date(date_purchased) { Some(d) => d, None => return Value::Error(ErrorKind::Value) };
+    let d_first  = match serial_to_date(first_period_s) { Some(d) => d, None => return Value::Error(ErrorKind::Value) };
+    let frac     = yearfrac(d_purch, d_first, basis as u32);
+    let dep_full = cost * rate;
+    let first_dep = (dep_full * frac).min(cost - salvage).max(0.0);
+
+    if per == 0 {
+        return Value::Number(first_dep);
+    }
+
+    // Periods 1+: full dep_full each, capped at remaining
+    let cumulative_before = first_dep + (per - 1) as f64 * dep_full;
+    let remaining = (cost - salvage) - cumulative_before;
 
     if remaining <= 0.0 {
         return Value::Number(0.0);
     }
 
-    // This period's depreciation (capped at remaining)
-    let dep = dep_per_period.min(remaining);
-    Value::Number(dep)
+    Value::Number(dep_full.min(remaining))
 }
 
 // ---------------------------------------------------------------------------
